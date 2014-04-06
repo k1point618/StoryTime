@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<!--
+   COLLABORATORS:
+   keren gu
+   katie bartel
+   rodrigo lopez u
+   
+  -->
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Kid's Library - StoryTime</title>
+    <link rel="stylesheet" type="text/css" href="style/kid-library.css" />
+    <link rel="stylesheet" type="text/css" href="style/main.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="jquery/css/smoothness/jquery-ui-1.10.4.custom.min.css">
+
+    <script type="text/javascript" src="external_js/jquery-1.9.0.min.js"></script>
+    <script type="text/javascript" src="external_js/jquery-1.10.0.js"></script>
+    <script type="text/javascript" charset="utf-8" src="jquery/js/jquery-ui-1.10.4.custom.min.js"></script>
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+        var top = 3;
+
+        console.log("hello");
+        var library = document.getElementById("library-div");
+        populateBooks();
+
+        function populateBooks(){
+          var library = document.getElementById("library-div");
+          for(var i = 1; i <= 12; i ++){
+            var filename = "../graphics/" + i + ".jpeg";
+            var image = document.createElement("IMG");
+            image.src = filename;
+            image.className = "draggable book-image";
+            image.style.padding = "5px";
+            image.style.background = "white";
+            library.appendChild(image); 
+
+
+            $(image).each(function(){
+                $(this).width($(this).width() * 1.5);
+                $(this).draggable({
+                  scroll:false,
+                  containment:$(this).parent()
+                });
+            });
+          
+            $(image).click(function(){
+              $(this).addClass('top').removeClass('bottom');
+              $(this).siblings().removeClass('top').addClass('bottom');
+            });
+
+            $(image).mousedown(function(){
+              $(this).css("z-index", top++);
+            });
+
+          }
+
+        }
+
+        function clearBooks(){
+          var library = document.getElementById("library-div");
+          while (library.firstChild) {
+              library.removeChild(library.firstChild);
+          }
+        }
+
+
+        // $('.draggable').each(function(){
+        //   $(this).draggable({ 
+        //     scroll: false, 
+        //     containment:$(this).parent()});
+        // });
+
+        
+
+        
+            
+        
+        
+
+        $('#order').click(function(){
+          clearBooks();
+          populateBooks();
+        });
+
+      });
+      
+      
+
+    </script>
+
+  </head>
+  
+  <body id="body">
+    <div id="main-frame">
+      <div id = "title-div">
+        <a href="home.html" style="text-decoration:none">
+          <input id="homepage" class="button" type="button" value="Exit Library"/>
+        </a>
+        <input id="order" class="button" type="button" value="Order"/>
+      </div>
+
+      <div id="library-div">
+      </div>
+
+
+    </div>
+
+  </body>
+</html>
