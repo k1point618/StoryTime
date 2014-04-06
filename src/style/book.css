@@ -1,0 +1,7 @@
+#content canvas{ 
+   /* vertical-align: top; */
+    float: center; 
+    position:fixed; 
+    padding-top: 100px; 
+    border:1px solid #FF0000;
+} 
