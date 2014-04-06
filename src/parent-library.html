@@ -10,8 +10,156 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>StoryTime</title>
     <link type="text/css" href="style/parent-library.css" rel="stylesheet" />
+    <script type="text/javascript" src="external_js/jquery-1.9.0.min.js"></script>
 
 
+    <script type = "text/javascript">
+    var hIncr;
+    var vIncr;
+    function createDescriptionView(){
+      boardSize = 2.5;
+      var incr = 600/boardSize;
+      var hIncr = incr;
+      var vIncr = incr;
+      var c = document.getElementById("library-canvas");
+      var ctx = c.getContext("2d");
+      ctx.fillStyle = "#AAAAAA";
+      for(var i = 0; i < 2; i ++){
+          for(var j = 0; j < boardSize; j++){
+              if((i+j)%2 == 0){
+                  ctx.fillStyle = "white";
+                  //ctx.fillRect(i*incr*2,j*incr,incr*2, incr);
+              }else{
+                  ctx.fillStyle = "#AAAAAA";
+                  //ctx.fillRect(i*incr*2,j*incr,incr*2, incr);                  
+              }
+              if(i == 0){
+                ctx.fillRect(0, j*incr, 800/4, incr);
+              }else{
+                ctx.fillRect(800/4, j*incr, 800, incr);
+              }
+          }
+      }
+    }
+
+    function createGridView(){
+      boardSize = 4;
+      hIncr = 800/boardSize;
+      vIncr = 600/boardSize*1.5;
+      var c = document.getElementById("library-canvas");
+      var ctx = c.getContext("2d");
+      ctx.fillStyle = "#AAAAAA";
+      for(var i = 0; i < boardSize; i ++){
+          for(var j = 0; j < boardSize; j++){
+              if((i+j)%2 == 0){
+                  ctx.fillStyle = "white";
+                  ctx.fillRect(i*hIncr,j*vIncr,hIncr*2, vIncr);
+              }else{
+                  ctx.fillStyle = "#AAAAAA";
+                  ctx.fillRect(i*hIncr,j*vIncr,hIncr*2, vIncr);
+              }
+          }
+      }
+    }
+
+    function add(name, row, col){
+      var body = document.getElementById('overlay');
+      var img = document.createElement("img");
+      img.src = '../graphics/'+name+".jpg";
+      //img.style.width = hIncr+"px";
+      //img.style.height = "auto";
+
+      img.style.height = vIncr*.9 +"px";
+      img.style.width = "auto";
+
+      img.style.zIndex = "1";
+      img.setAttribute("id",name)
+      //img.style.zIndex = "1";
+      img.setAttribute("draggable",false);
+      img.style.position = "fixed";
+      img.style.left = 315+col*hIncr + "px";
+      img.style.top = 70+row*vIncr + "px";
+      body.appendChild(img);
+    }
+
+  //  var overlay = jQuery('<div id = "overlay"> </div>');
+//    activeCheckers.appendTo(document.body);
+
+
+    $(document).ready(function() {
+      //createDescriptionView()
+      //createGridView();
+
+      /*
+      var obj = document.getElementById("overlay");
+      obj.style.position = "fixed";
+      obj.style.top = 50;
+      obj.style.left = 252;*/
+
+      var plot = [
+        {x:50, y:100},
+        {x:200, y:200},
+        {x:400, y:300},
+        {x:500, y:190}
+        ];
+
+      var can = document.getElementById("library-canvas"),
+          ctx = can.getContext('2d'),
+          dragging = false,
+          lastY = 0,
+          translated = 0;
+
+      ctx.scale(1,-1);
+      ctx.translate(0, -600);
+
+      can.onmousedown = function(e){
+        var evt = e || event;
+        dragging = true;
+        lastY = evt.offsetY;
+      }
+
+      window.onmousemove = function(e){
+        var evt = e || event;
+        if (dragging){
+          var delta = evt.offsetY - lastY;
+          translated += delta;
+          ctx.translate(0, delta);
+          lastY = evt.offsetY;
+          draw();
+        }
+      }
+
+      window.onmouseup = function(){
+        dragging = false;
+      }
+
+      function draw(){
+        ctx.clearRect(0,-translated,800,600);
+
+        var img =new Image();
+        img.onload=function(){
+          ctx.drawImage(img,0,0,img.width,img.height);
+        }
+        img.src='../graphics/'+"catInTheHat"+".jpg";
+
+        /*var img = document.createElement("img");
+        img.src = '../graphics/'+"catInTheHat"+".jpg";
+        //img.style.width = hIncr+"px";
+        //img.style.height = "auto";
+
+        img.style.height = vIncr*.9 +"px";
+        img.style.width = "auto";
+        ctx.drawImage(img, 10, 10);*/
+        for (var i = 0; i < plot.length; i++){
+          ctx.beginPath();
+          ctx.arc(plot[i].x, plot[i].y, 5, 0, 2*Math.PI);
+          ctx.fill();
+        }
+      }
+
+      draw();
+    });
+    </script>
   </head>
   
   <body>
@@ -37,7 +185,8 @@
             <p>  </p>
         </div>
         <div id="column-right">
-            <canvas id="library-canvas" width="800" height="600" style="border:1px solid #000000;"></canvas>
+            <canvas id="library-canvas" width="800" height="600"></canvas>
+            <div id = "overlay" style = "position:relative;"></div>
         </div>
         
     </div>
