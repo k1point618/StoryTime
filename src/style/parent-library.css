@@ -4,7 +4,7 @@ html {
 body{
     font-family: "Trebuchet MS";
     margin:10px 10px 10px 15px;
-    color:gray;
+    color:blue;
     font-size:25px;
     padding:10px 10px 10px 10px;
 }
@@ -23,13 +23,15 @@ body{
 #column-left{
     width:250px;
     float:left;
+    position: relative;
+    height:600px;
    
 }
 
 #column-center {
     width: 10px;
     float:left;
-    color: red;
+    background-color: red;
    
 }
 
@@ -57,8 +59,44 @@ ul li a {
   text-decoration: none;
 }
 
+.active a:hover{
+  text-decoration:none;
+}
+.active{
+  color:red;
+}
+
 #library-contents{
     padding:10px 20px;
+}
+
+#search{
+  padding: 10px;
+}
+
+#search{
+
+}
+
+a:link{
+  color: inherit;
+}
+
+a:active{
+  color: inherit;
+}
+a:visited{
+  color: inherit;
+}
+
+
+#new-list{
+  position: absolute;
+  bottom:0;
+}
+
+.section{
+  padding: 20px 0px 0px 0px;
 }
 
 .title{
@@ -66,36 +104,6 @@ ul li a {
     padding-bottom: 40px;
 }
 
-p.right{
-    color:blue;
-}
-
-p.black{
-    color:black;
-
-    display: inline-block;
-/*    margin-top: 10px;
-    margin-bottom:10px;*/
-}
-
-p.input{
-    padding-bottom: 20px;
-    color:black;
-}
-
-
-p.wrong{
-    color:red;
-}
-
-p.wrongAnswer{
-    text-decoration: line-through;
-    color:red;
-}
-
-.language{
-    color: black;
-}
 
 
 /* Your CSS here */
