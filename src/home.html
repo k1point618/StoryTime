@@ -13,19 +13,61 @@
 
 <!-- Load Javascript -->
 <script type="text/javascript" src="external_js/jquery-1.9.0.min.js"></script>
+<script type="text/javascript">
+
+	$(document).ready(function(){
+
+		$('#kid-library').click(function(){
+			window.location.href = 'kid-library.html';
+		});
+		$('#parent-library').click(function(){
+			//Show parent authentication
+			//Hardcoded What is your zipcode
+			//Accepts: 02142 and 02139'
+			$("body").append("<div class='blur-overlay'></div>");
+
+			// make pop up
+			var $div = $("<div>", {id:"authentication-popup", class:"popup"});
+
+			$div.append("<h3 class='title'>Parent Authentication</h3>");
+			$div.append("<p class='popup-text'>What is your zipcode?</p>");
+			$div.append("<input id='popup-answer' class='popup-text' type='text' name='answer' placeholder='Press \<Enter\> to submit.'>");
+			$div.append($("<button>", {type:"button", id:"cancel-popup", class:"cancel-button"}));
+			$("body").append($div)
+
+			// implement functionality for close
+			$('#cancel-popup').click(function(){
+				$('.blur-overlay').remove();
+				$('#authentication-popup').remove();
+			});
+
+			$('#popup-answer').keypress(function(event){
+				if(event.which == 13){
+					//Pressed Enter
+					if($('#popup-answer').val() == "02142"){
+						window.location.href = 'parent-library.html';
+					}else{
+						$('.blur-overlay').remove();
+						$('#authentication-popup').remove();
+					}
+				}
+			});
+			// window.location.href = 'parent-authentication.html';
+		});
+
+	});
+
+</script>
 
 </head>
 <div id="home-main">
 	<a href="kid-library.html">
-		<img src="../graphics/storytime.jpg">
+		<img src="../graphics/storytime.jpg" width="auto" height="95%">
 	</a>
 	<div id="home-navigation">
-		<a href="kid-library.html" style="text-decoration:none">
-			<input id="kid-library" class="button" type="button" name="new" value="Kid's Library"/>
-		</a>
-		<a href="parent-library.html" style="text-decoration:none">
-			<input id="parent-library" class="button" type="button" name="new" value="Parent's Library"/>
-		</a>
+		<button type="button" id="kid-library" class="button">Kid's Library</button>
+		<button type="button" id="parent-library" class="button">Parent's Library</button>
+		
 	</div>
 </div>
 
