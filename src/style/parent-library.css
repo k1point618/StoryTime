@@ -4,7 +4,7 @@ html {
 body{
     font-family: "Trebuchet MS";
     margin:10px 10px 10px 15px;
-    color:blue;
+    color:gray;
     font-size:25px;
     padding:10px 10px 10px 10px;
 }
@@ -14,7 +14,7 @@ body{
     padding: 0; 
 }   
 #wrapper { 
-    width: 980px; 
+    width: 1440px; 
    /* background: silver; */
     margin: 10 auto; 
 }   
@@ -24,22 +24,22 @@ body{
     width:250px;
     float:left;
     position: relative;
-    height:600px;
+    height:1000px;
    
 }
 
 #column-center {
     width: 2px;
-    height:600px;
+    height:1000px;
     float:left;
     background-color: gray;
    
 }
 
 #column-right{
-    width: 700px;
+    width: 1160px;
     float: left;
-    height:600px;
+    height:1000px;
     overflow:scroll;
     position:relative;
    
@@ -76,8 +76,8 @@ ul li a {
   text-decoration:none;
 }
 .active{
-  color:red;
-  background-color: blue;
+  color:#eee;
+  background-color: gray;
 }
 
 #library-contents{

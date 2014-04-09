@@ -21,173 +21,66 @@
       var incr = 600/boardSize;
       var hIncr = incr;
       var vIncr = incr;
-     /* var c = document.getElementById("library-canvas");
-      var ctx = c.getContext("2d");
-      ctx.fillStyle = "#AAAAAA";
-      for(var i = 0; i < 2; i ++){
-          for(var j = 0; j < boardSize; j++){
-              if((i+j)%2 == 0){
-                  ctx.fillStyle = "white";
-                  //ctx.fillRect(i*incr*2,j*incr,incr*2, incr);
-              }else{
-                  ctx.fillStyle = "#AAAAAA";
-                  //ctx.fillRect(i*incr*2,j*incr,incr*2, incr);                  
-              }
-              if(i == 0){
-                ctx.fillRect(0, j*incr, 800/4, incr);
-              }else{
-                ctx.fillRect(800/4, j*incr, 800, incr);
-              }
-          }
-      }*/
     }
 
-    function createGridView(){
-      boardSize = 3;
-      hIncr = 700/boardSize;
-      vIncr = 600/boardSize*1.2;
-      /*var c = document.getElementById("library-canvas");
-      var ctx = c.getContext("2d");
-      ctx.fillStyle = "#AAAAAA";
-      for(var i = 0; i < boardSize; i ++){
-          for(var j = 0; j < boardSize; j++){
-              if((i+j)%2 == 0){
-                  ctx.fillStyle = "white";
-                  ctx.fillRect(i*hIncr,j*vIncr,hIncr*2, vIncr);
-              }else{
-                  ctx.fillStyle = "#AAAAAA";
-                  ctx.fillRect(i*hIncr,j*vIncr,hIncr*2, vIncr);
-              }
+
+    function createGridView(perRow){
+      hIncr = 700/perRow;
+      //vIncr = 600/boardSize*1.2;
+      vIncr = hIncr * 5 /3;
+      var book = 1;
+      for(var i = 0; i < 12/perRow; i ++){
+          for(var j = 0; j < perRow; j++){
+              add(book.toString(),i,j);
+              book++;
           }
-      }*/
+      }
     }
 
     function add(name, row, col){
       var body = document.getElementById('column-right');
       var img = document.createElement("img");
       img.src = '../graphics/'+name+".jpeg";
-      //img.style.width = hIncr+"px";
-      //img.style.height = "auto";
-
-      //img.style.height = vIncr*.4 +"px";
-      //img.style.width = "auto";
-      img.style.width = hIncr/1.5+"px";
+    
+      img.style.width = hIncr+"px";
       img.style.height = "auto";
       img.style.zIndex = "1";
       img.setAttribute("id",name)
-      //img.style.zIndex = "1";
       img.setAttribute("draggable",false);
-      /*img.style.position = "fixed";
-      img.style.left = 315+col*hIncr + "px";
-      img.style.top = 70+row*vIncr + "px";*/
+    
       img.style.position = "absolute";
       console.log(hIncr, vIncr);
-      img.style.left = -150 + col*vIncr + "px";
-      img.style.top = -150 +  row*hIncr + "px";
+      img.style.left = 10+col*vIncr + "px";
+      img.style.top = 10+row*hIncr*1.7 + "px";
       body.appendChild(img);
     }
 
-  //  var overlay = jQuery('<div id = "overlay"> </div>');
-//    activeCheckers.appendTo(document.body);
+
     $(document).ready(function() {
 
-    /*  var img = document.createElement("img");
-      img.src = '../graphics/'+"catInTheHat"+".jpg";
-      //img.style.width = hIncr+"px";
-      //img.style.height = "auto";
-
-      img.style.height = vIncr*.9 +"px";
-      img.style.width = "auto";
-*/
-      createGridView();
-      add("1", 1, 1);
-      add("2",1,2);
-      add("3",1,3);
-      add("4",1,4);
-      add("5",2,1);
-      add("6",2,2);
-      add("7",2,3);
-      add("8",2,4);
-      add("9",3,1);
-      add("10",3,2);
-      add("11",3,3);
-      add("12",3,4);
-       $('.imgContain').on("click","a,img", function (e) {
+   
+      createGridView(3);
+     
+      $('.imgContain').on("click","a,img", function (e) {
         var id = e.target.getAttribute('id');
         e.preventDefault();
-        alert('You Clicked On Book '+id);
-     });
-      //createDescriptionView()
-      //createGridView();
+        //alert('You Clicked On Book '+id);
+        window.location.href = 'Book.html'
+      });
 
-      /*
-      var obj = document.getElementById("overlay");
-      obj.style.position = "fixed";
-      obj.style.top = 50;
-      obj.style.left = 252;*/
+      $('#column-left').on("click","a,img", function (e) {
+        var id = e.target.getAttribute('id');
+        var label = e.target;
+        var oldLabel = document.getElementsByClassName("active")[0]
+        oldLabel.style.color = "grey";
+        oldLabel.className = "";
+        label.style.color = "#eee";
+        label.className = "active";
+        e.preventDefault();
+        //window.location.href = 'Book.html'
+      });
 
-      /*var plot = [
-        {x:50, y:100},
-        {x:200, y:200},
-        {x:400, y:300},
-        {x:500, y:190}
-        ];
-
-      var can = document.getElementById("library-canvas"),
-          ctx = can.getContext('2d'),
-          dragging = false,
-          lastY = 0,
-          translated = 0;
-
-      ctx.scale(1,-1);
-      ctx.translate(0, -600);*/
-/*
-      can.onmousedown = function(e){
-        var evt = e || event;
-        dragging = true;
-        lastY = evt.offsetY;
-      }
-
-      window.onmousemove = function(e){
-        var evt = e || event;
-        if (dragging){
-          var delta = evt.offsetY - lastY;
-          translated += delta;
-          ctx.translate(0, delta);
-          lastY = evt.offsetY;
-          draw();
-        }
-      }
-
-      window.onmouseup = function(){
-        dragging = false;
-      }
-
-      function draw(){
-        ctx.clearRect(0,-translated,800,600);
-
-        var img =new Image();
-        img.onload=function(){
-          ctx.drawImage(img,0,0,img.width,img.height);
-        }
-        img.src='../graphics/'+"catInTheHat"+".jpg";
-
-        /*var img = document.createElement("img");
-        img.src = '../graphics/'+"catInTheHat"+".jpg";
-        //img.style.width = hIncr+"px";
-        //img.style.height = "auto";
-
-        img.style.height = vIncr*.9 +"px";
-        img.style.width = "auto";
-        ctx.drawImage(img, 10, 10);*/
-     /*   for (var i = 0; i < plot.length; i++){
-          ctx.beginPath();
-          ctx.arc(plot[i].x, plot[i].y, 5, 0, 2*Math.PI);
-          ctx.fill();
-        }
-      }
-
-      draw();*/
+      
     });
     </script>
   </head>
@@ -198,13 +91,13 @@
         <div id="column-left">
             <ul>
                 <span id = "search"><label> Search </label> <input type = "text" name = "search"></span>
-                <li class = "section"><a href = "#">My Library</a></li>
+                <li class = "section" id = "library"><a href = "#">My Library</a></li>
                 <div id = "library-contents">
                     <ul>
-                        <li><a href = "#">Dogs</a></li>
-                        <li><a href = "#">Nature</a></li>
-                        <li class = "active"><a href = "#">Robots</a></li>
-                        <li><a href = "#">Dragons</a></li>
+                        <li><a href = "#" id = "dogs">Dogs</a></li>
+                        <li><a href = "#" id = "nature">Nature</a></li>
+                        <li class = "active" id = "robots"><a href = "#">Robots</a></li>
+                        <li><a href = "#" id = "dragons">Dragons</a></li>
                     </ul> 
                 </div>
                 <li class = "section"><a href = "#">Discover More Books</a></li>
@@ -215,7 +108,6 @@
             <p>  </p>
         </div>
         <div id="column-right" class = "imgContain">
-<!--            <canvas id="library-canvas" width="800" height="600"></canvas>-->
         </div>
         
     </div>
