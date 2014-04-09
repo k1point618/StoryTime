@@ -37,8 +37,11 @@ body{
 }
 
 #column-right{
-    width: 250px;
+    width: 700px;
     float: left;
+    height:600px;
+    overflow:scroll;
+    position:relative;
    
 }
 
@@ -74,6 +77,7 @@ ul li a {
 }
 .active{
   color:red;
+  background-color: blue;
 }
 
 #library-contents{
