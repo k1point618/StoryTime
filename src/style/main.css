@@ -1,7 +1,7 @@
 .button{
 	cursor:pointer;
 	padding: 10px 15px;
-    background: #4479BA;
+    background: #599FFA;
     color: #FFF;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
@@ -23,4 +23,16 @@
     bottom: 0;
     right: 0;
     text-align: center;
+}
+.logo{
+    font-family:'Englebert', sans-serif;
+    font-size: 800%;
+    text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.8);
+    
+}
+.story{
+    color:#42B1FF;
+}
+.time{
+    color:#F342FF;
 }

@@ -2,7 +2,7 @@
 	text-decoration:none;
 }
 body{
-	background-color: black; /* Old browsers */
+	background-color: gray; /* Old browsers */
     text-align: center;
 }
 #home-main{
@@ -14,7 +14,9 @@ body{
 	width:85%;
 	height:auto;
 	text-align:center;
-	padding:5% 5%;
+	padding-top: 10%;
+    padding-left: 5%;
+    padding-right: 5%;
 	border: solid 2px #0489B1;
 	border-radius: 0px;
     z-index:20;
