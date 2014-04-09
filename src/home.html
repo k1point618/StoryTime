@@ -46,6 +46,8 @@
 					//Pressed Enter
 					if($('#popup-answer').val() == "02142"){
 						window.location.href = 'parent-library.html';
+						$('#authentication-popup').remove();
+						$('.blur-overlay').remove();
 					}else{
 						$('.blur-overlay').remove();
 						$('#authentication-popup').remove();

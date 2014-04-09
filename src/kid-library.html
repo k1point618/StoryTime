@@ -21,6 +21,7 @@
     <script type="text/javascript">
       $(document).ready(function(){
         var top = 3;
+        var selectToggle = -1;
 
         console.log("hello");
         var library = document.getElementById("library-div");
@@ -32,10 +33,15 @@
             var filename = "../graphics/" + i + ".jpeg";
             var image = document.createElement("IMG");
             image.src = filename;
-            image.className = "draggable book-image";
+            image.id = i + "";
+            image.className = "draggable book-image unselected";
             image.style.padding = "5px";
-            image.style.background = "white";
             library.appendChild(image); 
+
+            if(i == 1){
+              $(image).removeClass('unselected');
+              $(image).addClass('selected');
+            }
 
 
             $(image).each(function(){
@@ -46,9 +52,17 @@
                 });
             });
           
-            $(image).click(function(){
+            $(image).mouseup(function(){
               $(this).addClass('top').removeClass('bottom');
               $(this).siblings().removeClass('top').addClass('bottom');
+              $(this).removeClass('unselected');
+              $(this).addClass('selected');
+              $(this).siblings().removeClass('selected').addClass('unselected');
+              
+              // TODO: fix 
+              // $('.selected').click(function(){
+              //     $('#library-div').append("<div class='blur-overlay'></div>");
+              // });
             });
 
             $(image).mousedown(function(){
