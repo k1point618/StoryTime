@@ -9,7 +9,7 @@
 <!-- Load style sheets -->
 <link rel="stylesheet" type="text/css" href="style/main.css" />
 <link rel="stylesheet" type="text/css" href="style/homepage.css" />
-
+<link href='http://fonts.googleapis.com/css?family=Englebert' rel='stylesheet' type='text/css'>
 
 <!-- Load Javascript -->
 <script type="text/javascript" src="external_js/jquery-1.9.0.min.js"></script>
@@ -46,6 +46,8 @@
 					//Pressed Enter
 					if($('#popup-answer').val() == "02142"){
 						window.location.href = 'parent-library.html';
+						$('#authentication-popup').remove();
+						$('.blur-overlay').remove();
 					}else{
 						$('.blur-overlay').remove();
 						$('#authentication-popup').remove();
@@ -62,8 +64,10 @@
 </head>
 <div id="home-main">
 	<a href="kid-library.html">
-		<img src="../graphics/storytime.jpg" width="auto" height="95%">
+		<img src="../graphics/storytime.png" width="auto" height="50%">
 	</a>
+	<h1 class="logo"><span class="story">Story</span><span class="time">Time</span></h1>
+
 	<div id="home-navigation">
 		<button type="button" id="kid-library" class="button">Kid's Library</button>
 		<button type="button" id="parent-library" class="button">Parent's Library</button>

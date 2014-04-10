@@ -2,7 +2,7 @@
 	text-decoration:none;
 }
 body{
-	background-color: black; /* Old browsers */
+	background-color: gray; /* Old browsers */
     text-align: center;
 }
 #home-main{
@@ -14,7 +14,9 @@ body{
 	width:85%;
 	height:auto;
 	text-align:center;
-	padding:5% 5%;
+	padding-top: 10%;
+    padding-left: 5%;
+    padding-right: 5%;
 	border: solid 2px #0489B1;
 	border-radius: 0px;
     z-index:20;
@@ -24,32 +26,7 @@ body{
 	width:100%;
 	text-align: right
 }
-.button{
-	cursor:pointer;
-	padding: 10px 15px;
-    background: #4479BA;
-    color: #FFF;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 0px;
-    border: solid 1px #20538D;
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
-    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
-    -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
-}
-.blur-overlay {
-    position:absolute;
-    width:100%;
-    height:100%;
-    z-index: 100;
-    background-color: rgba(0, 0, 0, 0.7); 
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    text-align: center;
-}
+
 .popup{
     position:absolute;
     border:solid 2px black;
