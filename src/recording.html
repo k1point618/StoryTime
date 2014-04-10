@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-<title>Book</title>
+<title>Recording</title>
 <!-- Load style sheets -->
 <link rel="stylesheet" type="text/css" href="style/book.css" />
 <link href="Booklet-master/booklet/jquery.booklet.latest.css" type="text/css" rel="stylesheet" media="screen, projection, tv" />
@@ -23,6 +23,19 @@
 	$(function () {		
 		$("#mybook").booklet({ pageNumbers: false });
 	});
+
+	$(document).ready(function(){
+		var cue = document.getElementById("recording");
+
+  		$("h3").mouseup(function(){
+    		cue.innerHTML = "<img src = '../graphics/not-record.png'>";
+  		});
+  		$("h3").mousedown(function(){
+    		cue.innerHTML = "<img src = '../graphics/record.png'>";
+  		});
+
+  		$(document).on('dragstart', function(event) { event.preventDefault(); });
+ 	});
 
 </script>
 
@@ -45,7 +58,7 @@
 	        </div>
 	        <div title="second page">
 	            <h3>Once there was a tree</h3>
-	            <img src = "../graphics/book/Maple-tree.png">
+	           <!-- <img src = "../graphics/book/Maple-tree.png"> -->
 	        </div>
 	        <div title="third page">
 	            <h3>That loved a little boy</h3>
@@ -65,6 +78,7 @@
 	        
 	    </div>
 	</section>
+	<center><div id = "recording"><img src = '../graphics/not-record.png'></div></center>
 </body>
 
 </html>
