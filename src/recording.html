@@ -32,9 +32,20 @@
   		});
   		$("h3").mousedown(function(){
     		cue.innerHTML = "<img src = '../graphics/record.png'>";
+    		var pointer = document.getElementById("pointer");
+    		pointer.innerHTML = "";
+    		$("#pointer").finish();
   		});
 
   		$(document).on('dragstart', function(event) { event.preventDefault(); });
+  		$("#pointer").animate({left: "+=150"}, 2000);
+    	$("#pointer").animate({left: "-=150"}, 500);
+    	$("#pointer").animate({left: "+=150"}, 2000);
+    	$("#pointer").animate({left: "-=150"}, 500);
+    	$("#pointer").animate({left: "+=150"}, 2000);
+    	$("#pointer").animate({left: "-=150"}, 500);
+    	$("#pointer").animate({left: "+=150"}, 2000);
+    	$("#pointer").animate({left: "-=150"}, 500);
  	});
 
 </script>
@@ -58,6 +69,7 @@
 	        </div>
 	        <div title="second page">
 	            <h3>Once there was a tree</h3>
+	             <div id="pointer" style="position:absolute;"><img src = '../graphics/pointer.png'></div>
 	           <!-- <img src = "../graphics/book/Maple-tree.png"> -->
 	        </div>
 	        <div title="third page">

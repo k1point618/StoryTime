@@ -16,3 +16,8 @@ h3 {
 -o-user-select: none;
 user-select: none;  
 }
+
+#mybook {
+	float:center;
+	vertical-align: center;
+}
