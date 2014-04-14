@@ -13,6 +13,11 @@ body{
     margin: 0; 
     padding: 0; 
 }   
+
+table{
+  border-collapse: collapse;
+  border : none;
+}
 #wrapper { 
     width: 1440px; 
    /* background: silver; */
@@ -24,22 +29,23 @@ body{
     width:250px;
     float:left;
     position: relative;
-    height:1000px;
    
 }
 
 #column-center {
+    border-left: thick, double, black;
     width: 2px;
-    height:1000px;
     float:left;
-    background-color: gray;
    
+}
+
+#column-center, #column-left, #column-right{
+  height:900px;
 }
 
 #column-right{
     width: 1160px;
     float: left;
-    height:1000px;
     overflow:scroll;
     position:relative;
    
@@ -87,7 +93,12 @@ ul li a {
 #search{
   padding: 10px;
 }
+#column-right{
 
+    border: 1px solid;
+    border-color: gray;
+    border-radius: 25px;
+}
 #search{
 
 }
