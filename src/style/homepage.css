@@ -14,7 +14,7 @@ body{
 	width:85%;
 	height:auto;
 	text-align:center;
-	padding-top: 10%;
+	padding-top: 15%;
     padding-left: 5%;
     padding-right: 5%;
 	border: solid 2px #0489B1;
@@ -22,9 +22,9 @@ body{
     z-index:20;
 }
 #home-navigation{
-	top:10px;
+    position:absolute;
+    bottom:5%;
 	width:100%;
-	text-align: right
 }
 
 .popup{
@@ -66,5 +66,13 @@ body{
     -webkit-border-radius: 13px;
     -moz-border-radius: 13px;
     border-radius: 13px;
+}
+#kid-library{
+    position:absolute;
+    left:5%;
+}
+#parent-library{
+    position:absolute;
+    right:5%;
 }
 
