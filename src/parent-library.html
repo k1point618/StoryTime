@@ -25,6 +25,11 @@
 
 
     function createGridView(perRow){
+
+      tableButton = document.getElementById("btnTableView");
+      gridButton = document.getElementById("btnGridView");
+      gridButton.disabled = true;
+      tableButton.disabled = false;
       hIncr = 700/perRow;
       //vIncr = 600/boardSize*1.2;
       vIncr = hIncr * 5 /3;
@@ -39,6 +44,15 @@
 
     function add(name, row, col){
       var body = document.getElementById('column-right');
+      var img = setImage(name, hIncr, vIncr);
+      img.style.position = "absolute";
+      img.style.left = 70+col*vIncr + "px";
+      img.style.top = 10+row*hIncr*1.7 + "px";
+      body.appendChild(img);
+    }
+
+    function setImage(name, hIncr, vIncr){
+     // console.log(name);
       var img = document.createElement("img");
       img.src = '../graphics/'+name+".jpeg";
     
@@ -48,24 +62,67 @@
       img.setAttribute("id",name)
       img.setAttribute("draggable",false);
     
-      img.style.position = "absolute";
-      console.log(hIncr, vIncr);
-      img.style.left = 10+col*vIncr + "px";
-      img.style.top = 10+row*hIncr*1.7 + "px";
-      body.appendChild(img);
+      //console.log(hIncr, vIncr);
+      //console.log(img);
+      return img;
     }
 
+    function createRowView(){
+
+      tableButton = document.getElementById("btnTableView");
+      gridButton = document.getElementById("btnGridView");
+      gridButton.disabled = false;
+      tableButton.disabled = true;
+      boardSize = 2.5;
+      var incr = 600/boardSize;
+      var hIncr = incr;
+      var vIncr = incr;
+     // console.log(vIncr,hIncr);
+      var body = document.getElementById('column-right');
+
+      var tbl = document.createElement("table");
+      var tblBody = document.createElement("tbody");
+
+      for (var j = 0; j <= 11; j++){
+        var row = document.createElement("tr");
+        for (var i = 0; i < 2; i++){
+          var cell = document.createElement("td");
+          if(i==0){
+            var img = setImage((j+1).toString(), hIncr,vIncr);
+            //console.log(img);
+            cell.appendChild(img);
+          }else{
+            var cellText = document.createTextNode("The Giving Tree is a children's picture book written and illustrated by Shel Silverstein. First published in 1964 by Harper & Row, it has become one of Silverstein's best known titles and has been translated into numerous languages. Some argue that the popularity of the book is due to the romantic relationship between the child and the tree. However, others are of the opinion that such a relationship should not be portrayed to children at such a young age, for fear that they will join the gays.  Research has shown that this fear is unfounded, as tree lovers have an equal occurence of homosexuality as the general population."); 
+            cell.appendChild(cellText);
+            cell.style.width = "800px";
+          }
+          row.appendChild(cell);
+        }
+
+        tbl.appendChild(row);
+      }
+      tbl.appendChild(tblBody);
+      body.appendChild(tbl);
+      tbl.setAttribute("border","2");
+      tbl.style.position = "absolute";
+      tbl.style.top = "25px";
+      tbl.style.left = "25px";
+
+
+    }
+
+    
 
     $(document).ready(function() {
 
-   
       createGridView(3);
+      //createRowView();
      
       $('.imgContain').on("click","a,img", function (e) {
         var id = e.target.getAttribute('id');
         e.preventDefault();
         //alert('You Clicked On Book '+id);
-        window.location.href = 'Book.html'
+        window.location.href = 'recording.html'
       });
 
       $('#column-left').on("click","a,img", function (e) {
@@ -80,7 +137,20 @@
         //window.location.href = 'Book.html'
       });
 
-      
+      $("#btnGridView").click(function(evt){
+        console.log("viewing Grid!")
+        $(".imgContain").empty();
+        createGridView(3);
+        consle.log("viewing grid!");
+      });
+
+      $("#btnTableView").click(function(evt){
+        console.log("viewing Table!")
+        $(".imgContain").empty();
+        createRowView();
+        consle.log("viewing table!");
+      });
+
     });
     </script>
   </head>
@@ -88,7 +158,11 @@
   <body>
     <div id="wrapper"> 
         <div id="header" class = "title">
-          <input id="homepage" class="button" type="button" value="Exit Library"/>
+          <a href="home.html" style="text-decoration:none">
+            <input id="homepage" class="button" type="button" value="Exit Library"/>
+          </a>
+          <input id="btnGridView" class="button" type="button" value="View Grid"/>
+          <input id="btnTableView" class="button" type="button" value="View Table"/>
         </div>
         <div id="column-left">
             <ul>
