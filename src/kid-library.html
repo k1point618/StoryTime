@@ -23,16 +23,23 @@
       $(document).ready(function(){
         var top = 3;
         var selectToggle = -1;
+        var library = document.getElementById("library-div");
+        populateBooks();
+
+
+        // Event listeners -----------------
+        $('#order-button').click(function(){
+          clearBooks();
+          populateBooks();
+        });
 
         $('#logo-navigation-button').click(function(){
           console.log("go to home")
           window.location.href = 'home.html';
         });
 
-        console.log("hello");
-        var library = document.getElementById("library-div");
-        populateBooks();
 
+        // Helper functions ----------------------------------
         function populateBooks(){
           var library = document.getElementById("library-div");
           for(var i = 1; i <= 12; i ++){
@@ -49,7 +56,6 @@
               $(image).addClass('selected');
             }
 
-
             $(image).each(function(){
                 $(this).width($(this).width() * 1.5);
                 $(this).draggable({
@@ -64,11 +70,6 @@
               $(this).removeClass('unselected');
               $(this).addClass('selected');
               $(this).siblings().removeClass('selected').addClass('unselected');
-              
-              // TODO: fix 
-              // $('.selected').click(function(){
-              //     $('#library-div').append("<div class='blur-overlay'></div>");
-              // });
             });
 
             $(image).mousedown(function(){
@@ -86,41 +87,21 @@
           }
         }
 
-
-        // $('.draggable').each(function(){
-        //   $(this).draggable({ 
-        //     scroll: false, 
-        //     containment:$(this).parent()});
-        // });
-
-        
-
-        
-            
-        
-        
-
-        $('#order').click(function(){
-          clearBooks();
-          populateBooks();
-        });
-
       });
       
-      
-
     </script>
 
   </head>
   
+
   <body>
-
-
     
     <div id="main-frame">
       <div class="top-navigation">
 
-        <button id="order-button" class="button" type="button"/> Order </button>
+        <div id="order-button" type="button"/> 
+          Order 
+        </div>
         <div id="logo-navigation-button" type="button">
           <span class="story">Story</span><span class="time">Time</span>
         </div>

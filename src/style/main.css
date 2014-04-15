@@ -20,8 +20,6 @@ body{
 	padding: 10px 15px;
     background: #2CCCBC;
     color: #FFF;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
     border-radius: 0px;
     border: solid 1px #0d3d38;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
@@ -69,4 +67,5 @@ body{
     cursor:pointer;
     font-family:'Englebert', sans-serif;
     text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.8);
+    box-shadow: 0 0 10px #AAAAAA;
 }
