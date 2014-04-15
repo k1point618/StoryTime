@@ -1,7 +1,21 @@
+body{
+    /*Try different backgrounds*/
+    /*background-image:url('../../graphics/rainbows.png');*/
+    background-image:url('../../graphics/giftly.png');
+    height:100%;
+}
+.top-navigation{
+    position:absolute;
+    top:0%;
+    width:100%;
+    height:55px;
+    background: #FFFAFC;
+    border-bottom:solid 1px gray;
+}
 .button{
 	cursor:pointer;
 	padding: 10px 15px;
-    background: #599FFA;
+    background: #2CCCBC;
     color: #FFF;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
@@ -28,6 +42,7 @@
     font-family:'Englebert', sans-serif;
     font-size: 800%;
     text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.8);
+    opacity:1;
     
 }
 .story{

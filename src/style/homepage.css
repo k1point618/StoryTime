@@ -1,32 +1,32 @@
 .a{
 	text-decoration:none;
 }
-body{
-	background-color: gray; /* Old browsers */
-    text-align: center;
-}
+
 #home-main{
-	background-color:white;
 	position:absolute;
-	top:5%;
-	bottom:5%;
-	left: 2%;
-	width:85%;
-	height:auto;
+	left: 0%;
+	right: 0%;
+    top:0%;
+    bottom:0%;
+    width:100%;
+    height:100%;
 	text-align:center;
 	padding-top: 15%;
-    padding-left: 5%;
-    padding-right: 5%;
-	border: solid 2px #0489B1;
-	border-radius: 0px;
+    /*Try different colors for top line*/
+    /*border-top: solid 2px #0489B1;*/
+    border-top: solid 4px #2CCCBC;
     z-index:20;
 }
-#home-navigation{
-    position:absolute;
-    bottom:5%;
-	width:100%;
-}
+#home-image{
+    position:relative;
+    top:-100px;
 
+}
+#logo-banner{
+    position:relative;
+    top:-100px;
+    width:100%;
+}
 .popup{
     position:absolute;
     border:solid 2px black;
@@ -69,10 +69,16 @@ body{
 }
 #kid-library{
     position:absolute;
-    left:5%;
+    /*left:5%;*/
+    /*top:500px;*/
+    top:25px;
+    left:100px;
+    font-size: 160%;
 }
 #parent-library{
     position:absolute;
-    right:5%;
+    top:25px;
+    right:100px;
+    font-size: 160%;
 }
 
