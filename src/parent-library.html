@@ -9,6 +9,10 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>StoryTime</title>
+        <link rel="stylesheet" type="text/css" href="style/main.css" />
+    <link rel="stylesheet" type="text/css" href="style/kid-library.css" />
+    <link href='http://fonts.googleapis.com/css?family=Englebert' rel='stylesheet' type='text/css'>
+
     <link type="text/css" href="style/parent-library.css" rel="stylesheet" />
     <script type="text/javascript" src="external_js/jquery-1.9.0.min.js"></script>
 
@@ -26,11 +30,12 @@
 
     function createGridView(perRow){
 
-      tableButton = document.getElementById("btnTableView");
-      gridButton = document.getElementById("btnGridView");
+      tableButton = document.getElementById("table-button");
+      gridButton = document.getElementById("grid-button");
       gridButton.disabled = true;
       tableButton.disabled = false;
-      hIncr = 700/perRow;
+      console.log();
+      hIncr = $('#column-right').height()/perRow;
       //vIncr = 600/boardSize*1.2;
       vIncr = hIncr * 5 /3;
       var book = 1;
@@ -69,8 +74,8 @@
 
     function createRowView(){
 
-      tableButton = document.getElementById("btnTableView");
-      gridButton = document.getElementById("btnGridView");
+      tableButton = document.getElementById("table-button");
+      gridButton = document.getElementById("grid-button");
       gridButton.disabled = false;
       tableButton.disabled = true;
       boardSize = 2.5;
@@ -117,7 +122,7 @@
 
     $(document).ready(function() {
 
-      createGridView(3);
+      createGridView(4);
       //createRowView();
      
       $('.imgContain').on("click","a,img", function (e) {
@@ -128,6 +133,7 @@
       });
 
       $('#column-left').on("click","a,img", function (e) {
+
         var id = e.target.getAttribute('id');
         var label = e.target;
         var oldLabel = document.getElementsByClassName("active")[0]
@@ -139,33 +145,51 @@
         //window.location.href = 'Book.html'
       });
 
-      $("#btnGridView").click(function(evt){
+      $("#grid-button").click(function(evt){
         console.log("viewing Grid!")
         $(".imgContain").empty();
-        createGridView(3);
-        consle.log("viewing grid!");
+        createGridView(4);
+        console.log("viewing grid!");
       });
 
-      $("#btnTableView").click(function(evt){
+      $("#table-button").click(function(evt){
         console.log("viewing Table!")
         $(".imgContain").empty();
         createRowView();
-        consle.log("viewing table!");
+        console.log("viewing table!");
       });
+
+      $('#logo-navigation-button').click(function(){
+          console.log("go to home")
+          window.location.href = 'home.html';
+        });
+
+      $('#new-list').click(function(){
+      
+    });
 
     });
     </script>
   </head>
   
   <body>
-    <div id="wrapper"> 
-        <div id="header" class = "title">
-          <a href="home.html" style="text-decoration:none">
-            <input id="homepage" class="button" type="button" value="Exit Library"/>
-          </a>
-          <input id="btnGridView" class="button" type="button" value="View Grid"/>
-          <input id="btnTableView" class="button" type="button" value="View Table"/>
+    <div class="wrapper"> 
+    <div id="main-frame">
+      <div class="top-navigation">
+        <div id="grid-button" class = "bar-button" type="button"/> 
+          Grid 
         </div>
+        <div id="table-button" class = "bar-button" type="button"/> 
+          Table 
+        </div>
+        <div id="logo-navigation-button" type="button">
+          <span class="story">Story</span><span class="time">Time</span>
+        </div>
+        
+      </div>        
+
+      <div id="library-div">
+ 
         <div id="column-left">
             <ul>
                 <span id = "search"><label> Search </label> <input type = "text" name = "search"></span>
@@ -187,6 +211,7 @@
         </div>
         <div id="column-right" class = "imgContain">
         </div>
+      </div>
         
     </div>
 

@@ -1,11 +1,9 @@
-html {
-    background-color: #eee;
-}
+
 body{
     font-family: "Trebuchet MS";
     margin:10px 10px 10px 15px;
     color:gray;
-    font-size:25px;
+    font-size:20px;
     padding:10px 10px 10px 10px;
 }
 
@@ -26,9 +24,11 @@ table{
 
 
 #column-left{
-    width:250px;
+    width:19%;
     float:left;
     position: relative;
+    background-color:#eee;
+    text-align: left
    
 }
 
@@ -40,11 +40,28 @@ table{
 }
 
 #column-center, #column-left, #column-right{
-  height:900px;
+  height:100%;
+}
+
+.popup{
+    position:absolute;
+    border:solid 2px #2CCCBC;
+    background-color:#EFEBD4;
+    height:250px;
+    width:700px;
+    z-index:200;
+    top: 0;
+    left: 0;
+    bottom:10%;
+    right: 0;
+    margin:auto;
+    text-align: center;
+    padding: 10px, 20px, 20px, 20px; 
+    
 }
 
 #column-right{
-    width: 1160px;
+    width: 80%;
     float: left;
     overflow:scroll;
     position:relative;
@@ -95,12 +112,58 @@ ul li a {
 }
 #column-right{
 
-    border: 1px solid;
+ /*   border: 1px solid;
     border-color: gray;
-    border-radius: 25px;
+    border-radius: 25px;*/
+}
+
+#header{
 }
 #search{
 
+}
+
+.bar-button{
+  position:absolute;
+  height:41px;
+  width:95px;
+  font-size:24px;
+  border-left:solid 1px gray;
+  border-right:solid 1px gray;
+  border-top:solid 1px #2CCCBC;
+  border-bottom: solid 1px gray;
+  background-color: #2CCCBC;
+  padding-top: 13px;
+  color: #FFF;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
+   cursor:pointer;
+}
+
+#grid-button{
+  right:225px;
+}
+
+#table-button{
+  right:95px;
+  
+}
+
+#library-div{
+  position:relative;
+  top:100px;
+  left:50px;
+  right:50px;
+  width:1300px;
+  height: 90%;
+  padding: 15px 10px 15px 10px;
+  border:2px solid #888888;
+  box-shadow: 0 0 10px #AAAAAA;
+  background-color: #FFF9FB;
+  /*background-image: url('../../graphics/white_wall.png');*/
+}
+
+#logo-navigation-button{
+  font-size: 48px;
 }
 
 canvas{
@@ -131,7 +194,16 @@ a:visited{
     font-size: 40px;
     padding-bottom: 40px;
 }
+img {
+-webkit-touch-callout: none;
+-webkit-user-select: none; /* Webkit */
+-moz-user-select: none;    /* Firefox */
+-ms-user-select: none;     /* IE 10  */
 
+/* Currently not supported in Opera but will be soon */
+-o-user-select: none;
+user-select: none;  
+}
 
 
 /* Your CSS here */
