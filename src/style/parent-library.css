@@ -14,7 +14,8 @@ body{
 
 table{
   border-collapse: collapse;
-  border : none;
+ /* border : none;*/
+ border-color: blue;
 }
 #wrapper { 
     width: 1440px; 
@@ -147,6 +148,7 @@ ul li a {
   right:95px;
   
 }
+
 
 #library-div{
   position:relative;

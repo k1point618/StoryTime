@@ -78,8 +78,8 @@
       gridButton = document.getElementById("grid-button");
       gridButton.disabled = false;
       tableButton.disabled = true;
-      boardSize = 2.5;
-      var incr = 600/boardSize;
+      boardSize = 4;
+      var incr = $('#column-right').height()/boardSize;
       var hIncr = incr;
       var vIncr = incr;
      // console.log(vIncr,hIncr);
@@ -122,8 +122,8 @@
 
     $(document).ready(function() {
 
-      createGridView(4);
-      //createRowView();
+      //createGridView(4);
+      createRowView();
      
       $('.imgContain').on("click","a,img", function (e) {
         var id = e.target.getAttribute('id');
