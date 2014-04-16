@@ -70,6 +70,21 @@ body{
 .time{
     color:#F342FF;
 }
+.cancel-button{
+    cursor:pointer;
+    background-image: url("../../graphics/cancel-icon.png");
+    background-size: 30px 30px;
+    
+    position:absolute;
+    right:-15px;
+    top:-15px;
+    width:30px;
+    height:30px;
+
+    -webkit-border-radius: 13px;
+    -moz-border-radius: 13px;
+    border-radius: 13px;
+}
 #logo-navigation-button{
     position:absolute;
     left:100px;

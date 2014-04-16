@@ -29,7 +29,6 @@
 		$('#parent-library').click(function(){
 			//Show parent authentication
 			//Hardcoded What is your zipcode
-			//Accepts: 02142 and 02139'
 			$("body").append("<div class='blur-overlay'></div>");
 
 			// make pop up
@@ -38,8 +37,8 @@
 			$div.append("<h3 class='title'>Parent Authentication</h3>");
 			$div.append("<p class='popup-text'>What is your zipcode?</p>");
 			$div.append("<input id='popup-answer' class='popup-text' type='text' name='answer' placeholder='Press \<Enter\> to submit.'>");
-			$div.append($("<button>", {type:"button", id:"cancel-popup", class:"cancel-button"}));
-			$("body").append($div)
+			$div.append($("<img>", {type:"button", id:"cancel-popup", class:"cancel-button"}));
+			$("body").append($div);
 
 			// implement functionality for close
 			$('#cancel-popup').click(function(){
