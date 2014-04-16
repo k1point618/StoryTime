@@ -6,6 +6,12 @@ body{
     font-family: "Trebuchet MS";
 
 }
+
+#mybook {
+    float:center;
+    vertical-align: center;
+}
+
 .top-navigation{
     position:absolute;
     top:0%;
