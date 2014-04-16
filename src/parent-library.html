@@ -59,15 +59,43 @@
               book++;
           }
       }
+
+      loadListeners();
+
     }
 
     function add(name, row, col){
       var body = document.getElementById('column-right');
+
       var img = setImage(name, hIncr, vIncr);
-      img.style.position = "absolute";
-      img.style.left = 70+col*vIncr + "px";
-      img.style.top = 10+row*hIncr*1.7 + "px";
-      body.appendChild(img);
+
+      var container = document.createElement("div");
+      container.setAttribute("id", "f1_container");
+      var card = document.createElement("div");
+      card.setAttribute("id", "f1_card");
+      var front = document.createElement("div");
+      front.className = "front face";
+      front.appendChild(img);
+      var back = document.createElement("div");
+      back.className = "back face center";
+
+      var rec = document.createElement("img");
+      rec.src = '../graphics/record.png';
+      rec.style.position = "relative";
+      rec.style.top = "40%";
+      rec.style.left = "8%"
+      back.appendChild(rec);
+      card.appendChild(front);
+      card.appendChild(back);
+      container.appendChild(card);
+
+
+
+
+      container.style.position = "absolute";
+      container.style.left = 70+col*vIncr + "px";
+      container.style.top = 10+row*hIncr*1.7 + "px";
+      body.appendChild(container);
     }
 
     function setImage(name, hIncr, vIncr){
@@ -137,10 +165,14 @@
         front.appendChild(img);
         var back = document.createElement("div");
         back.className = "back face center";
-        var btn = document.createElement("BUTTON");
-        var t= document.createTextNode("CLICK ME");
-        btn.appendChild(t);
-        back.appendChild(btn);
+
+        var rec = document.createElement("img");
+        rec.src = '../graphics/record.png';
+        rec.style.position = "relative";
+        rec.style.top = "40%";
+        rec.style.left = "8%"
+        back.appendChild(rec);
+
         card.appendChild(front);
         card.appendChild(back);
         container.appendChild(card);
@@ -166,6 +198,7 @@
         //div.appendChild(p);
         body.appendChild(div);
       }
+      loadListeners();
     }
 
     function openBook(book){
@@ -192,6 +225,55 @@
           $(".book-popup").append(playButton);
         }
 
+    function loadListeners(){
+      $(".front").on("click", function(e){
+        console.log("clicked front");
+        console.log(e.target.parentNode.parentNode.getAttribute('id'));
+
+        $(e.target.parentNode.parentNode).css("transform","rotateY(180deg)")
+
+        setTimeout(function(){
+          var back = e.target.parentNode.parentNode.children[1];
+          console.log(back.getAttribute('id'));
+          //var back = e.target.parentNode.parentNode.parentNode;
+          var cancel = document.createElement("img");
+          cancel.setAttribute("id", "cancel-book");
+          cancel.className = "cancel-button";
+          cancel.style.type = "button";
+          back.appendChild(cancel);
+        }, 100);
+        
+
+        //openBook("book");
+      });
+
+      $(".back").on("click", function(e){
+        console.log("clicked back");
+        restoreBook(e.target)
+        if(e.target.getAttribute("id")!="cancel-book"){
+          openBook("book");
+        }/*else{
+          console.log(e.target.parentNode.parentNode.getAttribute('id'));
+          $(e.target.parentNode.parentNode).css("transform","rotateY(0deg)") 
+        }*/
+        
+        
+      })
+
+      $("#cancel-book").on("click", function(e){
+        console.log("clicked cancel");
+        /*console.log(e.target.getAttribute("id"));
+        console.log(e.parentNode.parentNode.parentNode.getAttribute("id"));
+        $(e.target.parentNode.parentNode.parentNode).css("transform","rotateY(-180deg)")*/
+      })
+    }
+    function restoreBook(target){
+      var currentNode = target;
+      while(currentNode.getAttribute("id")!= "f1_card"){
+        currentNode = currentNode.parentNode;
+      }
+      $(currentNode).css("transform","rotateY(0deg)") 
+    }
     $(document).ready(function() {
       // Format the booklet
       $("#mybook").booklet({ pageNumbers: false });
@@ -225,7 +307,6 @@
           $("#mybook").hide();
         }
         suppressBookHide = false;
-
       });
 
       //createGridView(4);
@@ -238,32 +319,53 @@
       $('.imgContain').on("click","a,img", function (e) {
         var id = e.target.getAttribute('id');
         e.preventDefault();
-        console.log("clicked img");
-        openBook("book");
+        if(e.target.getAttribute("id")!="cancel-book"){
+          console.log("clicked img");
+/*          $(e.target.parentNode.parentNode).css("transform","rotateY(180deg)") 
+
+          setTimeout(function(){
+            var back = e.target.parentNode.parentNode;
+            console.log(back.getAttribute('id'));
+            console.log(back.className);
+            //var back = e.target.parentNode.parentNode.parentNode;
+            var cancel = document.createElement("img");
+            cancel.setAttribute("id", "cancel-book");
+            cancel.className = "cancel-button";
+            cancel.style.type = "button";
+            back.appendChild(cancel);
+          }, 100);*/
+        }
+          //openBook("book");
         //alert('You Clicked On Book '+id);
         //window.location.href = 'recording.html'
       });
 
-      $('#column-left').on("click","a,img", function (e) {
+      loadListeners();
 
+
+/*      $('#column-left').on("click","a,img", function (e) {
         var id = e.target.getAttribute('id');
         var label = e.target;
        
         e.preventDefault();
       });
-
+*/
       // Prevent typical dragging functionality
       $(document).on('dragstart', function(event) { event.preventDefault(); });
 
-      $('#column-left').on("click","a,img", function (e) {
+      $('#column-left-contents').on("click","div", function (e) {
 
         var id = e.target.getAttribute('id');
-        var label = e.target;
-        var oldLabel = document.getElementsByClassName("active")[0]
+        if(e.target.className == "list"){
+          var label = e.target.parentNode;
+        }else{
+          var label = e.target;
+        }
+        var oldLabel = document.getElementsByClassName("current")[0]
         oldLabel.style.color = "grey";
         oldLabel.className = "";
         label.style.color = "#FFF";
-        label.className = "active";
+        label.className = "current";
         e.preventDefault();
         //window.location.href = 'Book.html'
       });
@@ -288,7 +390,55 @@
         });
 
       $('#new-list').click(function(){
-      
+        $("body").append("<div class='blur-overlay'></div>");
+
+        // make pop up
+        var $div = $("<div>", {id:"authentication-popup", class:"popup"});
+
+        $div.append("<h3 class='title'>New Reading List</h3>");
+        $div.append("<p class='popup-text'>What do you want to name your list?</p>");
+        $div.append("<input id='popup-answer' class='popup-text' type='text' name='answer' placeholder='Press \<Enter\> to submit.'>");
+        $div.append($("<img>", {type:"button", id:"cancel-popup", class:"cancel-button"}));
+        $("body").append($div);
+
+        // implement functionality for close
+        $('#cancel-popup').click(function(){
+          $('.blur-overlay').remove();
+          $('#authentication-popup').remove();
+        });
+
+        $('#popup-answer').keypress(function(event){
+          if(event.which == 13){
+            //Pressed Enter
+            var val = $('#popup-answer').val();
+            if(val.replace(' ','')){
+              var list = document.getElementById("reading-lists");
+              var item = document.createElement("li");
+              var div = document.createElement("div");
+              div.className = "list";
+              div.setAttribute('id', val.replace(' ',''));
+              var text = document.createTextNode(val);
+              div.appendChild(text);
+              item.appendChild(div);
+              list.appendChild(item);
+              var oldLabel = document.getElementsByClassName("current")[0]
+              oldLabel.style.color = "grey";
+              oldLabel.className = "";
+              item.style.color = "#FFF";
+              item.className = "current";    
+            }
+            $('#authentication-popup').remove();
+            $('.blur-overlay').remove();
+            /*if( == "02142"){
+              window.location.href = 'parent-library.html';
+              $('#authentication-popup').remove();
+              $('.blur-overlay').remove();
+            }else{
+              $('.blur-overlay').remove();
+              $('#authentication-popup').remove();
+            }*/
+          }
+        });
     });
 
       $('#table-button').hover(function(){
@@ -337,20 +487,20 @@
 
     <div id="library-div" class="main-frame">
       <div id="column-left">
-        <ul>
+        <ul id = "column-left-contents">
           <span id = "search"><label> Search </label> <input type = "text" name = "search"></span>
-          <li class = "section" id = "library"><a href = "#">My Library</a></li>
+          <li class = "section" id = "library"><div class = "current" href = "#">My Library</a></li>
           <div id = "library-contents">
-            <ul>
-              <li><a href = "#" id = "dogs">Dogs</a></li>
-              <li><a href = "#" id = "nature">Nature</a></li>
-              <li class = "active" id = "robots"><a href = "#">Robots</a></li>
-              <li><a href = "#" id = "dragons">Dragons</a></li>
+            <ul id = "reading-lists">
+              <li><div class = "list" id = "dogs">Dogs</div></li>
+              <li><div class = "list" id = "nature">Nature</div></li>
+              <li><div class = "list" id = "robots">Robots</div></li>
+              <li><div class = "list" id = "dragons">Dragons</div></li>
             </ul> 
           </div>
-          <li class = "section"><a href = "#">Discover More Books</a></li>
-          <li id = "new-list"><a href = "#">+ New Reading List</a></li>
+          <li class = "section"><div href = "#">Discover More Books</a></li>
         </ul>
+        <li id = "new-list"><div href = "#">+ New Reading List</a></li>
       </div>
       <div id="column-center">
         <p>  </p>
