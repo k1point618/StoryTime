@@ -23,6 +23,38 @@ table{
     margin: 10 auto; 
 }   
 
+#mybook {
+  position: relative;
+  margin: auto;
+  height:650px;
+  width:800px;
+  z-index: 300;
+  /*top: 50%; left: 50%;*/
+}
+
+.book-popup{
+  position:absolute;
+    border:solid 1px #2CCCBC;
+    background-image: url('../../graphics/rainbows.png');
+    height:400px;
+    width:1000px;
+    z-index:200;
+    top: 0;
+    left: 0;
+    bottom:0;
+    right: 0;
+    margin:auto;
+    text-align: center;
+    padding: 100px 20px 120px 20px; 
+}
+
+#play-button{
+  position:relative;
+  width:80px;
+  height:auto;
+  top:20px;
+  cursor: pointer;
+}
 
 #column-left{
     width:18%;
