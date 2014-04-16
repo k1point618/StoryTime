@@ -25,23 +25,25 @@ table{
 
 
 #column-left{
-    width:19%;
+    width:18%;
     float:left;
     position: relative;
-    background-color:#eee;
-    text-align: left
-   
+    background-color:white;
+    text-align: left;   
 }
 
 #column-center {
     border-left: thick, double, black;
     width: 2px;
     float:left;
+    background-color: #888888;
+    height:100%;
    
 }
 
-#column-center, #column-left, #column-right{
-  height:100%;
+#column-left, #column-right{
+  padding:10px;
+  height: 96%;
 }
 
 .popup{
@@ -62,7 +64,8 @@ table{
 }
 
 #column-right{
-    width: 80%;
+    padding: 15px, 10px;
+    width: 78%;
     float: left;
     overflow:scroll;
     position:relative;
@@ -100,8 +103,8 @@ ul li a {
   text-decoration:none;
 }
 .active{
-  color:#eee;
-  background-color: gray;
+  color:#FFF;
+  background-color: #2CCCBC;
 }
 
 #library-contents{
@@ -111,12 +114,7 @@ ul li a {
 #search{
   padding: 10px;
 }
-#column-right{
 
- /*   border: 1px solid;
-    border-color: gray;
-    border-radius: 25px;*/
-}
 
 #header{
 }
@@ -142,11 +140,18 @@ ul li a {
   right:50px;
   width:1300px;
   height: 90%;
-  padding: 15px 10px 15px 10px;
-  border:2px solid #888888;
+  padding: 0px 0px 0px 0px;
+  /*border:2px solid #888888;*/
   box-shadow: 0 0 10px #AAAAAA;
   background-color: #FFF9FB;
   /*background-image: url('../../graphics/white_wall.png');*/
+}
+
+.book-div{
+  padding: 15px 10px 15px 10px;
+  border:2px solid #888888;
+  box-shadow: 0 0 10px #AAAAAA;
+  background-color: white;
 }
 
 #logo-navigation-button{
