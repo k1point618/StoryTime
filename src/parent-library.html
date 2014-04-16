@@ -148,11 +148,12 @@
 
           //var id = book[0].id;
           $(".book-popup").show();
-          
+          $("#mybook").show();
+
           $('#cancel-popup').click(function(){
             $('.blur-overlay').remove();
             $(".book-popup").hide();
-
+            $("#mybook").hide();
           });
 
           ("#play-button").click(function(){
