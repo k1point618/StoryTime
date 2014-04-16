@@ -13,15 +13,26 @@
     <link rel="stylesheet" type="text/css" href="style/kid-library.css" />
     <link rel="stylesheet" type="text/css" href="style/main.css" />
     <link rel="stylesheet" type="text/css" media="all" href="jquery/css/smoothness/jquery-ui-1.10.4.custom.min.css">
+    <link href="Booklet-master/booklet/jquery.booklet.latest.css" type="text/css" rel="stylesheet" media="screen, projection, tv" />
+
+
     <link href='http://fonts.googleapis.com/css?family=Englebert' rel='stylesheet' type='text/css'>
 
+        <link type="text/css" href="style/parent-library.css" rel="stylesheet" />
     <script type="text/javascript" src="external_js/jquery-1.9.0.min.js"></script>
-    <script type="text/javascript" src="external_js/jquery.color.js"></script>
-    <script type="text/javascript" src="external_js/jquery-1.10.0.js"></script>
-    <script type="text/javascript" charset="utf-8" src="jquery/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <script> window.jQuery || document.write('<script src="Booklet-master/booklet/jquery-2.1.0.min.js"><\/script>') </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <script> window.jQuery.ui || document.write('<script src="Booklet-master/booklet/jquery-ui-1.10.4.min.js"><\/script>') </script>
+    <script src="Booklet-master/booklet/jquery.easing.1.3.js"></script>
+    <script src="Booklet-master/booklet/jquery.booklet.latest.js"></script>
 
     <script type="text/javascript">
       $(document).ready(function(){
+        $("#mybook").booklet({ pageNumbers: false });
+
+        //$("#mybook").hide();
+        $(".book-popup").hide();
         var top = 3;
         var selectToggle = -1;
         var library = document.getElementById("library-div");
@@ -31,6 +42,8 @@
         var heightBlock = 12;
         var widthPool = range(widthBlock);
         var heightPool = range(heightBlock);
+        var bookString = "";
+
         console.log(libraryWidth);
         console.log(libraryHeight);
         populateBooks();
@@ -148,9 +161,17 @@
           $("body").append("<div class='blur-overlay'></div>");
 
           var id = book[0].id;
-          var $div = $("<div>", {class:"book-popup"});          
+          var $div = $("<div>"); 
+          $(".book-popup").show();
+
+          //var div = $(".book-popup");
+
           $div.append($("<img>", {id:"cancel-popup", class:"cancel-button"}));
-          var cover = document.createElement("IMG");
+          //$div.innerHTML = bookString;
+          $("body").append($div);
+
+
+        /*  var cover = document.createElement("IMG");
           cover.src = "../graphics/GivingTree.jpg";
           cover.id = "book-cover";
 
@@ -171,12 +192,14 @@
           $div.append(cover);
           $div.append(playButton);
           // $div.append(reader1);
-          // $div.append(reader2);
-          $("body").append($div);
+          // $div.append(reader2);*/
           
           $('#cancel-popup').click(function(){
             $('.blur-overlay').remove();
-            $('.book-popup').remove();
+            //$('.book-popup').remove();
+            //$("#mybook").hide();
+            $(".book-popup").hide();
+
           });
 
         }
@@ -239,7 +262,13 @@
      <img src="../graphics/12.jpeg" width="1" height="1" alt="Image 12" />
      <img src="../graphics/GivingTree.jpg" width="1" height="1" alt="Image 13" />
       <img src="../graphics/play.png" width="1" height="1" alt="Image 14" />
-
   </div>
+ 
+  <div class = "book-popup">
+  <div id='mybook'>
+  <div title='first page'> 
+  <center> <h3>The Giving Tree</h3><img src = '../graphics/book/GivingTree.jpg'> </center></div><div title='second page'><h3>Once there was a tree</h3><div id='pointer' style='position:absolute;''><img src = '../graphics/pointer.png'></div><!-- <img src = '../graphics/book/Maple-tree.png'> --></div><div title='third page'><h3>That loved a little boy</h3><img src = '../graphics/book/boy.png'></div><div title='fourth page'><h3>And every day the boy would come</h3></div><div title='fifth page'><h3>All over the tree!</h3></div><div title='sixth page><h3>The End.</h3><h2><a href = 'kid-library.html'>here</a></h2></div></div>
+  </div>
+
   </body>
 </html>
