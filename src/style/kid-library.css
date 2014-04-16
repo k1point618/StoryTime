@@ -49,3 +49,45 @@ body{
 #random-button{
 	right: 212px;
 }
+.book-popup{
+	position:absolute;
+    border:solid 1px #2CCCBC;
+    background-image: url('../../graphics/rainbows.png');
+    height:650px;
+    width:1000px;
+    z-index:200;
+    top: 0;
+    left: 0;
+    bottom:0;
+    right: 0;
+    margin:auto;
+    text-align: center;
+    padding: 10px, 20px, 20px, 20px; 
+}
+#book-cover{
+	/*background-image: url('../../graphics/GivingTree.jpg');*/
+	height:100%;
+	width:auto;
+}
+#play-button{
+	position:absolute;
+	width:100px;
+	height:auto;
+	bottom:50px;
+	right:80px;
+	cursor: pointer;
+}
+.reader{
+	position:absolute;
+	width:70px;
+    height:70px;
+    left: 120px;
+    background-color: #DDD;
+    opacity: 0.6;
+}
+#reader1{
+	bottom: 60px;
+}
+#reader2{
+	bottom:200px;
+}

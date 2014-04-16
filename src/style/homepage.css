@@ -50,22 +50,6 @@
 .popup-text{
     font-size:160%;
 }
-.cancel-button{
-    cursor:pointer;
-    background-image: url("../../graphics/cancel-icon.png");
-    background-size: 26px 26px;
-    
-    
-    position:absolute;
-    right:-15px;
-    top:-15px;
-    width:30px;
-    height:30px;
-
-    -webkit-border-radius: 13px;
-    -moz-border-radius: 13px;
-    border-radius: 13px;
-}
 #kid-library{
     position:absolute;
     /*left:5%;*/

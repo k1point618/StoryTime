@@ -31,7 +31,6 @@
         var heightBlock = 12;
         var widthPool = range(widthBlock);
         var heightPool = range(heightBlock);
-        var openBook = false;
         console.log(libraryWidth);
         console.log(libraryHeight);
         populateBooks();
@@ -73,6 +72,7 @@
           window.location.href = 'home.html';
         });
 
+        
 
 
         // Helper functions ----------------------------------
@@ -108,16 +108,10 @@
                   containment:$(this).parent()
                 });
             });
-
-            $(image).mousemove(function(){
-              if($(this).hasClass('selected')){
-                openBook = false;
-              }
-            });
             
             $(image).mouseup(function(){
               if($(this).hasClass('openable')){
-                console.log("OPEN BOOK")
+                openBook($(this));
               }
               if($(this).hasClass('selected')){
                 $(this).addClass('openable');
@@ -140,6 +134,7 @@
 
         }
 
+
         function clearBooks(){
           var library = document.getElementById("library-div");
           while (library.firstChild) {
@@ -149,6 +144,42 @@
           heightPool = range(heightBlock);
         }
 
+        function openBook(book){
+          $("body").append("<div class='blur-overlay'></div>");
+
+          var id = book[0].id;
+          var $div = $("<div>", {class:"book-popup"});          
+          $div.append($("<img>", {id:"cancel-popup", class:"cancel-button"}));
+          var cover = document.createElement("IMG");
+          cover.src = "../graphics/GivingTree.jpg";
+          cover.id = "book-cover";
+
+          // var reader1 = document.createElement("IMG");
+          // reader1.src = "../graphics/user.png";
+          // reader1.className = "reader";
+          // reader1.id = "reader1"
+
+          // var reader2 = document.createElement("IMG");
+          // reader2.src = "../graphics/user.png";
+          // reader2.className = "reader";
+          // reader2.id = "reader2"
+
+          var playButton = document.createElement("IMG");
+          playButton.src = "../graphics/play2.png";
+          playButton.id = "play-button";
+
+          $div.append(cover);
+          $div.append(playButton);
+          // $div.append(reader1);
+          // $div.append(reader2);
+          $("body").append($div);
+          
+          $('#cancel-popup').click(function(){
+            $('.blur-overlay').remove();
+            $('.book-popup').remove();
+          });
+
+        }
 
         function getNumber(pool) {
             if (pool.length == 0) {
@@ -206,6 +237,8 @@
      <img src="../graphics/10.jpeg" width="1" height="1" alt="Image 10" />
      <img src="../graphics/11.jpeg" width="1" height="1" alt="Image 11" />
      <img src="../graphics/12.jpeg" width="1" height="1" alt="Image 12" />
+     <img src="../graphics/GivingTree.jpg" width="1" height="1" alt="Image 13" />
+      <img src="../graphics/play.png" width="1" height="1" alt="Image 14" />
 
   </div>
   </body>
