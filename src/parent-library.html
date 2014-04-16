@@ -11,7 +11,6 @@
     <title>StoryTime</title>
     <!-- Load style sheets -->
     <link rel="stylesheet" type="text/css" href="style/main.css" />
-    <link rel="stylesheet" type="text/css" href="style/kid-library.css" />
     <link href="Booklet-master/booklet/jquery.booklet.latest.css" type="text/css" rel="stylesheet" media="screen, projection, tv" />
 
     <link href='http://fonts.googleapis.com/css?family=Englebert' rel='stylesheet' type='text/css'>
@@ -25,7 +24,7 @@
     <script src="Booklet-master/booklet/jquery.easing.1.3.js"></script>
     <script src="Booklet-master/booklet/jquery.booklet.latest.js"></script>
     <script type='text/javascript' src='blur.js'></script>
-    
+
 
     <script type = "text/javascript">
     var hIncr;
@@ -115,7 +114,7 @@
         //img.style.left = 5 + "px";
         //img.style.display = "inline";
         //var p = document.createElement("p");
-        var text = document.createTextNode("The Giving Tree is a children's picture book written and illustrated by Shel Silverstein. First published in 1964 by Harper & Row, it has become one of Silverstein's best known titles and has been translated into numerous languages. Some argue that the popularity of the book is due to the romantic relationship between the child and the tree. However, others are of the opinion that such a relationship should not be portrayed to children at such a young age, for fear that they will join the gays.  Research has shown that this fear is unfounded, as tree lovers have an equal occurence of homosexuality as the general population."); 
+        var text = document.createTextNode("The Giving Tree is a children's picture book written and illustrated by Shel Silverstein. First published in 1964 by Harper & Row, it has become one of Silverstein's best known titles and has been translated into numerous languages. Some argue that the popularity of the book is due to the romantic relationship between the child and   the tree. However, others are of the opinion that such a relationship should not be portrayed to children at such a young age, for fear that they will join the gays.  Research has shown that this fear is unfounded, as tree lovers have an equal occurence of homosexuality as the general population."); 
 
         var tbl = document.createElement("table");
         var tblBody = document.createElement("tbody");
@@ -212,7 +211,7 @@
         var oldLabel = document.getElementsByClassName("active")[0]
         oldLabel.style.color = "grey";
         oldLabel.className = "";
-        label.style.color = "#eee";
+        label.style.color = "#FFF";
         label.className = "active";
         e.preventDefault();
         //window.location.href = 'Book.html'
