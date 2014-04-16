@@ -124,29 +124,14 @@ ul li a {
 
 }
 
-.bar-button{
-  position:absolute;
-  height:41px;
-  width:95px;
-  font-size:24px;
-  border-left:solid 1px gray;
-  border-right:solid 1px gray;
-  border-top:solid 1px #2CCCBC;
-  border-bottom: solid 1px gray;
-  background-color: #2CCCBC;
-  padding-top: 13px;
-  color: #FFF;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
-   cursor:pointer;
-}
-
 #grid-button{
   right:225px;
+  width:95px;
 }
 
 #table-button{
   right:95px;
-  
+  width:95px;
 }
 
 
