@@ -16,6 +16,7 @@
     <link href='http://fonts.googleapis.com/css?family=Englebert' rel='stylesheet' type='text/css'>
 
     <script type="text/javascript" src="external_js/jquery-1.9.0.min.js"></script>
+    <script type="text/javascript" src="external_js/jquery.color.js"></script>
     <script type="text/javascript" src="external_js/jquery-1.10.0.js"></script>
     <script type="text/javascript" charset="utf-8" src="jquery/js/jquery-ui-1.10.4.custom.min.js"></script>
 
@@ -24,13 +25,47 @@
         var top = 3;
         var selectToggle = -1;
         var library = document.getElementById("library-div");
+        var libraryWidth = library.offsetWidth - 200;
+        var libraryHeight = library.offsetHeight - 300;
+        var widthBlock= 20;
+        var heightBlock = 12;
+        var widthPool = range(widthBlock);
+        var heightPool = range(heightBlock);
+        var openBook = false;
+        console.log(libraryWidth);
+        console.log(libraryHeight);
         populateBooks();
 
 
         // Event listeners -----------------
         $('#order-button').click(function(){
           clearBooks();
-          populateBooks();
+          populateBooks(false);
+        });
+
+        $('#order-button').hover(function(){
+          // mouseenter
+          $(this).animate({'background-color':'#2CCCBC', "color": "#FFF"},300);
+
+        }, function(){
+          // mouseleave
+          $(this).animate({'background-color':'#d4f4f1', "color": "#666"},300);
+
+        });
+
+        $('#random-button').click(function(){
+          clearBooks();
+          populateBooks(true);
+        });
+
+        $('#random-button').hover(function(){
+          // mouseenter
+          $(this).animate({'background-color':'#2CCCBC', "color": "#FFF"},300);
+
+        }, function(){
+          // mouseleave
+          $(this).animate({'background-color':'#d4f4f1', "color": "#666"},300);
+
         });
 
         $('#logo-navigation-button').click(function(){
@@ -39,8 +74,9 @@
         });
 
 
+
         // Helper functions ----------------------------------
-        function populateBooks(){
+        function populateBooks(random){
           var library = document.getElementById("library-div");
           for(var i = 1; i <= 12; i ++){
             var filename = "../graphics/" + i + ".jpeg";
@@ -49,11 +85,20 @@
             image.id = i + "";
             image.className = "draggable book-image unselected";
             image.style.padding = "5px";
+            
+            if(random){
+              image.style.position = "absolute";
+              image.style.left = Math.floor(getNumber(widthPool) * (libraryWidth / widthBlock)) + "px";
+              image.style.top = Math.floor(getNumber(heightPool) * (libraryHeight / heightBlock))+ "px";
+              console.log(image.style.left);
+              console.log(image.style.top);
+            }
             library.appendChild(image); 
 
-            if(i == 1){
+            if(i == 12){
               $(image).removeClass('unselected');
               $(image).addClass('selected');
+              $(image).addClass('openable');
             }
 
             $(image).each(function(){
@@ -63,17 +108,32 @@
                   containment:$(this).parent()
                 });
             });
-          
+
+            $(image).mousemove(function(){
+              if($(this).hasClass('selected')){
+                openBook = false;
+              }
+            });
+            
             $(image).mouseup(function(){
+              if($(this).hasClass('openable')){
+                console.log("OPEN BOOK")
+              }
+              if($(this).hasClass('selected')){
+                $(this).addClass('openable');
+                $(this).siblings().removeClass('openable');
+              }
               $(this).addClass('top').removeClass('bottom');
-              $(this).siblings().removeClass('top').addClass('bottom');
-              $(this).removeClass('unselected');
-              $(this).addClass('selected');
-              $(this).siblings().removeClass('selected').addClass('unselected');
+              $(this).siblings().removeClass('top').addClass('bottom');              
             });
 
             $(image).mousedown(function(){
+              
               $(this).css("z-index", top++);
+              $(this).removeClass('unselected');
+              $(this).addClass('selected');
+              $(this).siblings().removeClass('selected').addClass('unselected');
+              
             });
 
           }
@@ -85,7 +145,21 @@
           while (library.firstChild) {
               library.removeChild(library.firstChild);
           }
+          widthPool = range(widthBlock);
+          heightPool = range(heightBlock);
         }
+
+
+        function getNumber(pool) {
+            if (pool.length == 0) {
+                throw "No numbers left";
+            }
+            var index = Math.floor(pool.length * Math.random());
+            var drawn = pool.splice(index, 1);
+            return drawn[0];
+        };
+
+        function range(i){return i?range(i-1).concat(i):[]};
 
       });
       
@@ -99,9 +173,14 @@
     <div id="main-frame">
       <div class="top-navigation">
 
-        <div id="order-button" type="button"/> 
-          Order 
+        <div id="order-button" class="bar-button" type="button"/> 
+          Organize 
         </div>
+
+        <div id="random-button" class="bar-button" type="button"/> 
+          Randomize 
+        </div>
+
         <div id="logo-navigation-button" type="button">
           <span class="story">Story</span><span class="time">Time</span>
         </div>
@@ -114,5 +193,20 @@
 
     </div>
 
+  <div id="preload">
+     <img src="../graphics/1.jpeg" width="1" height="1" alt="Image 01" />
+     <img src="../graphics/2.jpeg" width="1" height="1" alt="Image 02" />
+     <img src="../graphics/3.jpeg" width="1" height="1" alt="Image 03" />
+     <img src="../graphics/4.jpeg" width="1" height="1" alt="Image 04" />
+     <img src="../graphics/5.jpeg" width="1" height="1" alt="Image 05" />
+     <img src="../graphics/6.jpeg" width="1" height="1" alt="Image 06" />
+     <img src="../graphics/7.jpeg" width="1" height="1" alt="Image 07" />
+     <img src="../graphics/8.jpeg" width="1" height="1" alt="Image 08" />
+     <img src="../graphics/9.jpeg" width="1" height="1" alt="Image 09" />
+     <img src="../graphics/10.jpeg" width="1" height="1" alt="Image 10" />
+     <img src="../graphics/11.jpeg" width="1" height="1" alt="Image 11" />
+     <img src="../graphics/12.jpeg" width="1" height="1" alt="Image 12" />
+
+  </div>
   </body>
 </html>
