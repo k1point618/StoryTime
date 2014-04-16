@@ -62,7 +62,7 @@ body{
     right: 0;
     margin:auto;
     text-align: center;
-    padding: 120px 20px 120px 20px; 
+    padding: 100px 20px 120px 20px; 
 
 }
 #book-cover{
@@ -71,11 +71,10 @@ body{
 	width:auto;
 }
 #play-button{
-	position:absolute;
-	width:100px;
+	position:relative;
+	width:80px;
 	height:auto;
-	bottom:50px;
-	right:80px;
+	top:20px;
 	cursor: pointer;
 }
 
@@ -102,4 +101,7 @@ body{
 }
 #reader2{
 	bottom:200px;
+}
+.audio-controls{
+	display:none;
 }
