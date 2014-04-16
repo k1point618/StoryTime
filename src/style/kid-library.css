@@ -1,29 +1,4 @@
-#big-frame{
-	position:absolute;
-	top:0px;
-	bottom: 0px;
-	left:0px;
-	right:0px;
-	width:100%;
-	height:auto;
-	max-height: 700px;
-	text-align:center;
-	border-top: solid 4px #2CCCBC;
-    
-}
 
-.main-frame{
-	position:relative;
-	top:100px;
-	left:50px;
-	right:50px;
-	width:1300px;
-	height: 600px;
-	padding: 25px 10px 25px 10px;
-	border:2px solid #888888;
-	box-shadow: 0 0 10px #AAAAAA;
-	background-color: #FFF9FB;
-}
 #library-div{
 	
 	/*background-image: url('../../graphics/white_wall.png');*/
@@ -48,9 +23,11 @@ body{
 }
 #order-button{
 	right:95px;   
+	width:98px;
 }
 #random-button{
-	right: 236px;
+	right: 215px;
+	width:120px;
 }
 .book-popup{
 	position:absolute;
@@ -87,8 +64,6 @@ body{
 	height:650px;
 	width:800px;
 	/*top: 50%; left: 50%;*/
-
-
 }
 
 .reader{
