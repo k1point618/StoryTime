@@ -112,6 +112,10 @@
         var img = setImage((j+1).toString(), hIncr,vIncr);
         img.height = hIncr + "px";
         img.style.position = "relative";
+
+
+
+
         //img.style.left = 5 + "px";
         //img.style.display = "inline";
         //var p = document.createElement("p");
@@ -123,7 +127,28 @@
         tbl.setAttribute('border', '0');
         var row = document.createElement('tr');
         var cell1 = document.createElement("td");
-        cell1.appendChild(img);
+
+        var container = document.createElement("div");
+        container.setAttribute("id", "f1_container");
+        var card = document.createElement("div");
+        card.setAttribute("id", "f1_card");
+        var front = document.createElement("div");
+        front.className = "front face";
+        front.appendChild(img);
+        var back = document.createElement("div");
+        back.className = "back face center";
+        var btn = document.createElement("BUTTON");
+        var t= document.createTextNode("CLICK ME");
+        btn.appendChild(t);
+        back.appendChild(btn);
+        card.appendChild(front);
+        card.appendChild(back);
+        container.appendChild(card);
+        //container.height = img.height;
+        //container.width = img.width;
+
+
+        cell1.appendChild(container);
         cell1.style.width = "190px";
         row.appendChild(cell1);
         cell2 = document.createElement("td");
@@ -183,6 +208,9 @@
 
       //createGridView(4);
       createRowView();
+      tableButton = document.getElementById("table-button");
+      tableButton.style.color = "#FFF";
+      tableButton.style.backgroundColor = "#2CCCBC";
      
       // Clicking on a book should unhide the book view
       $('.imgContain').on("click","a,img", function (e) {
