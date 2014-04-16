@@ -171,12 +171,6 @@
           var id = book[0].id;
           $(".book-popup").show();
 
-          //var div = $(".book-popup");
-
-          $(".book-popup").append($("<img>", {id:"cancel-popup", class:"cancel-button"}));
-          //$div.innerHTML = bookString;
-          
-
         /*  var cover = document.createElement("IMG");
           cover.src = "../graphics/GivingTree.jpg";
           cover.id = "book-cover";
@@ -205,11 +199,9 @@
 
           });
 
-          var playButton = document.createElement("IMG");
-          playButton.src = "../graphics/play2.png";
-          playButton.id = "play-button";
+ 
           
-          $(playButton).click(function(){
+          $("#play-button").click(function(){
             var divElement = $('.b-p1').find('.p-title')[0];
             var title = divElement.title;
             console.log(title);
@@ -324,6 +316,10 @@
         <h2><a href = 'kid-library.html'>here</a></h2>
       </div>
     </div>
+
+    <img id="cancel-popup" class="cancel-button"/>
+
+    <img id="play-button" src="../graphics/play2.png">
   </div>
 
   </body>
