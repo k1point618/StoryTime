@@ -421,18 +421,18 @@
         $("body").append("<div class='blur-overlay'></div>");
 
         // make pop up
-        var $div = $("<div>", {id:"authentication-popup", class:"popup"});
+        var $div = $("<div>", {id:"new-list-popup", class:"popup"});
 
         $div.append("<h3 class='title'>New Reading List</h3>");
         $div.append("<p class='popup-text'>What do you want to name your list?</p>");
         $div.append("<input id='popup-answer' class='popup-text' type='text' name='answer' placeholder='Press \<Enter\> to submit.'>");
-        $div.append($("<img>", {type:"button", id:"cancel-popup", class:"cancel-button"}));
+        $div.append($("<img>", {type:"button", id:"cancel-popup-new-list", class:"cancel-button"}));
         $("body").append($div);
 
         // implement functionality for close
-        $('#cancel-popup').click(function(){
+        $('#cancel-popup-new-list').click(function(){
           $('.blur-overlay').remove();
-          $('#authentication-popup').remove();
+          $('#new-list-popup').remove();
         });
 
         $('#popup-answer').keypress(function(event){
@@ -455,7 +455,7 @@
               item.style.color = "#FFF";
               item.className = "current";    
             }
-            $('#authentication-popup').remove();
+            $('#new-list-popup').remove();
             $('.blur-overlay').remove();
             /*if( == "02142"){
               window.location.href = 'parent-library.html';
