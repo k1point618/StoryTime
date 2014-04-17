@@ -171,6 +171,14 @@
         }
 
         function openBook(book){
+          $("#mybook").booklet({
+            pageNumbers: false,
+            height: '100%',
+            width: '80%',
+            closed: true,
+            autoCenter: true
+          });
+          
           $("body").append("<div class='blur-overlay'></div>");
 
           var id = book[0].id;
