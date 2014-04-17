@@ -243,12 +243,25 @@
 
 
     function openBook(book){
+        $("#mybook").booklet({ 
+          pageNumbers: false,
+          height: '100%',
+          width: '80%',
+          closed: true,
+          autoCenter: true,
+          arrows: true,
+          arrowsHide: true
+        });
 
-
-         $('#mybook').mousedown(function(){
+         $('.book-text').mousedown(function(){
             $('#pointer').hide();
             // turn recording button on
             $("#recording").attr('src', "../graphics/record.png");
+          });
+
+         $('.book-text').mouseup(function(){
+            // turn recording button off
+            $("#recording").attr('src', "../graphics/not-record.png");
           });
 
          $('#mybook').mouseup(function(){
@@ -285,8 +298,6 @@
             $("#mybook").hide();
           });
 
-           
-
           $("#play-button").click(function(){
             var divElement = $('.b-p1').find('.p-title')[0];
             var title = divElement.title;
@@ -302,27 +313,7 @@
     }
 
     
-    $('#exit-book').click(function(){
-        $('.blur-overlay').remove();
-        $(".book-popup").hide();
-        $("#mybook").hide();
-    });
-    $('#exit-book-label').click(function(){
-        $('.blur-overlay').remove();
-        $(".book-popup").hide();
-        $("#mybook").hide();
-    });
-
-    $('#re-read').click(function(){
-        $('.blur-overlay').remove();
-        $(".book-popup").hide();
-        $("#mybook").hide();
-    });
-    $('#re-read-label').click(function(){
-        $('.blur-overlay').remove();
-        $(".book-popup").hide();
-        $("#mybook").hide();
-    });
+    
 
     function loadListeners(){
      /* $(".front").on("click", function(e){
@@ -389,9 +380,32 @@
         arrows: true,
         arrowsHide: true
       });
-      $(".book-popup").hide();
-      $("#mybook").hide();
-      $("#mybook").show();
+
+        $(".book-popup").hide();
+        $("#mybook").hide();
+        $("#mybook").show();
+
+        $('#exit-book').click(function(){
+          $('.blur-overlay').remove();
+          $(".book-popup").hide();
+          $("#mybook").hide();
+      });
+      $('#exit-book-label').click(function(){
+          $('.blur-overlay').remove();
+          $(".book-popup").hide();
+          $("#mybook").hide();
+      });
+
+      $('#re-read').click(function(){
+          $('.blur-overlay').remove();
+          $(".book-popup").hide();
+          $("#mybook").hide();
+      });
+      $('#re-read-label').click(function(){
+          $('.blur-overlay').remove();
+          $(".book-popup").hide();
+          $("#mybook").hide();
+      });
 
       $("#library-div").on("click", function(e) {
         console.log("clicked, trying to exit");
