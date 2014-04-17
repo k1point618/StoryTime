@@ -12,6 +12,18 @@ body{
     vertical-align: center;
 }
 
+.book-text {
+    position: absolute;
+    height:100%;
+    font-size:16pt;
+}
+
+#book-cover{
+    /*background-image: url('../../graphics/GivingTree.jpg');*/
+    height:100%;
+    width:auto;
+}
+
 .book-popup{
   position:absolute;
     border:solid 1px #2CCCBC;

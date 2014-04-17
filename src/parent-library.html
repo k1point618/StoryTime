@@ -232,7 +232,18 @@
       loadListeners();
     }
 
+    function movePointer() {
+      var divElement = $('.b-p1').find('.p-title')[0];
+      var title = divElement.title;
+      //if (title == "second-page") {
+        $("#pointer").show();
+        $("#pointer").animate({left: "+=500"}, 300);
+      //}
+    }
+
     function openBook(book){
+          //movePointer();
+
           $("body").append("<div class='blur-overlay'></div>");
 
           //var id = book[0].id;
@@ -245,26 +256,7 @@
             $("#mybook").hide();
           });
 
-          $('#boldText').animate({"color": "#0000FF"},500);
-          $('#boldText').animate({"color": "#000000"},500);
-          $('#boldText').animate({"color": "#0000FF"},500);
-          $('#boldText').animate({"color": "#000000"},500);
-          $('#boldText').animate({"color": "#0000FF"},500);
-          $('#boldText').animate({"color": "#000000"},500);
-          $('#boldText').animate({"color": "#0000FF"},500);
-          $('#boldText').animate({"color": "#000000"},500);
-          $('#boldText').animate({"color": "#0000FF"},500);
-          $('#boldText').animate({"color": "#000000"},500);
-          $('#boldText').animate({"color": "#0000FF"},500);
-          $('#boldText').animate({"color": "#000000"},500);
-          $('#boldText').animate({"color": "#0000FF"},500);
-          $('#boldText').animate({"color": "#000000"},500);
-          $('#boldText').animate({"color": "#0000FF"},500);
-          $('#boldText').animate({"color": "#000000"},500);
-          $('#boldText').animate({"color": "#0000FF"},500);
-          $('#boldText').animate({"color": "#000000"},500);
-          $('#boldText').animate({"color": "#0000FF"},500);
-          $('#boldText').animate({"color": "#000000"},500);
+           //$("#pointer").animate({left: "+=1000"}, 1000);
 
           ("#play-button").click(function(){
             var divElement = $('.b-p1').find('.p-title')[0];
@@ -275,7 +267,10 @@
           });
 
           $(".book-popup").append(playButton);
+
         }
+
+    
 
     function loadListeners(){
      /* $(".front").on("click", function(e){
@@ -635,55 +630,73 @@
   </div>
   </div>
 
+    
+
     <div class = "book-popup">
+    <div id='pointer' style='position:absolute;'><img src = '../graphics/pointer.png'></div>
+
     <div id='mybook' style="height:600px; width:auto;">
-      <!-- FIRST PAGE -->
-      <div  class="p-title" title='first-page'> 
-          <img src = '../graphics/book/GivingTree.jpg' style="position: relative; height:100%; width:100%"> 
+      
+      <div class="p-title" title='first-page'> 
+        <center> 
+          <h3>The Giving Tree</h3>
+                    <br><br>
+
+          <img style = "height:100%; width:auto;" src = '../graphics/book/GivingTree.jpg'> 
           <audio controls id="first-page" class="audio-controls">
-            <source src="../audios/first-page.mp3" type="audio/mp3">
+            <source src="../audios/first-page.mp3" type="audio/mp3" style="visibility: none;">
+            Your browser does not support the audio element.
+          </audio>
+        </center>
+      </div>
+
+
+      <div class="p-title" title='second-page'>
+          <div class = "book-text" style = "left:15px; top:300px;">Once there was a tree</div>
+          <img src = '../graphics/book/page1.png'>
+          <audio controls id="second-page" class="audio-controls">
+            <source src="../audios/second-page.mp3" type="audio/mp3">
             Your browser does not support the audio element.
           </audio>
       </div>
-      <!-- SECOND PAGE -->
-      <div class="p-title" title='second-page'>
-          <div id = "boldText">Once there was a tree</div>
-          <div id='pointer' style='position:absolute;'><img src = '../graphics/pointer.png'></div>
-          <!-- <img src = '../graphics/book/Maple-tree.png'> -->
-      </div>
-      <!-- THIRD PAGE -->
       <div  class="p-title" title='third-page'>
-        <h3>That loved a little boy</h3>
-        <img src = '../graphics/book/boy.png'>
-        <audio controls id="third-page" class="audio-controls">
-          <source src="../audios/third-page.mp3" type="audio/mp3">
+        <div class = "book-text" style = "width:150px; left:220px; top:180px;">And she loved a little boy</div>
+        <img src = '../graphics/book/page2.png'>
+      </div>
+
+      <div  class="p-title" title='fourth-page'>
+        <div class = "book-text" style = "left:200px; top:210px;">And every day the boy would come</div>
+        <img src = '../graphics/book/page3.png'>
+        <audio controls id="fourth-page" class="audio-controls">
+          <source src="../audios/fourth-page.mp3" type="audio/mp3">
           Your browser does not support the audio element.
         </audio>  
       </div>
-      <!-- FOURTH PAGE -->
-      <div  class="p-title" title='fourth-page'>
-        <h3>And every day the boy would come</h3>
-        <!-- <embed class="audio" id="fourth-page" src="../audio/fourth-page.mp3"> -->
-      </div>
-      <!-- FIFTH PAGE -->
       <div  class="p-title" title='fifth-page'>
-        <h3>All over the tree!</h3>
-        <audio controls id="first-page" class="audio-controls">
-          <source src="../audios/first-page.mp3" type="audio/mp3">
+        <div class = "book-text" style = "width: 200px; left:80px; top:300px;">And he would gather her leaves</div>
+        <img src = '../graphics/book/page4.png'>
+      </div>
+
+      <div  class="p-title" title='sixth-page'>
+        <h3>The End.</h3>
+        <audio controls id="sixth-page" class="audio-controls">
+          <source src="../audios/sixth-page.mp3" type="audio/mp3">
           Your browser does not support the audio element.
         </audio>
       </div>
-      <!-- SIXTH PAGE -->
-      <div  class="p-title" title='sixth-page'>
-        <h3>The End.</h3>
-        <h2><a href = 'kid-library.html'>here</a></h2>
+      <div  class="p-title" title='seventh-page'>
+        <h3>
+          <img src="../graphics/replay.png" id="re-read">
+          <img src="../graphics/home.png" id="exit-book">
+          <div id="re-read-label">Re-Read</div>
+          <div id="exit-book-label">Exit</div>
+        </h3>
       </div>
-    <!-- END OF BOOK -->
-    </div> 
+    </div>
 
     <img id="cancel-popup" class="cancel-button"/>
 
-    <img id="play-button" src="../graphics/play2.png">
+    <img src="../graphics/record.png" name = "play">
   </div>
 
 </body>

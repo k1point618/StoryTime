@@ -143,8 +143,12 @@
                 });
             });
             
+            $(image).mousemove(function(){
+              notDrag = false;
+            });
+
             $(image).mouseup(function(){
-              if($(this).hasClass('openable')){
+              if($(this).hasClass('openable') && notDrag){
                 openBook($(this));
               }
               if($(this).hasClass('selected')){
@@ -153,10 +157,11 @@
               }
               $(this).addClass('top').removeClass('bottom');
               $(this).siblings().removeClass('top').addClass('bottom');              
+              notDrag = true;
             });
 
             $(image).mousedown(function(){
-              
+              notDrag = true;
               $(this).css("z-index", top++);
               $(this).removeClass('unselected');
               $(this).addClass('selected');
@@ -389,7 +394,7 @@
         </audio>  
       </div>
       <div  class="p-title" title='fifth-page'>
-        <div class = "book-text" style = "left:80px; top:300px;">And gather her leaves</div>
+        <div class = "book-text" style = "width: 200px; left:80px; top:300px;">And he would gather her leaves</div>
         <img src = '../graphics/book/page4.png'>
       </div>
 
