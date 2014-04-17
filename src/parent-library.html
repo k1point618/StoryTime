@@ -244,25 +244,36 @@
 
     function openBook(book){
 
-         /* $(".book-popup").on("click", function(e){
-              console.log("clicked on popup");
-            } */
+
+         $('#mybook').mousedown(function(){
+            $('#pointer').hide();
+            // turn recording button on
+            $("#recording").attr('src', "../graphics/record.png");
+          });
+
+         $('#mybook').mouseup(function(){
+            // turn recording button off
+            $("#recording").attr('src', "../graphics/not-record.png");
+          });
+
           //movePointer();
 
-          $("#pointer").animate({left: "+=200"}, 3000);
-          $("#pointer").animate({left: "-=200"}, 500);
-          $("#pointer").animate({left: "+=200"}, 3000);
-          $("#pointer").animate({left: "-=200"}, 500);
-          $("#pointer").animate({left: "+=200"}, 3000);
-          $("#pointer").animate({left: "-=200"}, 500);
-          $("#pointer").animate({left: "+=200"}, 3000);
-          $("#pointer").animate({left: "-=200"}, 500);
-          $("#pointer").animate({left: "+=200"}, 3000);
-          $("#pointer").animate({left: "-=200"}, 500);
-          $("#pointer").animate({left: "+=200"}, 3000);
-          $("#pointer").animate({left: "-=200"}, 500);
+
 
           $("body").append("<div class='blur-overlay'></div>");
+
+          $("#pointer").animate({left: "+=200"}, 3000);
+          $("#pointer").animate({left: "-=200"}, 500);
+          $("#pointer").animate({left: "+=200"}, 3000);
+          $("#pointer").animate({left: "-=200"}, 500);
+          $("#pointer").animate({left: "+=200"}, 3000);
+          $("#pointer").animate({left: "-=200"}, 500);
+          $("#pointer").animate({left: "+=200"}, 3000);
+          $("#pointer").animate({left: "-=200"}, 500);
+          $("#pointer").animate({left: "+=200"}, 3000);
+          $("#pointer").animate({left: "-=200"}, 500);
+          $("#pointer").animate({left: "+=200"}, 3000);
+          $("#pointer").animate({left: "-=200"}, 500);
 
           //var id = book[0].id;
           $(".book-popup").show();
@@ -657,8 +668,8 @@
       
       <div class="p-title" title='first-page'> 
         <center> 
-          <h3>The Giving Tree</h3>
-                    <br><br>
+          <h3 class = "book-text" style = "left: 120px">The Giving Tree</h3>
+                    <br><br><br><br><br>
 
           <img style = "height:100%; width:auto;" src = '../graphics/book/GivingTree.jpg'> 
           <audio controls id="first-page" class="audio-controls">
@@ -670,7 +681,7 @@
 
 
       <div class="p-title" title='second-page'>
-          <div class = "book-text" style = "left:15px; top:300px;">Once there was a tree</div>
+          <div class = "book-text" style = "width: 200px; left:30px; top:300px;">Once there was a tree</div>
           <img src = '../graphics/book/page1.png'>
           <audio controls id="second-page" class="audio-controls">
             <source src="../audios/second-page.mp3" type="audio/mp3">
@@ -713,8 +724,8 @@
     </div>
 
     <img id="cancel-popup" class="cancel-button"/>
-
-    <img src="../graphics/record.png" name = "play">
+    <br>
+    <img id="recording" src="../graphics/not-record.png" name = "play">
   </div>
 
 </body>
