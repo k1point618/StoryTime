@@ -59,11 +59,21 @@ table{
 }
 
 #column-left{
-    width:18%;
+    width:220px;
     float:left;
     position: relative;
     background-color:white;
     text-align: left;   
+    /*padding-top: 100px;*/
+    padding:20px;
+}
+#column-right{
+    padding: 20px 10px 20px 10px;
+    width: 78%;
+    float: left;
+    overflow:scroll;
+    position:relative;
+    
 }
 
 #column-center {
@@ -76,8 +86,8 @@ table{
 }
 
 #column-left, #column-right{
-  padding:10px;
-  height: 96%;
+  /*padding:10px;*/
+  height: 93.65%;
 }
 
 .popup{
@@ -97,14 +107,6 @@ table{
     
 }
 
-#column-right{
-    padding: 15px, 10px;
-    width: 78%;
-    float: left;
-    overflow:scroll;
-    position:relative;
-   
-}
 
 #overlay{
     width: 100%;
