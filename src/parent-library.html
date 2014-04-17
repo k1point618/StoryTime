@@ -241,8 +241,26 @@
       //}
     }
 
+
     function openBook(book){
+
+         /* $(".book-popup").on("click", function(e){
+              console.log("clicked on popup");
+            } */
           //movePointer();
+
+          $("#pointer").animate({left: "+=200"}, 3000);
+          $("#pointer").animate({left: "-=200"}, 500);
+          $("#pointer").animate({left: "+=200"}, 3000);
+          $("#pointer").animate({left: "-=200"}, 500);
+          $("#pointer").animate({left: "+=200"}, 3000);
+          $("#pointer").animate({left: "-=200"}, 500);
+          $("#pointer").animate({left: "+=200"}, 3000);
+          $("#pointer").animate({left: "-=200"}, 500);
+          $("#pointer").animate({left: "+=200"}, 3000);
+          $("#pointer").animate({left: "-=200"}, 500);
+          $("#pointer").animate({left: "+=200"}, 3000);
+          $("#pointer").animate({left: "-=200"}, 500);
 
           $("body").append("<div class='blur-overlay'></div>");
 
@@ -256,7 +274,7 @@
             $("#mybook").hide();
           });
 
-           //$("#pointer").animate({left: "+=1000"}, 1000);
+           
 
           ("#play-button").click(function(){
             var divElement = $('.b-p1').find('.p-title')[0];
