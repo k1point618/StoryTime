@@ -143,8 +143,12 @@
                 });
             });
             
+            $(image).mousemove(function(){
+              notDrag = false;
+            });
+
             $(image).mouseup(function(){
-              if($(this).hasClass('openable')){
+              if($(this).hasClass('openable') && notDrag){
                 openBook($(this));
               }
               if($(this).hasClass('selected')){
@@ -153,10 +157,11 @@
               }
               $(this).addClass('top').removeClass('bottom');
               $(this).siblings().removeClass('top').addClass('bottom');              
+              notDrag = true;
             });
 
             $(image).mousedown(function(){
-              
+              notDrag = true;
               $(this).css("z-index", top++);
               $(this).removeClass('unselected');
               $(this).addClass('selected');
