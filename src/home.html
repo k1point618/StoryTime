@@ -40,6 +40,8 @@
 			$div.append($("<img>", {type:"button", id:"cancel-popup", class:"cancel-button"}));
 			$("body").append($div);
 
+			document.getElementById("popup-answer").focus();
+			
 			// implement functionality for close
 			$('#cancel-popup').click(function(){
 				$('.blur-overlay').remove();

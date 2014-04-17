@@ -179,6 +179,14 @@
         }
 
         function openBook(book){
+          $("#mybook").booklet({
+            pageNumbers: false,
+            height: '100%',
+            width: '80%',
+            closed: true,
+            autoCenter: true
+          });
+          
           $("body").append("<div class='blur-overlay' style='opacity:0;'></div>");
           $('.blur-overlay').animate({opacity:1}, 500);
           var id = book[0].id;
@@ -277,7 +285,9 @@
             height: '100%',
             width: '80%',
             closed: true,
-            autoCenter: true
+            autoCenter: true,
+            arrows: true,
+            arrowsHide: true
           });
         }
         function getNumber(pool) {
@@ -382,7 +392,7 @@
       </div>
 
       <div  class="p-title" title='sixth-page'>
-        <h3>The End.</h3>
+        <h3 style="top:200px; position:absolute; left:150px">The End.</h3>
         <audio controls id="sixth-page" class="audio-controls">
           <source src="../audios/sixth-page.mp3" type="audio/mp3">
           Your browser does not support the audio element.
