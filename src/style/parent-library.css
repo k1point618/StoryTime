@@ -79,6 +79,12 @@ table{
   cursor: pointer;
 }
 
+#pointer {
+  left: 400px;
+  top: 100px;
+  z-index: 500;
+}
+
 #column-left{
     width:220px;
     float:left;
@@ -196,7 +202,7 @@ ul li a {
 }
 
 #grid-button{
-  right:213px;
+  right:225px;
   width:95px;
 }
 

@@ -23,17 +23,14 @@ body{
 }
 #order-button{
 	right:95px;   
-	width:98px;
+	width:95px;
 }
 #random-button{
-	right: 215px;
-	width:120px;
+	right: 225px;
+	width:95px;
 }
 .book-text {
 	position: absolute;
-}
-
-.book-text {
 	height:100%;
 	font-size:16pt;
 }
