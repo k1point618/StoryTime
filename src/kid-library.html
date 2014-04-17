@@ -28,13 +28,7 @@
 
     <script type="text/javascript">
       $(document).ready(function(){
-        $("#mybook").booklet({
-          pageNumbers: false,
-          height: '100%',
-          width: '80%',
-          closed: true,
-          autoCenter: true
-        });
+        makeBook();
         // $("#mybook").css("width", "1000px");
         // $("#mybook").css("height", "600px");
         // $(".b-page").css("width", "500px");
@@ -96,9 +90,21 @@
           window.location.href = 'home.html';
         });
 
-        
+        $('#exit-book').click(function(){
+            $('.blur-overlay').remove();
+            $(".book-popup").hide();
+        });
+        $('#exit-book-label').click(function(){
+            $('.blur-overlay').remove();
+            $(".book-popup").hide();
+        });
 
-
+        $('#re-read').click(function(){
+            makeBook();
+        });
+        $('#re-read-label').click(function(){
+            makeBook();
+        });
         // Helper functions ----------------------------------
         function populateBooks(random){
           var library = document.getElementById("library-div");
@@ -111,7 +117,8 @@
             image.style.padding = "5px";
             image.style.height = "190px";
             image.style.width = "90px";
-            
+            image.style.opacity = "0";
+
             if(random){
               image.style.position = "absolute";
               image.style.left = Math.floor(getNumber(widthPool) * (libraryWidth / widthBlock)) + "px";
@@ -120,6 +127,7 @@
               console.log(image.style.top);
             }
             library.appendChild(image); 
+            $(image).animate({opacity:1}, 1000);
 
             if(i == 12){
               $(image).removeClass('unselected');
@@ -171,10 +179,12 @@
         }
 
         function openBook(book){
-          $("body").append("<div class='blur-overlay'></div>");
-
+          $("body").append("<div class='blur-overlay' style='opacity:0;'></div>");
+          $('.blur-overlay').animate({opacity:1}, 500);
           var id = book[0].id;
+          $(".book-popup").css("opacity", "0");
           $(".book-popup").show();
+          $(".book-popup").animate({opacity:1}, 500);
 
         /*  var cover = document.createElement("IMG");
           cover.src = "../graphics/GivingTree.jpg";
@@ -202,33 +212,32 @@
             //$("#mybook").hide();
             $(".book-popup").hide();
 
-            // animate text
-            $('#boldText').animate({"font-weight": "900"},500);
-            $('#boldText').animate({"font-weight": "normal"},500);
-             $('#boldText').animate({"font-weight": "900"},500);
-            $('#boldText').animate({"font-weight": "normal"},500);
-             $('#boldText').animate({"font-weight": "900"},500);
-            $('#boldText').animate({"font-weight": "normal"},500);
-             $('#boldText').animate({"font-weight": "900"},500);
-            $('#boldText').animate({"font-weight": "normal"},500);
-             $('#boldText').animate({"font-weight": "900"},500);
-            $('#boldText').animate({"font-weight": "normal"},500);
-             $('#boldText').animate({"font-weight": "900"},500);
-            $('#boldText').animate({"font-weight": "normal"},500);
-             $('#boldText').animate({"font-weight": "900"},500);
-            $('#boldText').animate({"font-weight": "normal"},500);
-             $('#boldText').animate({"font-weight": "900"},500);
-            $('#boldText').animate({"font-weight": "normal"},500);
-             $('#boldText').animate({"font-weight": "900"},500);
-            $('#boldText').animate({"font-weight": "normal"},500);
-             $('#boldText').animate({"font-weight": "900"},500);
-            $('#boldText').animate({"font-weight": "normal"},500);
-             $('#boldText').animate({"font-weight": "900"},500);
-            $('#boldText').animate({"font-weight": "normal"},500);
+            // // animate text
+            // $('#boldText').animate({"font-weight": "900"},500);
+            // $('#boldText').animate({"font-weight": "normal"},500);
+            //  $('#boldText').animate({"font-weight": "900"},500);
+            // $('#boldText').animate({"font-weight": "normal"},500);
+            //  $('#boldText').animate({"font-weight": "900"},500);
+            // $('#boldText').animate({"font-weight": "normal"},500);
+            //  $('#boldText').animate({"font-weight": "900"},500);
+            // $('#boldText').animate({"font-weight": "normal"},500);
+            //  $('#boldText').animate({"font-weight": "900"},500);
+            // $('#boldText').animate({"font-weight": "normal"},500);
+            //  $('#boldText').animate({"font-weight": "900"},500);
+            // $('#boldText').animate({"font-weight": "normal"},500);
+            //  $('#boldText').animate({"font-weight": "900"},500);
+            // $('#boldText').animate({"font-weight": "normal"},500);
+            //  $('#boldText').animate({"font-weight": "900"},500);
+            // $('#boldText').animate({"font-weight": "normal"},500);
+            //  $('#boldText').animate({"font-weight": "900"},500);
+            // $('#boldText').animate({"font-weight": "normal"},500);
+            //  $('#boldText').animate({"font-weight": "900"},500);
+            // $('#boldText').animate({"font-weight": "normal"},500);
+            //  $('#boldText').animate({"font-weight": "900"},500);
+            // $('#boldText').animate({"font-weight": "normal"},500);
 
           });
 
- 
           
           $("#play-button").click(function(){
             if ($('.b-p1').hasClass('b-page-0')){
@@ -239,7 +248,18 @@
             var title = divElement.title;
             console.log(title);
             var audio = document.getElementById(title);
-            audio.play();
+            if($(this).attr('name') == "play"){ 
+              audio.play();
+              $(this).attr('name', "pause");
+              $(this).attr('src', "../graphics/pause.png");
+            }
+            else if($(this).attr('name') == "pause"){
+              audio.pause();
+              $(this).attr('name', "play");
+              $(this).attr('src', "../graphics/play2.png");
+            }
+
+            audio.addEventListener('ended', ended);
           });
 
           $(".book-popup").append($("#play-button"));
@@ -247,6 +267,19 @@
           
         }
 
+        function ended(){
+          $("#play-button").attr('name', "play");
+          $("#play-button").attr('src', "../graphics/play2.png");
+        }
+        function makeBook(){
+          $("#mybook").booklet({
+            pageNumbers: false,
+            height: '100%',
+            width: '80%',
+            closed: true,
+            autoCenter: true
+          });
+        }
         function getNumber(pool) {
             if (pool.length == 0) {
                 throw "No numbers left";
@@ -367,7 +400,7 @@
 
     <img id="cancel-popup" class="cancel-button"/>
 
-    <img id="play-button" src="../graphics/play2.png">
+    <img id="play-button" src="../graphics/play2.png" name = "play">
   </div>
 
   </body>
