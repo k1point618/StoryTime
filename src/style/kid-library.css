@@ -31,9 +31,6 @@ body{
 }
 .book-text {
 	position: absolute;
-}
-
-.book-text {
 	height:100%;
 	font-size:16pt;
 }

@@ -75,6 +75,12 @@ table{
   cursor: pointer;
 }
 
+#pointer {
+  left: 350px;
+  top: 75px;
+  z-index: 500;
+}
+
 #column-left{
     width:220px;
     float:left;
