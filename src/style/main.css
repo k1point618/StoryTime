@@ -124,7 +124,8 @@ body{
     text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.8);
     box-shadow: 0 0 10px #AAAAAA;
 }
-div#preload { display: none; }
+div#p
+reload { display: none; }
 
 #big-frame{
     position:absolute;
@@ -151,4 +152,40 @@ div#preload { display: none; }
     border:2px solid #888888;
     box-shadow: 0 0 10px #AAAAAA;
     background-color: #FFF9FB;
+}
+
+#exit-book{
+    position:absolute;
+    height:100px;
+    width:100px;
+    top:200px;
+    right:80px;
+    margin:auto;
+    cursor:pointer;
+
+}
+#exit-book-label{
+    position:absolute;
+    height:40px;
+    width:100px;
+    top:300px;
+    right:80px;
+    cursor:pointer;
+}
+#re-read{
+    position:absolute;
+    height:100px;
+    width:100px;
+    top: 200px;
+    left:80px;
+    margin:auto;
+    cursor:pointer;
+}
+#re-read-label{
+    position:absolute;
+    height:40px;
+    width:100px;
+    top:300px;
+    left:80px;
+    cursor:pointer;
 }
