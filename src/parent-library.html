@@ -276,7 +276,7 @@
 
            
 
-          ("#play-button").click(function(){
+          $("#play-button").click(function(){
             var divElement = $('.b-p1').find('.p-title')[0];
             var title = divElement.title;
             console.log(title);
@@ -286,9 +286,32 @@
 
           $(".book-popup").append(playButton);
 
-        }
+
+          
+    }
 
     
+    $('#exit-book').click(function(){
+        $('.blur-overlay').remove();
+        $(".book-popup").hide();
+        $("#mybook").hide();
+    });
+    $('#exit-book-label').click(function(){
+        $('.blur-overlay').remove();
+        $(".book-popup").hide();
+        $("#mybook").hide();
+    });
+
+    $('#re-read').click(function(){
+        $('.blur-overlay').remove();
+        $(".book-popup").hide();
+        $("#mybook").hide();
+    });
+    $('#re-read-label').click(function(){
+        $('.blur-overlay').remove();
+        $(".book-popup").hide();
+        $("#mybook").hide();
+    });
 
     function loadListeners(){
      /* $(".front").on("click", function(e){
@@ -599,6 +622,8 @@
         }
       });       
 
+
+
     });
     </script>
   </head>
@@ -705,10 +730,10 @@
       </div>
       <div  class="p-title" title='seventh-page'>
         <h3>
-          <img src="../graphics/replay.png" id="re-read">
-          <img src="../graphics/home.png" id="exit-book">
-          <div id="re-read-label">Re-Read</div>
-          <div id="exit-book-label">Exit</div>
+          <img src="../graphics/save.png" id="re-read">
+          <img src="../graphics/trash.png" id="exit-book">
+          <div id="re-read-label">Save</div>
+          <div id="exit-book-label">Discard</div>
         </h3>
       </div>
     </div>
