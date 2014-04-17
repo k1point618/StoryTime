@@ -29,14 +29,16 @@ table{
   height:650px;
   width:800px;
   z-index: 300;
+  visibility: visible;
+
   /*top: 50%; left: 50%;*/
 }
 
-.book-popup{
+/*.book-popup{
   position:absolute;
     border:solid 1px #2CCCBC;
     background-image: url('../../graphics/rainbows.png');
-    height:400px;
+    height:500px;
     width:1000px;
     z-index:200;
     top: 0;
@@ -45,8 +47,8 @@ table{
     right: 0;
     margin:auto;
     text-align: center;
-    padding: 100px 20px 120px 20px; 
-}
+    padding: 50px 20px 120px 20px; 
+}*/
 
 #play-button{
   position:relative;

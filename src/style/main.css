@@ -12,6 +12,22 @@ body{
     vertical-align: center;
 }
 
+.book-popup{
+  position:absolute;
+    border:solid 1px #2CCCBC;
+    background-image: url('../../graphics/rainbows.png');
+    height:500px;
+    width:1000px;
+    z-index:200;
+    top: 0;
+    left: 0;
+    bottom:0;
+    right: 0;
+    margin:auto;
+    text-align: center;
+    padding: 50px 20px 120px 20px; 
+}
+
 .top-navigation{
     position:absolute;
     top:0%;

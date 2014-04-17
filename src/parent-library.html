@@ -89,9 +89,6 @@
       card.appendChild(back);
       container.appendChild(card);
 
-
-
-
       container.style.position = "absolute";
       container.style.left = 70+col*vIncr + "px";
       container.style.top = 10+row*hIncr*1.7 + "px";
@@ -244,7 +241,7 @@
         }, 100);
         
 
-        //openBook("book");
+        //  ("book");
       });
 
       $(".back").on("click", function(e){
@@ -276,9 +273,14 @@
     }
     $(document).ready(function() {
       // Format the booklet
-      $("#mybook").booklet({ pageNumbers: false });
+      $("#mybook").booklet({ 
+        pageNumbers: false,
+        height: '100%',
+        width: '80%'
+      });
       $(".book-popup").hide();
       $("#mybook").hide();
+      $("#mybook").show();
 
     /*  $('#library-div').blurjs({
         draggable: true,
@@ -287,8 +289,8 @@
       }); */
 
       // Hide the possible book at first
-      $("#mybook").hide()
-      var cue = document.getElementById("recording");
+      //$("#mybook").hide()
+ /*     var cue = document.getElementById("recording");
       $("h3").mouseup(function(){
         cue.innerHTML = "<img src = '../graphics/not-record.png'>";
       });
@@ -308,7 +310,7 @@
           $("#mybook").hide();
         }
         suppressBookHide = false;
-      });
+      });   */
 
       //createGridView(4);
       createRowView();

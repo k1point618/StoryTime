@@ -28,7 +28,11 @@
 
     <script type="text/javascript">
       $(document).ready(function(){
-        $("#mybook").booklet({ pageNumbers: false });
+        $("#mybook").booklet({
+          pageNumbers: false,
+          height: '100%',
+          width: '80%'
+        });
         // $("#mybook").css("width", "1000px");
         // $("#mybook").css("height", "600px");
         // $(".b-page").css("width", "500px");
