@@ -202,43 +202,47 @@
             //$("#mybook").hide();
             $(".book-popup").hide();
 
-          // animate text
-          $('#boldText').animate({"font-weight": "900"},500);
-          $('#boldText').animate({"font-weight": "normal"},500);
-           $('#boldText').animate({"font-weight": "900"},500);
-          $('#boldText').animate({"font-weight": "normal"},500);
-           $('#boldText').animate({"font-weight": "900"},500);
-          $('#boldText').animate({"font-weight": "normal"},500);
-           $('#boldText').animate({"font-weight": "900"},500);
-          $('#boldText').animate({"font-weight": "normal"},500);
-           $('#boldText').animate({"font-weight": "900"},500);
-          $('#boldText').animate({"font-weight": "normal"},500);
-           $('#boldText').animate({"font-weight": "900"},500);
-          $('#boldText').animate({"font-weight": "normal"},500);
-           $('#boldText').animate({"font-weight": "900"},500);
-          $('#boldText').animate({"font-weight": "normal"},500);
-           $('#boldText').animate({"font-weight": "900"},500);
-          $('#boldText').animate({"font-weight": "normal"},500);
-           $('#boldText').animate({"font-weight": "900"},500);
-          $('#boldText').animate({"font-weight": "normal"},500);
-           $('#boldText').animate({"font-weight": "900"},500);
-          $('#boldText').animate({"font-weight": "normal"},500);
-           $('#boldText').animate({"font-weight": "900"},500);
-          $('#boldText').animate({"font-weight": "normal"},500);
+            // animate text
+            $('#boldText').animate({"font-weight": "900"},500);
+            $('#boldText').animate({"font-weight": "normal"},500);
+             $('#boldText').animate({"font-weight": "900"},500);
+            $('#boldText').animate({"font-weight": "normal"},500);
+             $('#boldText').animate({"font-weight": "900"},500);
+            $('#boldText').animate({"font-weight": "normal"},500);
+             $('#boldText').animate({"font-weight": "900"},500);
+            $('#boldText').animate({"font-weight": "normal"},500);
+             $('#boldText').animate({"font-weight": "900"},500);
+            $('#boldText').animate({"font-weight": "normal"},500);
+             $('#boldText').animate({"font-weight": "900"},500);
+            $('#boldText').animate({"font-weight": "normal"},500);
+             $('#boldText').animate({"font-weight": "900"},500);
+            $('#boldText').animate({"font-weight": "normal"},500);
+             $('#boldText').animate({"font-weight": "900"},500);
+            $('#boldText').animate({"font-weight": "normal"},500);
+             $('#boldText').animate({"font-weight": "900"},500);
+            $('#boldText').animate({"font-weight": "normal"},500);
+             $('#boldText').animate({"font-weight": "900"},500);
+            $('#boldText').animate({"font-weight": "normal"},500);
+             $('#boldText').animate({"font-weight": "900"},500);
+            $('#boldText').animate({"font-weight": "normal"},500);
 
           });
 
  
           
           $("#play-button").click(function(){
-            var divElement = $('.b-p1').find('.p-title')[0];
+            if ($('.b-p1').hasClass('b-page-0')){
+              var divElement = $('.b-p2').find('.p-title')[0];
+            }else{
+              var divElement = $('.b-p1').find('.p-title')[0];
+            }
             var title = divElement.title;
             console.log(title);
             var audio = document.getElementById(title);
             audio.play();
           });
 
-          $(".book-popup").append(playButton);
+          $(".book-popup").append($("#play-button"));
 
           
         }
@@ -306,7 +310,7 @@
   <div class = "book-popup">
     <div id='mybook' style="height:600px; width:auto;">
       
-      <div  class="p-title" title='first-page'> 
+      <div class="p-title" title='first-page'> 
         <center> 
           <h3>The Giving Tree</h3>
           <img src = '../graphics/book/GivingTree.jpg'> 
@@ -316,35 +320,38 @@
           </audio>
         </center>
       </div>
+
+
       <div class="p-title" title='second-page'>
           <h3>Once there was a tree</h3>
-          <!-- <img src = '../graphics/book/Maple-tree.png'> -->
+          <audio controls id="second-page" class="audio-controls">
+            <source src="../audios/second-page.mp3" type="audio/mp3">
+            Your browser does not support the audio element.
+          </audio>
       </div>
-
       <div  class="p-title" title='third-page'>
         <h3>That loved a little boy</h3>
         <img src = '../graphics/book/boy.png'>
-        <audio controls id="third-page" class="audio-controls">
-          <source src="../audios/third-page.mp3" type="audio/mp3">
+      </div>
+
+      <div  class="p-title" title='fourth-page'>
+        <h3>And every day the boy would come</h3>
+        <audio controls id="fourth-page" class="audio-controls">
+          <source src="../audios/fourth-page.mp3" type="audio/mp3">
           Your browser does not support the audio element.
         </audio>  
       </div>
-      <div  class="p-title" title='fourth-page'>
-        <h3>And every day the boy would come</h3>
-        <!-- <embed class="audio" id="fourth-page" src="../audio/fourth-page.mp3"> -->
-          
-      </div>
-
       <div  class="p-title" title='fifth-page'>
         <h3>All over the tree!</h3>
-        <audio controls id="first-page" class="audio-controls">
-          <source src="../audios/first-page.mp3" type="audio/mp3">
-          Your browser does not support the audio element.
-        </audio>
       </div>
+
       <div  class="p-title" title='sixth-page'>
         <h3>The End.</h3>
         <h2><a href = 'kid-library.html'>here</a></h2>
+        <audio controls id="six-page" class="audio-controls">
+          <source src="../audios/six-page.mp3" type="audio/mp3">
+          Your browser does not support the audio element.
+        </audio>
       </div>
     </div>
 
