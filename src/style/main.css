@@ -79,7 +79,7 @@ body{
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
     cursor:pointer;
 }
-.blur-overlay {
+.blur-overlay, .blur-overaly2 {
     position:absolute;
     width:100%;
     height:100%;

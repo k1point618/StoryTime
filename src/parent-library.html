@@ -366,7 +366,7 @@
        console.log(e.target.className);
 
         if(e.target.className != "bookCover" && e.target.className != "blur-overlay"){
-          $('.blur-overlay').remove();
+          $('#blurrer').remove();
           $('#cancel-button').remove();
           $('.record-button').remove();
           //openBook("book");
@@ -420,7 +420,7 @@
         var id = e.target.getAttribute('id');
         e.preventDefault();
         if(e.target.className == "record-button"){
-          $('.blur-overlay').remove();
+          $('#blurrer').remove();
           $('#cancel-button').remove();
           $('.record-button').remove();
           openBook("book");
@@ -432,6 +432,7 @@
           var book = e.target.parentNode;
           var blur = document.createElement("img");
           blur.className = "blur-overlay";
+          blur.setAttribute("id","blurrer")
           blur.style.zIndex = 99;
           book.appendChild(blur);
           var record = document.createElement("img");
@@ -446,7 +447,7 @@
           button.id = "cancel-button";
           button.style.zIndex = 100;
           button.onclick = function(){
-            $('.blur-overlay').remove();
+            $('#blurrer').remove();
             $('#cancel-button').remove();
             $('.record-button').remove();
           }
