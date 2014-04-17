@@ -211,6 +211,27 @@
             $("#mybook").hide();
           });
 
+          $('#boldText').animate({"color": "#0000FF"},500);
+          $('#boldText').animate({"color": "#000000"},500);
+          $('#boldText').animate({"color": "#0000FF"},500);
+          $('#boldText').animate({"color": "#000000"},500);
+          $('#boldText').animate({"color": "#0000FF"},500);
+          $('#boldText').animate({"color": "#000000"},500);
+          $('#boldText').animate({"color": "#0000FF"},500);
+          $('#boldText').animate({"color": "#000000"},500);
+          $('#boldText').animate({"color": "#0000FF"},500);
+          $('#boldText').animate({"color": "#000000"},500);
+          $('#boldText').animate({"color": "#0000FF"},500);
+          $('#boldText').animate({"color": "#000000"},500);
+          $('#boldText').animate({"color": "#0000FF"},500);
+          $('#boldText').animate({"color": "#000000"},500);
+          $('#boldText').animate({"color": "#0000FF"},500);
+          $('#boldText').animate({"color": "#000000"},500);
+          $('#boldText').animate({"color": "#0000FF"},500);
+          $('#boldText').animate({"color": "#000000"},500);
+          $('#boldText').animate({"color": "#0000FF"},500);
+          $('#boldText').animate({"color": "#000000"},500);
+
           ("#play-button").click(function(){
             var divElement = $('.b-p1').find('.p-title')[0];
             var title = divElement.title;
@@ -276,7 +297,11 @@
       $("#mybook").booklet({ 
         pageNumbers: false,
         height: '100%',
-        width: '80%'
+        width: '80%',
+        closed: true,
+        autoCenter: true,
+        arrows: true,
+        arrowsHide: true
       });
       $(".book-popup").hide();
       $("#mybook").hide();
@@ -519,18 +544,15 @@
     <div id='mybook' style="height:600px; width:auto;">
       <!-- FIRST PAGE -->
       <div  class="p-title" title='first-page'> 
-        <center> 
-          <h3>The Giving Tree</h3>
-          <img src = '../graphics/book/GivingTree.jpg'> 
+          <img src = '../graphics/book/GivingTree.jpg' style="position: relative; height:100%; width:100%"> 
           <audio controls id="first-page" class="audio-controls">
             <source src="../audios/first-page.mp3" type="audio/mp3">
             Your browser does not support the audio element.
           </audio>
-        </center>
       </div>
       <!-- SECOND PAGE -->
       <div class="p-title" title='second-page'>
-          <h3>Once there was a tree</h3>
+          <div id = "boldText">Once there was a tree</div>
           <div id='pointer' style='position:absolute;'><img src = '../graphics/pointer.png'></div>
           <!-- <img src = '../graphics/book/Maple-tree.png'> -->
       </div>
