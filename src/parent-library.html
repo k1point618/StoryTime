@@ -69,6 +69,8 @@
 
       var img = setImage(name, hIncr, vIncr);
 
+      img.className = "bookCover";
+
       var container = document.createElement("div");
       container.setAttribute("id", "f1_container");
       var card = document.createElement("div");
@@ -99,6 +101,8 @@
      // console.log(name);
       var img = document.createElement("img");
       img.src = '../graphics/'+name+".jpeg";
+
+      img.className = "bookCover";
     
       img.style.width = hIncr+"px";
       img.style.height = "auto";
@@ -109,6 +113,12 @@
       //console.log(hIncr, vIncr);
       //console.log(img);
       return img;
+    }
+
+    function boldHTML(text) {
+      var element = document.createElement("b");
+      element.innerHTML = text;
+      return element;
     }
 
     function createRowView(){
@@ -144,7 +154,13 @@
         //img.style.left = 5 + "px";
         //img.style.display = "inline";
         //var p = document.createElement("p");
-        var text = document.createTextNode("The Giving Tree is a children's picture book written and illustrated by Shel Silverstein. First published in 1964 by Harper & Row, it has become one of Silverstein's best known titles and has been translated into numerous languages. Some argue that the popularity of the book is due to the romantic relationship between the child and   the tree. However, others are of the opinion that such a relationship should not be portrayed to children at such a young age, for fear that they will join the gays.  Research has shown that this fear is unfounded, as tree lovers have an equal occurence of homosexuality as the general population."); 
+
+        //$div.append("<p class='popup-text'>What do you want to name your list?</p>");
+        //$div.append("<input id='popup-answer' class='popup-text' type='text' name='answer' placeholder='Press \<Enter\> to submit.'>");
+        //$div.append($("<img>", {type:"button", id:"cancel-popup-new-list", class:"cancel-button"}));
+
+
+
 
         var tbl = document.createElement("table");
         var tblBody = document.createElement("tbody");
@@ -181,7 +197,25 @@
         cell1.style.width = "190px";
         row.appendChild(cell1);
         cell2 = document.createElement("td");
+        /*cell2.appendChild(title);
         cell2.appendChild(text);
+        cell2.appendChild(document.createElement("br"));
+        cell2.appendChild(author);
+        cell2.appendChild(text2);
+        cell2.appendChild(document.createElement("br"));
+        cell2.appendChild(document.createElement("br"));
+        cell2.appendChild(synopsis);
+        cell2.appendChild(text3);*/
+        cell2.appendChild(boldHTML("Title: "));
+        cell2.appendChild(document.createTextNode("The Giving Tree"));
+        cell2.appendChild(document.createElement("br"));
+        cell2.appendChild(boldHTML("Author: "));
+        cell2.appendChild(document.createTextNode("Shel Silverstein"));
+        cell2.appendChild(document.createElement("br"));
+        cell2.appendChild(document.createElement("br"));
+        cell2.appendChild(boldHTML("Synopsis: "));
+        cell2.appendChild(document.createTextNode("The Giving Tree is a children's picture book written and illustrated by Shel Silverstein. First published in 1964 by Harper & Row, it has become one of Silverstein's best known titles and has been translated into numerous languages."));
+
         cell2.style.width = "800px";
         cell2.style.textAlign = "left"
         //cell2.style.left = 10+"px";
@@ -312,6 +346,26 @@
       $("#mybook").hide();
       $("#mybook").show();
 
+      $("#library-div").on("click", function(e) {
+        console.log("clicked, trying to exit");
+        console.log(suppressBookHide);
+        console.log("visible? " + $('#mybook').is(':visible'));
+       console.log(e.target.className);
+
+        if(e.target.className != "bookCover" && e.target.className != "blur-overlay"){
+          $('.blur-overlay').remove();
+          $('#cancel-button').remove();
+          $('.record-button').remove();
+          //openBook("book");
+
+        }
+        /*if($('#mybook').is(':visible') && !suppressBookHide) {
+          console.log("book is hidden");
+          $("#mybook").hide();
+        }
+        suppressBookHide = false;*/
+      });
+
     /*  $('#library-div').blurjs({
         draggable: true,
         overlay: 'rgba(255,255,255,0.1)',
@@ -320,7 +374,7 @@
 
       // Hide the possible book at first
       //$("#mybook").hide()
- /*     var cue = document.getElementById("recording");
+  /*    var cue = document.getElementById("recording");
       $("h3").mouseup(function(){
         cue.innerHTML = "<img src = '../graphics/not-record.png'>";
       });
