@@ -29,22 +29,15 @@ body{
 	right: 215px;
 	width:120px;
 }
-.book-popup{
-	position:absolute;
-    border:solid 1px #2CCCBC;
-    background-image: url('../../graphics/rainbows.png');
-    height:400px;
-    width:1000px;
-    z-index:200;
-    top: 0;
-    left: 0;
-    bottom:0;
-    right: 0;
-    margin:auto;
-    text-align: center;
-    padding: 100px 20px 120px 20px; 
-
+.book-text {
+	position: absolute;
 }
+
+.book-text {
+	height:100%;
+	font-size:16pt;
+}
+
 #book-cover{
 	/*background-image: url('../../graphics/GivingTree.jpg');*/
 	height:100%;
