@@ -15,11 +15,21 @@ body{
 	box-shadow: 0 0 10px #AAAAAA;
 	cursor:pointer;
 }
-.selected{
-	background:yellow;
+.random-mode{
+	position:absolute;
 }
-.unselected{
-	background:white;
+.ordered-mode{
+	position:relative;
+}
+.selected{ background:yellow; }
+.unselected{ background:white; }
+.bigger{
+	height:250px;
+	width:auto;
+}
+.smaller{
+	height:200px;
+	width:auto;
 }
 #order-button{
 	right:95px;   

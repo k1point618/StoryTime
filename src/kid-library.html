@@ -25,19 +25,11 @@
     <script> window.jQuery.ui || document.write('<script src="Booklet-master/booklet/jquery-ui-1.10.4.min.js"><\/script>') </script>
     <script src="Booklet-master/booklet/jquery.easing.1.3.js"></script>
     <script src="Booklet-master/booklet/jquery.booklet.latest.js"></script>
-
+    <script type="text/javascript" src="books.json"></script>
+    
     <script type="text/javascript">
       $(document).ready(function(){
-        makeBook();
-        // $("#mybook").css("width", "1000px");
-        // $("#mybook").css("height", "600px");
-        // $(".b-page").css("width", "500px");
-        // $(".b-page").css("height", "600px");
-        // $(".b-wrap").css("width", "100%");
-        // $(".b-wrap").css("height", "100%");
-
-        //$("#mybook").hide();
-        $(".book-popup").hide();
+        
         var top = 3;
         var selectToggle = -1;
         var library = document.getElementById("library-div");
@@ -48,41 +40,84 @@
         var widthPool = range(widthBlock);
         var heightPool = range(heightBlock);
         var bookString = "";
+        var smallBookHeight="200px";
+        var bigBookHeight="250px";
+        var randomMode = true; //1 is random mode, 0 is organized mode.
 
-        console.log(libraryWidth);
-        console.log(libraryHeight);
-        populateBooks(true);
+        $(".book-popup").hide();
+        makeBook();
+        
+        populateBooks(randomMode);
+        var thisButton = document.getElementById("random-button");
+        thisButton.disabled = true;
+        thisButton.style.backgroundColor = "#2CCCBC";
 
 
         // Event listeners -----------------
         $('#order-button').click(function(){
+          if(!randomMode){
+            return;
+          }
+          saveBookLocations();
           clearBooks();
-          populateBooks(false);
-        });
+          randomMode = false;
+          populateBooks(randomMode);
+          //Make this button not clickable
+          var thisButton = document.getElementById("order-button");
+          thisButton.disabled = true;
+          thisButton.style.backgroundColor = "#2CCCBC";
 
+          //Make other button clickable
+          var otherButton = document.getElementById("random-button");
+          otherButton.disabled = false;
+          otherButton.style.backgroundColor = "#d4f4f1";
+          
+        });
         $('#order-button').hover(function(){
           // mouseenter
-          $(this).animate({'background-color':'#2CCCBC', "color": "#FFF"},300);
-
+          if(randomMode){
+            $(this).animate({'background-color':'#2CCCBC', "color": "#FFF"},300);
+          }
         }, function(){
           // mouseleave
-          $(this).animate({'background-color':'#d4f4f1', "color": "#666"},300);
-
+          if(randomMode){
+            $(this).animate({'background-color':'#d4f4f1', "color": "#666"},300);
+          }
+          
         });
 
+
         $('#random-button').click(function(){
+          if(randomMode){
+            return;
+          }
           clearBooks();
-          populateBooks(true);
+          randomMode = true;
+          populateBooks(randomMode);
+          //Make this button not clickable
+          var thisButton = document.getElementById("random-button");
+          thisButton.disabled = true;
+          thisButton.style.backgroundColor = "#2CCCBC";
+
+          //Make other button clickable
+          var otherButton = document.getElementById("order-button");
+          otherButton.disabled = false;
+          otherButton.style.backgroundColor = "#d4f4f1";
+
+          
+
         });
 
         $('#random-button').hover(function(){
           // mouseenter
-          $(this).animate({'background-color':'#2CCCBC', "color": "#FFF"},300);
-
+          if(!randomMode){
+            $(this).animate({'background-color':'#2CCCBC', "color": "#FFF"},300);
+          }
         }, function(){
           // mouseleave
-          $(this).animate({'background-color':'#d4f4f1', "color": "#666"},300);
-
+          if(!randomMode){
+            $(this).animate({'background-color':'#d4f4f1', "color": "#666"},300);
+          }
         });
 
         $('#logo-navigation-button').click(function(){
@@ -105,44 +140,38 @@
         $('#re-read-label').click(function(){
             makeBook();
         });
-        // Helper functions ----------------------------------
-        function populateBooks(random){
-          var library = document.getElementById("library-div");
-          for(var i = 1; i <= 12; i ++){
-            var filename = "../graphics/" + i + ".jpeg";
-            var image = document.createElement("IMG");
-            image.src = filename;
-            image.id = i + "";
-            image.className = "draggable book-image unselected";
-            image.style.padding = "5px";
-            image.style.height = "190px";
-            image.style.width = "90px";
-            image.style.opacity = "0";
 
-            if(random){
-              image.style.position = "absolute";
-              image.style.left = Math.floor(getNumber(widthPool) * (libraryWidth / widthBlock)) + "px";
-              image.style.top = Math.floor(getNumber(heightPool) * (libraryHeight / heightBlock))+ "px";
-              console.log(image.style.left);
-              console.log(image.style.top);
+        // Helper functions ----------------------------------
+        function populateBooks(randomMode){
+
+          var library = document.getElementById("library-div");
+          for(var i = 0; i < books.length; i ++){
+
+            // Random mode
+            if(randomMode){
+              var curBook = books[i];
+              var x = curBook["xLoc"];
+              var y = curBook["yLoc"];
             }
+            else{
+              var x = null;
+              var y = null;
+            }
+            var image = createBook(i+1, x, y, randomMode);
             library.appendChild(image); 
             $(image).animate({opacity:1}, 1000);
-
-            if(i == 12){
-              $(image).removeClass('unselected');
-              $(image).addClass('selected');
-              $(image).addClass('openable');
+            
+            
+            if(randomMode){
+            // Add draggable functionality          
+              $(image).each(function(){
+                  $(this).draggable({
+                    scroll:false,
+                    containment:$(this).parent()
+                  });
+              });
             }
 
-            $(image).each(function(){
-                $(this).width($(this).width() * 1.5);
-                $(this).draggable({
-                  scroll:false,
-                  containment:$(this).parent()
-                });
-            });
-            
             $(image).mousemove(function(){
               notDrag = false;
             });
@@ -158,6 +187,8 @@
               $(this).addClass('top').removeClass('bottom');
               $(this).siblings().removeClass('top').addClass('bottom');              
               notDrag = true;
+
+              $(this).animate({height:smallBookHeight}, 500);
             });
 
             $(image).mousedown(function(){
@@ -167,12 +198,46 @@
               $(this).addClass('selected');
               $(this).siblings().removeClass('selected').addClass('unselected');
               
+              $(this).animate({height:bigBookHeight}, 500);
             });
 
           }
 
+          
+
         }
 
+        function createBook(bookId, x, y, randomMode){
+          var filename = "../graphics/" + bookId + ".jpeg";
+          var image = document.createElement("IMG");
+          image.src = filename;
+          image.id = bookId + "";
+          image.style.padding = "5px";
+          console.log(x)
+          console.log(y)
+          if(x != null){
+            image.style.left = x;
+            image.style.top = y;              
+          }
+          if(randomMode){
+            image.className = "draggable book-image unselected smaller random-mode";
+          }else{
+            image.className = "draggable book-image unselected smaller ordered-mode";
+          }
+          return image;
+        }
+
+        function saveBookLocations(){
+          for(var i = 0; i < books.length; i ++){
+            var bookId = i + 1;
+            var bookCover = document.getElementById(bookId);
+            var y = $(bookCover).css("top");
+            var x = $(bookCover).css("left");
+            books[i]["xLoc"] = x;
+            books[i]["yLoc"] = y;
+          }
+          console.log(JSON.stringify(books));
+        }
 
         function clearBooks(){
           var library = document.getElementById("library-div");
@@ -224,30 +289,6 @@
             //$('.book-popup').remove();
             //$("#mybook").hide();
             $(".book-popup").hide();
-
-            // // animate text
-            // $('#boldText').animate({"font-weight": "900"},500);
-            // $('#boldText').animate({"font-weight": "normal"},500);
-            //  $('#boldText').animate({"font-weight": "900"},500);
-            // $('#boldText').animate({"font-weight": "normal"},500);
-            //  $('#boldText').animate({"font-weight": "900"},500);
-            // $('#boldText').animate({"font-weight": "normal"},500);
-            //  $('#boldText').animate({"font-weight": "900"},500);
-            // $('#boldText').animate({"font-weight": "normal"},500);
-            //  $('#boldText').animate({"font-weight": "900"},500);
-            // $('#boldText').animate({"font-weight": "normal"},500);
-            //  $('#boldText').animate({"font-weight": "900"},500);
-            // $('#boldText').animate({"font-weight": "normal"},500);
-            //  $('#boldText').animate({"font-weight": "900"},500);
-            // $('#boldText').animate({"font-weight": "normal"},500);
-            //  $('#boldText').animate({"font-weight": "900"},500);
-            // $('#boldText').animate({"font-weight": "normal"},500);
-            //  $('#boldText').animate({"font-weight": "900"},500);
-            // $('#boldText').animate({"font-weight": "normal"},500);
-            //  $('#boldText').animate({"font-weight": "900"},500);
-            // $('#boldText').animate({"font-weight": "normal"},500);
-            //  $('#boldText').animate({"font-weight": "900"},500);
-            // $('#boldText').animate({"font-weight": "normal"},500);
 
           });
 
