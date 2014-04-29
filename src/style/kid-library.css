@@ -6,6 +6,10 @@
 body{
 	background-color:#DDDDDD; 
 }
+ul
+{
+    list-style-type: none;
+}
 .top {z-index: 2; position: relative; background-color: yellow;}
 .bottom {z-index: 1; position: relative}
 .a{
@@ -14,6 +18,7 @@ body{
 .book-image{
 	box-shadow: 0 0 10px #AAAAAA;
 	cursor:pointer;
+	opacity:0;
 }
 .random-mode{
 	position:absolute;
@@ -81,5 +86,8 @@ body{
 	bottom:200px;
 }
 .audio-controls{
+	display:none;
+}
+.ordered-frame{
 	display:none;
 }

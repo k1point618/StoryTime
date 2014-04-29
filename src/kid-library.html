@@ -17,7 +17,7 @@
 
 
     <link href='http://fonts.googleapis.com/css?family=Englebert' rel='stylesheet' type='text/css'>
-
+    <link rel="stylesheet" type="text/css" href="external_js/jquery.gridster.css">
     <script type="text/javascript" src="external_js/jquery-1.9.0.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
     <script> window.jQuery || document.write('<script src="Booklet-master/booklet/jquery-2.1.0.min.js"><\/script>') </script>
@@ -26,7 +26,8 @@
     <script src="Booklet-master/booklet/jquery.easing.1.3.js"></script>
     <script src="Booklet-master/booklet/jquery.booklet.latest.js"></script>
     <script type="text/javascript" src="books.json"></script>
-    
+    <script src="external_js/jquery.gridster.min.js" type="text/javascript" charset="utf-8"></script>
+
     <script type="text/javascript">
       $(document).ready(function(){
         
@@ -47,7 +48,7 @@
         $(".book-popup").hide();
         makeBook();
         
-        populateBooks(randomMode);
+        populateRandomBooks();
         var thisButton = document.getElementById("random-button");
         thisButton.disabled = true;
         thisButton.style.backgroundColor = "#2CCCBC";
@@ -61,7 +62,7 @@
           saveBookLocations();
           clearBooks();
           randomMode = false;
-          populateBooks(randomMode);
+          populateGridBooks();
           //Make this button not clickable
           var thisButton = document.getElementById("order-button");
           thisButton.disabled = true;
@@ -93,7 +94,7 @@
           }
           clearBooks();
           randomMode = true;
-          populateBooks(randomMode);
+          populateRandomBooks();
           //Make this button not clickable
           var thisButton = document.getElementById("random-button");
           thisButton.disabled = true;
@@ -142,36 +143,25 @@
         });
 
         // Helper functions ----------------------------------
-        function populateBooks(randomMode){
+        function populateRandomBooks(){
 
           var library = document.getElementById("library-div");
           for(var i = 0; i < books.length; i ++){
 
             // Random mode
-            if(randomMode){
-              var curBook = books[i];
-              var x = curBook["xLoc"];
-              var y = curBook["yLoc"];
-            }
-            else{
-              var x = null;
-              var y = null;
-            }
+            var curBook = books[i];
+            var x = curBook["xLoc"];
+            var y = curBook["yLoc"];
             var image = createBook(i+1, x, y, randomMode);
             library.appendChild(image); 
             $(image).animate({opacity:1}, 1000);
-            
-            
-            if(randomMode){
-            // Add draggable functionality          
-              $(image).each(function(){
-                  $(this).draggable({
-                    scroll:false,
-                    containment:$(this).parent()
-                  });
-              });
-            }
 
+            // Add draggable functionality          
+            $(image).draggable({
+                  scroll:false,
+                  containment:$(this).parent()
+            });
+          
             $(image).mousemove(function(){
               notDrag = false;
             });
@@ -188,7 +178,7 @@
               $(this).siblings().removeClass('top').addClass('bottom');              
               notDrag = true;
 
-              $(this).animate({height:smallBookHeight}, 500);
+              $(this).animate({height:smallBookHeight}, 300);
             });
 
             $(image).mousedown(function(){
@@ -198,23 +188,88 @@
               $(this).addClass('selected');
               $(this).siblings().removeClass('selected').addClass('unselected');
               
-              $(this).animate({height:bigBookHeight}, 500);
+              $(this).animate({height:bigBookHeight}, 300);
             });
+            
+          }// End for loop
+        }
 
+        function populateGridBooks(){
+          var library = document.getElementById("library-div");
+          var gridsterDiv = document.createElement("DIV");
+          gridsterDiv.className = "gridster";
+          library.appendChild(gridsterDiv);
+
+          var ul = document.createElement("UL");
+          gridsterDiv.appendChild(ul);
+
+          var numRow = 2;
+          var numCol = 6;
+          var curID = 1;
+
+          for(var i = 0; i < numRow; i ++){
+
+            for(var j = 0; j < numCol; j ++){
+              var li = document.createElement("li");
+              li.id = curID;
+              li.setAttribute("data-row", i+1);
+              li.setAttribute("data-col", j+1);
+              li.setAttribute("data-sizex", 1);
+              li.setAttribute("data-sizey", 1);
+
+              var image = createBook(curID, null, null, randomMode);
+              curID += 1;
+
+              li.appendChild(image);
+              ul.appendChild(li);
+              $(image).animate({opacity:1}, 1000);
+
+              $(image).mousemove(function(){
+                notDrag = false;
+              });
+
+              $(image).mouseup(function(){
+                if($(this).parent().hasClass('openable') && notDrag){
+                  openBook($(this));
+                }
+                if($(this).parent().hasClass('selected')){
+                  $(this).parent().addClass('openable');
+                  $(this).parent().siblings().removeClass('openable');
+                }
+                notDrag = true;
+
+                $(this).animate({height:smallBookHeight}, 300);
+              });
+
+              $(image).mousedown(function(){
+                notDrag = true;
+                $(this).parent().removeClass('unselected');
+                $(this).parent().addClass('selected');
+                $(this).parent().siblings().removeClass('selected').addClass('unselected');
+                
+                $(this).animate({height:bigBookHeight}, 300);
+              });
+            }
           }
 
-          
+          var gridster;
 
+          $(function() {
+              gridtster = $(".gridster > ul").gridster({
+                  widget_margins: [10, 10],
+                  widget_base_dimensions: [170, 200],
+                  min_cols: 6,
+                  min_rows: 2,
+              }).data('gridster');
+          });
         }
 
         function createBook(bookId, x, y, randomMode){
           var filename = "../graphics/" + bookId + ".jpeg";
           var image = document.createElement("IMG");
           image.src = filename;
-          image.id = bookId + "";
+          image.id = bookId;
           image.style.padding = "5px";
-          console.log(x)
-          console.log(y)
           if(x != null){
             image.style.left = x;
             image.style.top = y;              
@@ -222,7 +277,7 @@
           if(randomMode){
             image.className = "draggable book-image unselected smaller random-mode";
           }else{
-            image.className = "draggable book-image unselected smaller ordered-mode";
+            image.className = "book-image unselected smaller";
           }
           return image;
         }
@@ -346,6 +401,7 @@
         };
 
         function range(i){return i?range(i-1).concat(i):[]};
+
 
       });
       

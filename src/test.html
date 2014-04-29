@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>gridster.js Test Suite</title>
+  <!-- Load local jQuery, removing access to $ (use jQuery, not $). -->
+  <script type="text/javascript" src="external_js/jquery-1.10.1.js"></script>
+  <script src="external_js/jquery.gridster.min.js" type="text/javascript" charset="utf-8"></script>
+  <link rel="stylesheet" type="text/css" href="external_js/jquery.gridster.css">
+  <script type="text/javascript">
+      var gridster;
+
+      $(function() {
+          gridtster = $(".gridster > ul").gridster({
+              widget_margins: [10, 10],
+              widget_base_dimensions: [140, 140],
+              min_cols: 6
+          }).data('gridster');
+      });
+  </script> 
+
+</head>
+<body>
+  
+
+  <div class="gridster">
+      <ul id="hello">
+
+      <li id="li1" data-row="1" data-col="1" data-sizex="1" data-sizey="1">Hello</li>
+      <li id="li2" data-row="2" data-col="1" data-sizex="1" data-sizey="1">World</li>
+      <li id="li3" data-row="3" data-col="1" data-sizex="1" data-sizey="1"></li>
+      <li id="li4" data-row="4" data-col="1" data-sizex="2" data-sizey="1"></li>
+      <li id="li5" data-row="1" data-col="2" data-sizex="1" data-sizey="1"></li>
+      <li id="li6" data-row="2" data-col="2" data-sizex="1" data-sizey="1"></li>
+      <li id="li7" data-row="3" data-col="2" data-sizex="1" data-sizey="1"></li>
+
+      <li id="li8" data-row="1" data-col="3" data-sizex="2" data-sizey="1"></li>
+      <li id="li9" data-row="2" data-col="3" data-sizex="2" data-sizey="1"></li>
+      <li id="li10" data-row="3" data-col="3" data-sizex="2" data-sizey="1"></li>
+      <li id="li11" data-row="4" data-col="3" data-sizex="2" data-sizey="1"></li>
+
+
+      <li id="li12" data-row="1" data-col="5" data-sizex="2" data-sizey="1"></li>
+      <li id="li13" data-row="2" data-col="5" data-sizex="2" data-sizey="1"></li>
+      <li id="li14" data-row="3" data-col="5" data-sizex="2" data-sizey="1"></li>
+      <li id="li15" data-row="4" data-col="5" data-sizex="1" data-sizey="1"></li>
+      <li id="li16" data-row="4" data-col="6" data-sizex="1" data-sizey="1"></li>
+
+      <li id="li17" data-row="1" data-col="8" data-sizex="2" data-sizey="1"></li>
+      <li id="li18" data-row="2" data-col="8" data-sizex="2" data-sizey="1"></li>
+      <li id="li19" data-row="3" data-col="8" data-sizex="2" data-sizey="1"></li>
+      <li id="li20" data-row="4" data-col="8" data-sizex="1" data-sizey="1"></li>
+      <li id="li21" data-row="4" data-col="9" data-sizex="1" data-sizey="1"></li>
+
+      </ul>
+</div>
+    </div>
+  </div>
+
+
+</body>
+</html>
