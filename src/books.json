@@ -1,0 +1,13 @@
+var books = [
+    {"id":1,"xLoc":"630px","yLoc":"25px"},
+    {"id":2,"xLoc":"1102px","yLoc":"362px"},
+    {"id":3,"xLoc":"238px","yLoc":"359px"},
+    {"id":4,"xLoc":"816px","yLoc":"393px"},
+    {"id":5,"xLoc":"425px","yLoc":"25px"},
+    {"id":6,"xLoc":"71px","yLoc":"210px"},
+    {"id":7,"xLoc":"933px","yLoc":"29px"},
+    {"id":8,"xLoc":"1139px","yLoc":"153px"},
+    {"id":9,"xLoc":"869px","yLoc":"190px"},
+    {"id":10,"xLoc":"520px","yLoc":"303px"},
+    {"id":11,"xLoc":"929px","yLoc":"247px"},
+    {"id":12,"xLoc":"265px","yLoc":"89px"}]
