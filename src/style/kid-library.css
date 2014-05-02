@@ -61,6 +61,19 @@ ul
 	height:auto;
 	top:20px;
 	cursor: pointer;
+	margin-left:5px;
+	margin-left:5px;
+	left:-40px;
+}
+#restart-button{
+	position:relative;
+	width:70px;
+	height:auto;
+	top:15px;
+	left:-40px;
+	cursor: pointer;
+	margin-left:5px;
+	margin-left:5px;
 }
 
 #mybook {
@@ -73,17 +86,22 @@ ul
 
 .reader{
 	position:absolute;
-	width:70px;
-    height:70px;
-    left: 120px;
-    background-color: #DDD;
-    opacity: 0.6;
+	width:80px;
+    height:auto;
+    bottom: 17px;
 }
 #reader1{
-	bottom: 60px;
+	right: 120px;
 }
 #reader2{
-	bottom:200px;
+	right: 230px;
+}
+.current-reader{
+	opacity:1;
+}
+.other-reader{
+	opacity:0.5;
+	cursor:pointer;
 }
 .audio-controls{
 	display:none;

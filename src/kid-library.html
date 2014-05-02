@@ -327,25 +327,24 @@
               $(".book-popup").hide();
           });
 
-        /*  var cover = document.createElement("IMG");
-          cover.src = "../graphics/GivingTree.jpg";
-          cover.id = "book-cover";
+          // var cover = document.createElement("IMG");
+          // cover.src = "../graphics/GivingTree.jpg";
+          // cover.id = "book-cover";
 
-          // var reader1 = document.createElement("IMG");
-          // reader1.src = "../graphics/user.png";
-          // reader1.className = "reader";
-          // reader1.id = "reader1"
+          var reader1 = document.createElement("IMG");
+          reader1.src = "../graphics/user.png";
+          reader1.className = "reader current-reader";
+          reader1.id = "reader1"
 
-          // var reader2 = document.createElement("IMG");
-          // reader2.src = "../graphics/user.png";
-          // reader2.className = "reader";
-          // reader2.id = "reader2"
+          var reader2 = document.createElement("IMG");
+          reader2.src = "../graphics/user.png";
+          reader2.className = "reader other-reader";
+          reader2.id = "reader2"
 
           
-
-          $div.append(cover);
-          // $div.append(reader1);
-          // $div.append(reader2);*/
+          // $div.append(cover);
+          $(".book-popup").append(reader1);
+          $(".book-popup").append(reader2);
           
           $('#cancel-popup').click(function(){
             $('.blur-overlay').remove();
@@ -365,12 +364,12 @@
             if($(this).attr('name') == "play"){ 
               audio.play();
               $(this).attr('name', "pause");
-              $(this).attr('src', "../graphics/pause.png");
+              $(this).attr('src', "../graphics/pause3.png");
             }
             else if($(this).attr('name') == "pause"){
               audio.pause();
               $(this).attr('name', "play");
-              $(this).attr('src', "../graphics/play2.png");
+              $(this).attr('src', "../graphics/play3.png");
             }
 
             audio.addEventListener('ended', ended);
@@ -520,7 +519,8 @@
 
     <img id="cancel-popup" class="cancel-button"/>
 
-    <img id="play-button" src="../graphics/play2.png" name = "play">
+    <img id="play-button" src="../graphics/play3.png" name = "play">
+    <img id="restart-button" src="../graphics/restart3.png" name = "restart">
   </div>
 
   </body>
