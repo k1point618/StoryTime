@@ -25,6 +25,7 @@
     <script src="Booklet-master/booklet/jquery.easing.1.3.js"></script>
     <script src="Booklet-master/booklet/jquery.booklet.latest.js"></script>
     <script type='text/javascript' src='blur.js'></script>
+    <script type="text/javascript" src="util.js"></script>
 
 
     <script type = "text/javascript">
@@ -309,14 +310,21 @@
 
           $(".book-popup").append(playButton);
 
-
+          $('.blur-overlay').click(function(event){
+              $('.blur-overlay').remove();
+              $(".book-popup").hide();
+              $("#mybook").hide();
+          });
           
     }
 
-    
+    $(document).click(function(event){
+        console.log(event);
+      });
     
 
     function loadListeners(){
+
      /* $(".front").on("click", function(e){
         console.log("clicked front");
         console.log(e.target.parentNode.parentNode.getAttribute('id'));
@@ -371,6 +379,7 @@
       $(currentNode).css("transform","rotateY(0deg)") 
     }
     $(document).ready(function() {
+      
       // Format the booklet
       $("#mybook").booklet({ 
         pageNumbers: false,
@@ -382,14 +391,14 @@
         arrowsHide: true
       });
 
+      $(".book-popup").hide();
+      $("#mybook").hide();
+      $("#mybook").show();
+
+      $('#exit-book').click(function(){
+        $('.blur-overlay').remove();
         $(".book-popup").hide();
         $("#mybook").hide();
-        $("#mybook").show();
-
-        $('#exit-book').click(function(){
-          $('.blur-overlay').remove();
-          $(".book-popup").hide();
-          $("#mybook").hide();
       });
       $('#exit-book-label').click(function(){
           $('.blur-overlay').remove();
@@ -500,6 +509,7 @@
             $('#cancel-button').remove();
             $('.record-button').remove();
           }
+        
           button.style.position = "absolute";
 
           button.style.left = "30%";
@@ -510,6 +520,12 @@
           cancel.className = "cancel-button";
           cancel.style.type = "button";*/
           book.appendChild(record);
+
+          $('.blur-overlay').click(function(event){
+              $('.blur-overlay').remove();
+              $(".book-popup").hide();
+              $("#mybook").hide();
+          });
           loadListeners();
 /*          $(e.target.parentNode.parentNode).css("transform","rotateY(180deg)") 
 
@@ -702,7 +718,7 @@
 
     
 
-    <div class = "book-popup">
+    <div class = "book-popup popup">
     <div id='pointer' style='position:absolute;'><img src = '../graphics/pointer.png'></div>
 
     <div id='mybook' style="height:600px; width:auto;">
