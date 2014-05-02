@@ -25,6 +25,7 @@
     <script src="Booklet-master/booklet/jquery.easing.1.3.js"></script>
     <script src="Booklet-master/booklet/jquery.booklet.latest.js"></script>
     <script type='text/javascript' src='blur.js'></script>
+    <script type="text/javascript" src="util.js"></script>
 
 
     <script type = "text/javascript">
@@ -268,11 +269,17 @@
 
           $(".book-popup").append(playButton);
 
-
+          $('.blur-overlay').click(function(event){
+              $('.blur-overlay').remove();
+              $(".book-popup").hide();
+              $("#mybook").hide();
+          });
           
     }
 
-    
+    $(document).click(function(event){
+        console.log(event);
+      });
     
 
     function loadListeners(){
@@ -326,6 +333,7 @@
       $(currentNode).css("transform","rotateY(0deg)") 
     }
     $(document).ready(function() {
+      
       // Format the booklet
       $("#mybook").booklet({ 
         pageNumbers: false,
@@ -337,14 +345,14 @@
         arrowsHide: true
       });
 
+      $(".book-popup").hide();
+      $("#mybook").hide();
+      $("#mybook").show();
+
+      $('#exit-book').click(function(){
+        $('.blur-overlay').remove();
         $(".book-popup").hide();
         $("#mybook").hide();
-        $("#mybook").show();
-
-        $('#exit-book').click(function(){
-          $('.blur-overlay').remove();
-          $(".book-popup").hide();
-          $("#mybook").hide();
       });
       $('#exit-book-label').click(function(){
           $('.blur-overlay').remove();
@@ -578,7 +586,7 @@
 
     
 
-    <div class = "book-popup">
+    <div class = "book-popup popup">
     <div id='pointer' style='position:absolute;'><img src = '../graphics/pointer.png'></div>
 
     <div id='mybook' style="height:600px; width:auto;">

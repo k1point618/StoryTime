@@ -27,6 +27,7 @@
     <script src="Booklet-master/booklet/jquery.booklet.latest.js"></script>
     <script type="text/javascript" src="books.json"></script>
     <script src="external_js/jquery.gridster.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="util.js"></script>
 
     <script type="text/javascript">
       $(document).ready(function(){
@@ -142,6 +143,7 @@
             makeBook();
         });
 
+        
         // Helper functions ----------------------------------
         function populateRandomBooks(){
 
@@ -319,6 +321,12 @@
           $(".book-popup").show();
           $(".book-popup").animate({opacity:1}, 500);
 
+          $('.blur-overlay').click(function(event){
+              console.log(event);
+              $('.blur-overlay').remove();
+              $(".book-popup").hide();
+          });
+
         /*  var cover = document.createElement("IMG");
           cover.src = "../graphics/GivingTree.jpg";
           cover.id = "book-cover";
@@ -341,10 +349,7 @@
           
           $('#cancel-popup').click(function(){
             $('.blur-overlay').remove();
-            //$('.book-popup').remove();
-            //$("#mybook").hide();
             $(".book-popup").hide();
-
           });
 
           
@@ -380,6 +385,7 @@
           $("#play-button").attr('name', "play");
           $("#play-button").attr('src', "../graphics/play2.png");
         }
+
         function makeBook(){
           $("#mybook").booklet({
             pageNumbers: false,
@@ -454,7 +460,7 @@
       <img src="../graphics/play.png" width="1" height="1" alt="Image 14" />
   </div>
  
-  <div class = "book-popup">
+  <div class = "book-popup popup">
     <div id='mybook' style="height:600px; width:auto;">
       
       <div class="p-title" title='first-page'> 
