@@ -32,6 +32,8 @@
     var vIncr;
     var suppressBookHide = true;
     var mode;
+    var activeBook = false;
+
     function createDescriptionView(){
       boardSize = 2.5;
       var incr = 600/boardSize;
@@ -110,8 +112,7 @@
       img.setAttribute("id",name)
       img.setAttribute("draggable",false);
     
-      //console.log(hIncr, vIncr);
-      //console.log(img);
+
       return img;
     }
 
@@ -148,20 +149,6 @@
         img.height = hIncr + "px";
         img.style.position = "relative";
 
-
-
-
-        //img.style.left = 5 + "px";
-        //img.style.display = "inline";
-        //var p = document.createElement("p");
-
-        //$div.append("<p class='popup-text'>What do you want to name your list?</p>");
-        //$div.append("<input id='popup-answer' class='popup-text' type='text' name='answer' placeholder='Press \<Enter\> to submit.'>");
-        //$div.append($("<img>", {type:"button", id:"cancel-popup-new-list", class:"cancel-button"}));
-
-
-
-
         var tbl = document.createElement("table");
         var tblBody = document.createElement("tbody");
 
@@ -171,41 +158,13 @@
 
         var container = document.createElement("div");
         container.setAttribute("id", "f1_container");
-       /* var card = document.createElement("div");
-        card.setAttribute("id", "f1_card");
-        var front = document.createElement("div");
-        front.className = "front face";
-        front.appendChild(img);
-        var back = document.createElement("div");
-        back.className = "back face center";
-
-        var rec = document.createElement("img");
-        rec.src = '../graphics/record.png';
-        rec.style.position = "relative";
-        rec.style.top = "40%";
-        rec.style.left = "8%"
-        back.appendChild(rec);
-
-        card.appendChild(front);
-        card.appendChild(back);
-        container.appendChild(card);*/
-        //container.height = img.height;
-        //container.width = img.width;
         container.appendChild(img);
 
         cell1.appendChild(container);
         cell1.style.width = "190px";
         row.appendChild(cell1);
         cell2 = document.createElement("td");
-        /*cell2.appendChild(title);
-        cell2.appendChild(text);
-        cell2.appendChild(document.createElement("br"));
-        cell2.appendChild(author);
-        cell2.appendChild(text2);
-        cell2.appendChild(document.createElement("br"));
-        cell2.appendChild(document.createElement("br"));
-        cell2.appendChild(synopsis);
-        cell2.appendChild(text3);*/
+
         cell2.appendChild(boldHTML("Title: "));
         cell2.appendChild(document.createTextNode("The Giving Tree"));
         cell2.appendChild(document.createElement("br"));
@@ -317,51 +276,47 @@
     
 
     function loadListeners(){
-     /* $(".front").on("click", function(e){
-        console.log("clicked front");
-        console.log(e.target.parentNode.parentNode.getAttribute('id'));
-
-        $(e.target.parentNode.parentNode).css("transform","rotateY(180deg)")
-
-        setTimeout(function(){
-          var back = e.target.parentNode.parentNode.children[1];
-          console.log(back.getAttribute('id'));
-          //var back = e.target.parentNode.parentNode.parentNode;
-          var cancel = document.createElement("img");
-          cancel.setAttribute("id", "cancel-book");
-          cancel.className = "cancel-button";
-          cancel.style.type = "button";
-          back.appendChild(cancel);
-        }, 100);
-        
-
-        //  ("book");
-      });
-
-      /*$(".back").on("click", function(e){
-        console.log("clicked back");
-        restoreBook(e.target)
-        if(e.target.getAttribute("id")!="cancel-book"){
-          openBook("book");
-        }/*else{
-          console.log(e.target.parentNode.parentNode.getAttribute('id'));
-          $(e.target.parentNode.parentNode).css("transform","rotateY(0deg)") 
-        }
-        
-        
-      })*/
 
       $("#record-button").on("click",function(e){
         openBook("book");
-      })
+      });
 
       $("#cancel-button").on("click", function(e){
         console.log("clicked cancel");
-        /*console.log(e.target.getAttribute("id"));
-        console.log(e.parentNode.parentNode.parentNode.getAttribute("id"));
-        $(e.target.parentNode.parentNode.parentNode).css("transform","rotateY(-180deg)")*/
-      }
-      )
+      });
+
+      $('#blurrer').hover(function(e){
+        console.log("blah")
+      },function(e){
+        $('#blurrer').remove();
+          $('#cancel-button').remove();
+          $('.record-button').remove();
+          activeBook = false;
+      });
+
+      $('.bookCover').hover(function(e){
+        if(!activeBook){
+          activeBook = true;
+          console.log(e.currentTarget);
+
+          var book = e.currentTarget.parentNode;
+
+          var blur = document.createElement("img");
+          blur.className = "blur-overlay";
+          blur.setAttribute("id","blurrer")
+          blur.style.zIndex = 99;
+          book.appendChild(blur);
+          var record = document.createElement("img");
+          record.setAttribute("id","record");
+          record.className = "record-button";
+          record.style.type = "button";
+          blur.width = e.target.width;
+          blur.height = e.target.height;
+          book.appendChild(record);
+          loadListeners();
+       }
+
+      });
     }
     function restoreBook(target){
       var currentNode = target;
@@ -413,58 +368,30 @@
         console.log(suppressBookHide);
         console.log("visible? " + $('#mybook').is(':visible'));
        console.log(e.target.className);
+       console.log(e.target.id);
 
         if(e.target.className != "bookCover" && e.target.className != "blur-overlay"){
           $('#blurrer').remove();
           $('#cancel-button').remove();
           $('.record-button').remove();
-          //openBook("book");
+          activeBook = false;
 
         }
-        /*if($('#mybook').is(':visible') && !suppressBookHide) {
-          console.log("book is hidden");
-          $("#mybook").hide();
-        }
-        suppressBookHide = false;*/
+
       });
 
-    /*  $('#library-div').blurjs({
-        draggable: true,
-        overlay: 'rgba(255,255,255,0.1)',
-        radius:10
-      }); */
 
-      // Hide the possible book at first
-      //$("#mybook").hide()
-  /*    var cue = document.getElementById("recording");
-      $("h3").mouseup(function(){
-        cue.innerHTML = "<img src = '../graphics/not-record.png'>";
-      });
-      $("h3").mousedown(function(){
-        cue.innerHTML = "<img src = '../graphics/record.png'>";
-        var pointer = document.getElementById("pointer");
-        pointer.innerHTML = "";
-        $("#pointer").finish();
-      });
-
-      $("#library-div").on("click", function(e) {
-        console.log("clicked, trying to exit");
-        console.log(suppressBookHide);
-        console.log("visible? " + $('#mybook').is(':visible'));
-        if($('#mybook').is(':visible') && !suppressBookHide) {
-          console.log("book is hidden");
-          $("#mybook").hide();
-        }
-        suppressBookHide = false;
-      });   */
-
-      //createGridView(4);
       createRowView();
       tableButton = document.getElementById("table-button");
       tableButton.style.color = "#FFF";
       tableButton.style.backgroundColor = "#2CCCBC";
      
       // Clicking on a book should unhide the book view
+      
+      
+
+
+
       $('.imgContain').on("click","a,img", function (e) {
         var id = e.target.getAttribute('id');
         e.preventDefault();
@@ -472,62 +399,11 @@
           $('#blurrer').remove();
           $('#cancel-button').remove();
           $('.record-button').remove();
+          activeBook = false;
           openBook("book");
 
         }
-        if(e.target.className!="record-button" && e.target.parentNode.childNodes.length == 1){
 
-          console.log("clicked img");
-          var book = e.target.parentNode;
-          var blur = document.createElement("img");
-          blur.className = "blur-overlay";
-          blur.setAttribute("id","blurrer")
-          blur.style.zIndex = 99;
-          book.appendChild(blur);
-          var record = document.createElement("img");
-          record.setAttribute("id","record");
-          record.className = "record-button";
-          record.style.type = "button";
-          blur.width = e.target.width;
-          blur.height = e.target.height;
-          var button = document.createElement("input");
-          button.type = "button";
-          button.value = "Cancel";
-          button.id = "cancel-button";
-          button.style.zIndex = 100;
-          button.onclick = function(){
-            $('#blurrer').remove();
-            $('#cancel-button').remove();
-            $('.record-button').remove();
-          }
-          button.style.position = "absolute";
-
-          button.style.left = "30%";
-          button.style.top = "55%";
-          book.appendChild(button);
-          /*var cancel = document.createElement("img");
-          cancel.setAttribute("id", "cancel-book");
-          cancel.className = "cancel-button";
-          cancel.style.type = "button";*/
-          book.appendChild(record);
-          loadListeners();
-/*          $(e.target.parentNode.parentNode).css("transform","rotateY(180deg)") 
-
-          setTimeout(function(){
-            var back = e.target.parentNode.parentNode;
-            console.log(back.getAttribute('id'));
-            console.log(back.className);
-            //var back = e.target.parentNode.parentNode.parentNode;
-            var cancel = document.createElement("img");
-            cancel.setAttribute("id", "cancel-book");
-            cancel.className = "cancel-button";
-            cancel.style.type = "button";
-            back.appendChild(cancel);
-          }, 100);*/
-        }
-          //openBook("book");
-        //alert('You Clicked On Book '+id);
-        //window.location.href = 'recording.html'
       });
 
       loadListeners();
