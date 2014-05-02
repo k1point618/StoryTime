@@ -24,18 +24,26 @@ body{
     width:auto;
 }
 
-.book-popup{
-  position:absolute;
-    border:solid 1px #2CCCBC;
-    background-image: url('../../graphics/rainbows.png');
-    height:500px;
-    width:1000px;
+.popup{
+    position:absolute;
+    border:solid 2px #2CCCBC;
+    background-color:#EFEBD4;
+    height:250px;
+    width:700px;
     z-index:200;
     top: 0;
     left: 0;
-    bottom:0;
+    bottom:5%;
     right: 0;
     margin:auto;
+    text-align: center;
+    padding: 10px, 20px, 20px, 20px; 
+    
+}
+.book-popup{
+    background-image: url('../../graphics/rainbows.png');
+    height:500px;
+    width:1000px;
     text-align: center;
     padding: 50px 20px 120px 20px; 
 

@@ -117,22 +117,6 @@ table{
   height: 93.65%;
 }
 
-.popup{
-    position:absolute;
-    border:solid 2px #2CCCBC;
-    background-color:#EFEBD4;
-    height:250px;
-    width:700px;
-    z-index:200;
-    top: 0;
-    left: 0;
-    bottom:10%;
-    right: 0;
-    margin:auto;
-    text-align: center;
-    padding: 10px, 20px, 20px, 20px; 
-    
-}
 
 
 #overlay{
@@ -183,23 +167,6 @@ ul li a {
 
 }
 
-
-.popup{
-    position:absolute;
-    border:solid 2px #2CCCBC;
-    background-color:#EFEBD4;
-    height:250px;
-    width:700px;
-    z-index:200;
-    top: 0;
-    left: 0;
-    bottom:10%;
-    right: 0;
-    margin:auto;
-    text-align: center;
-    padding: 10px, 20px, 20px, 20px; 
-    
-}
 
 #grid-button{
   right:225px;
