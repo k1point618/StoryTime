@@ -27,6 +27,7 @@
     <script src="Booklet-master/booklet/jquery.booklet.latest.js"></script>
     <script type="text/javascript" src="books.json"></script>
     <script src="external_js/jquery.gridster.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="util.js"></script>
 
     <script type="text/javascript">
       $(document).ready(function(){
@@ -142,6 +143,7 @@
             makeBook();
         });
 
+        
         // Helper functions ----------------------------------
         function populateRandomBooks(){
 
@@ -320,32 +322,34 @@
           $(".book-popup").show();
           $(".book-popup").animate({opacity:1}, 500);
 
-        /*  var cover = document.createElement("IMG");
-          cover.src = "../graphics/GivingTree.jpg";
-          cover.id = "book-cover";
+          $('.blur-overlay').click(function(event){
+              console.log(event);
+              $('.blur-overlay').remove();
+              $(".book-popup").hide();
+          });
 
-          // var reader1 = document.createElement("IMG");
-          // reader1.src = "../graphics/user.png";
-          // reader1.className = "reader";
-          // reader1.id = "reader1"
+          // var cover = document.createElement("IMG");
+          // cover.src = "../graphics/GivingTree.jpg";
+          // cover.id = "book-cover";
 
-          // var reader2 = document.createElement("IMG");
-          // reader2.src = "../graphics/user.png";
-          // reader2.className = "reader";
-          // reader2.id = "reader2"
+          var reader1 = document.createElement("IMG");
+          reader1.src = "../graphics/user.png";
+          reader1.className = "reader current-reader";
+          reader1.id = "reader1"
+
+          var reader2 = document.createElement("IMG");
+          reader2.src = "../graphics/user.png";
+          reader2.className = "reader other-reader";
+          reader2.id = "reader2"
 
           
-
-          $div.append(cover);
-          // $div.append(reader1);
-          // $div.append(reader2);*/
+          // $div.append(cover);
+          $(".book-popup").append(reader1);
+          $(".book-popup").append(reader2);
           
           $('#cancel-popup').click(function(){
             $('.blur-overlay').remove();
-            //$('.book-popup').remove();
-            //$("#mybook").hide();
             $(".book-popup").hide();
-
           });
 
           
@@ -361,12 +365,12 @@
             if($(this).attr('name') == "play"){ 
               audio.play();
               $(this).attr('name', "pause");
-              $(this).attr('src', "../graphics/pause.png");
+              $(this).attr('src', "../graphics/pause3.png");
             }
             else if($(this).attr('name') == "pause"){
               audio.pause();
               $(this).attr('name', "play");
-              $(this).attr('src', "../graphics/play2.png");
+              $(this).attr('src', "../graphics/play3.png");
             }
 
             audio.addEventListener('ended', ended);
@@ -381,6 +385,7 @@
           $("#play-button").attr('name', "play");
           $("#play-button").attr('src', "../graphics/play2.png");
         }
+
         function makeBook(){
           $("#mybook").booklet({
             pageNumbers: false,
@@ -455,7 +460,7 @@
       <img src="../graphics/play.png" width="1" height="1" alt="Image 14" />
   </div>
  
-  <div class = "book-popup">
+  <div class = "book-popup popup">
     <div id='mybook' style="height:600px; width:auto;">
       
       <div class="p-title" title='first-page'> 
@@ -515,7 +520,8 @@
 
     <img id="cancel-popup" class="cancel-button"/>
 
-    <img id="play-button" src="../graphics/play2.png" name = "play">
+    <img id="play-button" src="../graphics/play3.png" name = "play">
+    <img id="restart-button" src="../graphics/restart3.png" name = "restart">
   </div>
 
   </body>
