@@ -5,7 +5,8 @@ var books = [
         "yLoc": "25px",
         "list": "cats",
         "title": "Green Eggs and Ham",
-        "author": "Dr. Seuss"
+        "author": "Dr. Seuss",
+        "synopsis": "The Giving Tree is a children's picture book written and illustrated by Shel Silverstein. First published in 1964 by Harper & Row, it has become one of Silverstein's best known titles and has been translated into numerous languages.",
     },
     {
         "id": 2,
@@ -13,7 +14,7 @@ var books = [
         "yLoc": "362px",
         "list": "cats",
         "title": "The Cat in the Hat",
-        "author": "Dr. Seuss"
+        "author": "Dr. Seuss", 
     },
     {
         "id": 3,

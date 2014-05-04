@@ -72,13 +72,38 @@ table{
 }
 
 #play-button{
-  position:relative;
-  width:80px;
+  position:absolute;
+  width:70px;
   height:auto;
-  top:20px;
+  /*top:20px;*/
+  bottom: 19px;
+  left: 130px;
   cursor: pointer;
 }
-
+#save-button{
+  position:absolute;
+  width:70px;
+  height:auto;
+  /*top:15px;*/
+  bottom: 19px;
+  left: 240px;
+  cursor: pointer;
+}
+#trash-button{
+  position:absolute;
+  width:70px;
+  height:auto;
+  /*top:15px;*/
+  bottom: 19px;
+  left: 350px;
+  cursor: pointer;
+}
+#recording{
+  position:absolute;
+  bottom: 33px;
+  right: 130px;
+  cursor: pointer;
+}
 #pointer {
   left: 430px;
   top: 100px;
