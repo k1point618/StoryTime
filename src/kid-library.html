@@ -311,7 +311,8 @@
             height: '100%',
             width: '80%',
             closed: true,
-            autoCenter: true
+            autoCenter: true,
+            arrows: true,
           });
           
           $("body").append("<div class='blur-overlay' style='opacity:0;'></div>");
@@ -327,25 +328,24 @@
               $(".book-popup").hide();
           });
 
-        /*  var cover = document.createElement("IMG");
-          cover.src = "../graphics/GivingTree.jpg";
-          cover.id = "book-cover";
+          // var cover = document.createElement("IMG");
+          // cover.src = "../graphics/GivingTree.jpg";
+          // cover.id = "book-cover";
 
-          // var reader1 = document.createElement("IMG");
-          // reader1.src = "../graphics/user.png";
-          // reader1.className = "reader";
-          // reader1.id = "reader1"
+          var reader1 = document.createElement("IMG");
+          reader1.src = "../graphics/user.png";
+          reader1.className = "reader current-reader";
+          reader1.id = "reader1"
 
-          // var reader2 = document.createElement("IMG");
-          // reader2.src = "../graphics/user.png";
-          // reader2.className = "reader";
-          // reader2.id = "reader2"
+          var reader2 = document.createElement("IMG");
+          reader2.src = "../graphics/user.png";
+          reader2.className = "reader other-reader";
+          reader2.id = "reader2"
 
           
-
-          $div.append(cover);
-          // $div.append(reader1);
-          // $div.append(reader2);*/
+          // $div.append(cover);
+          $(".book-popup").append(reader1);
+          $(".book-popup").append(reader2);
           
           $('#cancel-popup').click(function(){
             $('.blur-overlay').remove();
@@ -361,16 +361,23 @@
             }
             var title = divElement.title;
             console.log(title);
+            //Figure out reader's user name and append to title
+            var userID = $('.current-reader').attr("id");
+            console.log(userID);
+            title = title + "-" + userID;
+            console.log(title);
+
+            //Play or pause audio
             var audio = document.getElementById(title);
             if($(this).attr('name') == "play"){ 
               audio.play();
               $(this).attr('name', "pause");
-              $(this).attr('src', "../graphics/pause.png");
+              $(this).attr('src', "../graphics/pause3.png");
             }
             else if($(this).attr('name') == "pause"){
               audio.pause();
               $(this).attr('name', "play");
-              $(this).attr('src', "../graphics/play2.png");
+              $(this).attr('src', "../graphics/play3.png");
             }
 
             audio.addEventListener('ended', ended);
@@ -378,12 +385,46 @@
 
           $(".book-popup").append($("#play-button"));
 
-          
+          $("#restart-button").click(function(){
+            if ($('.b-p1').hasClass('b-page-0')){
+              var divElement = $('.b-p2').find('.p-title')[0];
+            }else{
+              var divElement = $('.b-p1').find('.p-title')[0];
+            }
+            var title = divElement.title;
+            console.log(title);
+            //Figure out reader's user name and append to title
+            var userID = $('.current-reader').attr("id");
+            console.log(userID);
+            title = title + "-" + userID;
+            console.log(title);
+
+            var audio = document.getElementById(title);
+            audio.load();
+            $('#play-button').attr('name', "play");
+            $('#play-button').attr('src', "../graphics/play3.png");
+            console.log("reloaded");
+
+          }); 
+
+          $(".reader").click(function(){
+            if($(this).hasClass(".current-reader")){
+              return;
+            }
+            var cur = $(".current-reader");
+            var oth = $(".other-reader");
+            cur.addClass('other-reader');
+            cur.removeClass('current-reader');
+            oth.addClass('current-reader');
+            oth.removeClass('other-reader');
+           
+          });
         }
 
         function ended(){
           $("#play-button").attr('name', "play");
-          $("#play-button").attr('src', "../graphics/play2.png");
+          $("#play-button").attr('src', "../graphics/play3.png");
+          this.load();
         }
 
         function makeBook(){
@@ -467,8 +508,8 @@
         <center> 
           <h3>The Giving Tree</h3>
           <img src = '../graphics/book/GivingTree.jpg'> 
-          <audio controls id="first-page" class="audio-controls">
-            <source src="../audios/first-page.mp3" type="audio/mp3">
+          <audio controls id="first-page-reader1" class="audio-controls">
+            <source src="../audios/first-page-reader1.mp3" type="audio/mp3">
             Your browser does not support the audio element.
           </audio>
         </center>
@@ -478,11 +519,15 @@
       <div class="p-title" title='second-page'>
           <div class = "book-text" style = "left:15px; top:300px;">Once there was a tree</div>
           <img src = '../graphics/book/page1.png'>
-          <audio controls id="second-page" class="audio-controls">
-            <source src="../audios/second-page.mp3" type="audio/mp3">
+          <audio controls id="second-page-reader1" class="audio-controls">
+            <source src="../audios/second-page-reader1.mp3" type="audio/mp3">
             Your browser does not support the audio element.
           </audio>
-      </div>
+<!--           <audio controls id="second-page-reader2" class="audio-controls">
+            <source src="../audios/second-page-reader2.mp3" type="audio/mp3">
+            Your browser does not support the audio element.
+          </audio>
+ -->      </div>
       <div  class="p-title" title='third-page'>
         <div class = "book-text" style = "width:150px; left:220px; top:180px;">And she loved a little boy</div>
         <img src = '../graphics/book/page2.png'>
@@ -491,8 +536,8 @@
       <div  class="p-title" title='fourth-page'>
         <div class = "book-text" style = "left:200px; top:210px;">And every day the boy would come</div>
         <img src = '../graphics/book/page3.png'>
-        <audio controls id="fourth-page" class="audio-controls">
-          <source src="../audios/fourth-page.mp3" type="audio/mp3">
+        <audio controls id="fourth-page-reader1" class="audio-controls">
+          <source src="../audios/fourth-page-reader1.mp3" type="audio/mp3">
           Your browser does not support the audio element.
         </audio>  
       </div>
@@ -503,8 +548,8 @@
 
       <div  class="p-title" title='sixth-page'>
         <h3 style="top:200px; position:absolute; left:150px">The End.</h3>
-        <audio controls id="sixth-page" class="audio-controls">
-          <source src="../audios/sixth-page.mp3" type="audio/mp3">
+        <audio controls id="sixth-page-reader1" class="audio-controls">
+          <source src="../audios/sixth-page-reader1.mp3" type="audio/mp3">
           Your browser does not support the audio element.
         </audio>
       </div>
@@ -520,7 +565,8 @@
 
     <img id="cancel-popup" class="cancel-button"/>
 
-    <img id="play-button" src="../graphics/play2.png" name = "play">
+    <img id="play-button" src="../graphics/play3.png" name = "play">
+    <img id="restart-button" src="../graphics/restart3.png" name = "restart">
   </div>
 
   </body>
