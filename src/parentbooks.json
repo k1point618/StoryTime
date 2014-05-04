@@ -1,0 +1,13 @@
+var books = [
+    {"id":1,"list":"cats","title":"Green Eggs and Ham","author":"Dr. Seuss"},
+    {"id":2,"list":"cats","title":"The Cat in the Hat","author":"Dr. Seuss"},
+    {"id":3,"list":"travel","title":"Alice's Adventures in Wonderland","author":"Lewis Carroll"},
+    {"id":4,"list":"travel","title":"Oh, the Places You'll Go!","author":"Dr. Seuss"},
+    {"id":5,"list":"discover","title":"Alexander and the Terrible, Horrible, No Good, Very Bad Day","author":"Judith Viorst"},
+    {"id":6,"list":"discover","title":"Brown Bear, Brown Bear, What Do You Say?","author":"Bill Martin Jr."},
+    {"id":7,"list":"nature","title":"The Giving Tree","author":"Shel Silverstein"},
+    {"id":8,"list":"travel","title":"The Wonderful Wizard of Oz","author":"L. Frank Baum"},
+    {"id":9,"list":"discover","title":"One Fish, Two Fish, Red Fish, Blue Fish","author":"Dr Seuss"},
+    {"id":10,"list":"nature","title":"Where the Wild Things Are","author":"Maurice Sendak"},
+    {"id":11,"list":"discover","title":"Charlotte's Web","author":"E. B. White"},
+    {"id":12,"list":"religious","title":"The Lion, the Witch, and the Wardrobe","author":"C.S. Lewis"}]
