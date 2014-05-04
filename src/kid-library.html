@@ -405,8 +405,20 @@
             $('#play-button').attr('src', "../graphics/play3.png");
             console.log("reloaded");
 
-         }); 
+          }); 
 
+          $(".reader").click(function(){
+            if($(this).hasClass(".current-reader")){
+              return;
+            }
+            var cur = $(".current-reader");
+            var oth = $(".other-reader");
+            cur.addClass('other-reader');
+            cur.removeClass('current-reader');
+            oth.addClass('current-reader');
+            oth.removeClass('other-reader');
+           
+          });
         }
 
         function ended(){
