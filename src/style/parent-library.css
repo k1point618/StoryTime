@@ -100,8 +100,15 @@ table{
 }
 #recording{
   position:absolute;
-  bottom: 33px;
+  bottom: 47px;
   right: 130px;
+  cursor: pointer;
+}
+#reader{
+  position:absolute;
+  height: 80px;
+  bottom: 17px;
+  right: 180px;
   cursor: pointer;
 }
 #pointer {

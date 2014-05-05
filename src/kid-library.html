@@ -198,39 +198,71 @@
 
         function populateGridBooks(){
           var library = document.getElementById("library-div");
-          var gridsterDiv = document.createElement("DIV");
-          gridsterDiv.className = "gridster";
-          library.appendChild(gridsterDiv);
+          
+          // var grid = document.createElement("DIV");
+          // library.appendChild(grid);
 
-          var ul = document.createElement("UL");
-          gridsterDiv.appendChild(ul);
+          // var gridsterDiv = document.createElement("DIV");
+          // gridsterDiv.className = "gridster";
+          // library.appendChild(gridsterDiv);
 
-          var numRow = 2;
-          var numCol = 6;
+          // var ul = document.createElement("UL");
+          // gridsterDiv.appendChild(ul);
+
+          var maxRow = 2;
+          var maxCol = 6;
           var curID = 1;
 
-          for(var i = 0; i < numRow; i ++){
+          var totalY = library.offsetHeight - 100;
+          var totalX = library.offsetWidth;
+          var gridY = totalY / maxRow;
+          var gridX = totalX / maxCol;
+          var numBooks = 0;
 
-            for(var j = 0; j < numCol; j ++){
-              var li = document.createElement("li");
-              li.id = curID;
-              li.setAttribute("data-row", i+1);
-              li.setAttribute("data-col", j+1);
-              li.setAttribute("data-sizex", 1);
-              li.setAttribute("data-sizey", 1);
+          for(var i = 0; i < maxRow; i ++){
+
+            for(var j = 0; j < maxCol; j ++){
+
+              while(books[curID-1]['list'] == "discover"){
+                curID += 1;
+              }
+
+              var box = document.createElement("DIV");
+              box.id = curID;
+              box.className = "grid";
+              box.setAttribute("name", i * maxCol + j + 1);
+              library.appendChild(box);
+              $(box).css("position", "absolute");
+              $(box).css("top", i * gridY + "px");
+              $(box).css("left", j * gridX + "px");
+              $(box).css("height", gridY + "px");
+              $(box).css("width", gridX + "px");
+              // var li = document.createElement("li");
+              // li.id = curID;
+
+              // li.setAttribute("data-row", i+1);
+              // li.setAttribute("data-col", j+1);
+              // li.setAttribute("data-sizex", 1);
+              // li.setAttribute("data-sizey", 1);
 
               var image = createBook(curID, null, null, randomMode);
               curID += 1;
+              box.appendChild(image);
+              numBooks += 1;
 
-              li.appendChild(image);
-              ul.appendChild(li);
+              // li.appendChild(image);
+              // ul.appendChild(li);
               $(image).animate({opacity:1}, 1000);
+              $(image).css("z-index", "120");
 
               $(image).mousemove(function(){
                 notDrag = false;
               });
 
-              $(image).mouseup(function(){
+              $(image).mouseup(function(event){
+                $(this).parent().css("z-index", "120");
+                $(this).css("z-index", "120");
+
                 if($(this).parent().hasClass('openable') && notDrag){
                   openBook($(this));
                 }
@@ -240,32 +272,81 @@
                 }
                 notDrag = true;
 
-                $(this).animate({height:smallBookHeight}, 300);
+                // Animation for put down book.
+                $(this).animate({height:smallBookHeight});
               });
 
               $(image).mousedown(function(){
+                $(this).parent().css("z-index", "150");
+                $(this).css("z-index", "150");
+
+
                 notDrag = true;
                 $(this).parent().removeClass('unselected');
                 $(this).parent().addClass('selected');
-                $(this).parent().siblings().removeClass('selected').addClass('unselected');
+                $(this).addClass('selected');
+                $(this).removeClass('unselected');
+                $(this).parent().siblings().each(function() {
+                  $(this).children().removeClass('selected').addClass('unselected');
+                });
                 
-                $(this).animate({height:bigBookHeight}, 300);
+                $(this).animate({height:bigBookHeight});
+              });
+
+              // Add draggable functionality          
+              $(image).parent().draggable({
+                    scroll:false,
+                    containment:$(library)
+              });
+
+              $('.grid').mouseup(function(event){
+                // Animation for reordering other books
+                var newY = event.clientY - library.offsetTop;
+                var newX = event.clientX - library.offsetLeft;
+                var newIndex = Math.ceil(newX / gridX) + Math.floor(newY / gridY) * maxCol;
+                var oldIndex = this.getAttribute("name");
+
+                if (newIndex > numBooks){
+                  returnBook(this, gridX, gridY, maxCol);
+                  return
+                  // newIndex = numBooks;                  
+                }
+
+                // When moved out of scope
+                // if(newX < 0 || newX > library.offsetWidth){
+                //   returnBook(this, gridX, gridY);
+                // }else if (newY < 0 || newY > library.offsetHeight){
+                //   returnBook(this, gridX, gridY);
+                // }
+
+                // moveGrid(this, oldIndex, newIndex);
+                var gridX_new = Math.floor(newX / gridX) * gridX;
+                var gridY_new = Math.floor(newY / gridY) * gridY;
+                $(this).animate({left:gridX_new, top:gridY_new});
+                this.setAttribute("name", newIndex);
               });
             }
           }
 
-          var gridster;
+          // var gridster;
 
-          $(function() {
-              gridtster = $(".gridster > ul").gridster({
-                  widget_margins: [10, 10],
-                  widget_base_dimensions: [170, 200],
-                  min_cols: 6,
-                  min_rows: 2,
-              }).data('gridster');
-          });
+          // $(function() {
+          //     gridtster = $(".gridster > ul").gridster({
+          //         widget_margins: [10, 10],
+          //         widget_base_dimensions: [170, 200],
+          //         min_cols: 6,
+          //         min_rows: 2,
+          //     }).data('gridster');
+          // });
         }
 
+        function returnBook(bookGrid, gridX, gridY, maxCol){
+          var index = bookGrid.getAttribute("name");
+          var y = Math.floor(index / maxCol);
+          var x = index % maxCol - 1;
+          $(bookGrid).animate({left: x * gridX, top: y * gridY});
+        }
+        
         function createBook(bookId, x, y, randomMode){
           var filename = "../graphics/" + bookId + ".jpeg";
           var image = document.createElement("IMG");
@@ -553,14 +634,14 @@
           Your browser does not support the audio element.
         </audio>
       </div>
-      <div  class="p-title" title='seventh-page'>
+      <!-- <div  class="p-title" title='seventh-page'>
         <h3>
-          <img src="../graphics/replay.png" id="re-read">
-          <img src="../graphics/home.png" id="exit-book">
+          <img src="../graphics/replay3.png" id="re-read">
+          <img src="../graphics/home3.png" id="exit-book">
           <div id="re-read-label">Re-Read</div>
           <div id="exit-book-label">Exit</div>
         </h3>
-      </div>
+      </div> -->
     </div>
 
     <img id="cancel-popup" class="cancel-button"/>

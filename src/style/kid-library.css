@@ -36,6 +36,11 @@ ul
 	height:200px;
 	width:auto;
 }
+.grid{
+	background-color: transparent;
+	padding:20px 0px 0px 0px;
+	z-index: 120;
+}
 #order-button{
 	right:95px;   
 	width:95px;
