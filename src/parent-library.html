@@ -225,7 +225,16 @@
     }
 
     //opens the book
-    function openBook(book){
+    //Event is the click event when choosing a user. 
+    function openBook(event, book){
+        //Kgu
+        var userID = event.target.id;
+        var userName = event.target.name;
+        $(".choose-user").hide();
+        $('.blur-overlay').remove();
+        $(".user").remove();
+        $("#add-user").remove();
+
         // Make booklet
         $("#mybook").booklet({ 
           pageNumbers: false,
@@ -292,9 +301,8 @@
             audio.play();
           });
 
-          $(".book-popup").append(playButton);
-
           $('.blur-overlay').click(function(event){
+              console.log("Clicking on Blur Overlay")
               $('.blur-overlay').remove();
               $(".book-popup").hide();
               $("#mybook").hide();
@@ -382,7 +390,7 @@
 
       //append to choose-user
       for(var i = 1; i <= users.length; i ++){
-        var img = "<img id='" + users[i-1]["name"] + "' class='user' src='../graphics/" + users[i-1]["name"] + ".png'/>";
+        var img = "<img id='" + users[i-1]["name"] + "' class='user' src='../graphics/" + users[i-1]["image"] + ".png'/>";
         $(".choose-user").append(img);
       }
 
@@ -396,17 +404,15 @@
         $('#new-user-name').keypress(function(event){
           if(event.which == 13){
             //Pressed Enter
-            var val = $('#popup-answer').val();
+            var val = $('#new-user-name').val();
             var id = users.length;
-            users[id] = {"id":id, "name":val};
+            users[id] = {"id":id, "name":val, "image":"user"};
             $('#new-user-name').remove();
-            var img = "<img id='" + val + "' class='user' src='../graphics/user.png'/>";
+            var img = "<img id='" + id + "' class='user' src='../graphics/user.png' name='" + val + "'/>";
             $(".choose-user").append(img);
 
             $(".user").click(function(event){
-              $(".choose-user").hide();
-              $('.blur-overlay').remove();
-              openBook(bookID);
+              openBook(event, bookID);
             });
           }
         });
@@ -416,20 +422,18 @@
             $('.blur-overlay').remove();
             $(".choose-user").hide();
             $(".user").remove();
+            $("#add-user").remove();
       });
 
       $(".user").click(function(event){
-        $(".choose-user").hide();
-        $('.blur-overlay').remove();
-        openBook(bookID);
-        $(".user").remove();
+        openBook(event, bookID);
       });
 
       $('.blur-overlay').click(function(event){
-          console.log(event);
           $('.blur-overlay').remove();
           $(".choose-user").hide();
           $(".user").remove();
+          $("#add-user").remove();
       });
 
     }//end Choose User (kgu)
