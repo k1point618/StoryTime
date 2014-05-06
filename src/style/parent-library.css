@@ -52,6 +52,7 @@ table{
 
 .choose-user{
   display:none;
+  width:750px;
 }
 .boldText{
   font-weight:bold;

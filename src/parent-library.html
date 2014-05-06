@@ -390,7 +390,7 @@
 
       //append to choose-user
       for(var i = 1; i <= users.length; i ++){
-        var img = "<img id='" + users[i-1]["name"] + "' class='user' src='../graphics/" + users[i-1]["image"] + ".png'/>";
+        var img = "<img id='" + i + "' name='" + users[i-1]["name"] + "' class='user' src='../graphics/" + users[i-1]["image"] + ".png'/>";
         $(".choose-user").append(img);
       }
 
@@ -405,7 +405,7 @@
           if(event.which == 13){
             //Pressed Enter
             var val = $('#new-user-name').val();
-            var id = users.length;
+            var id = users.length + 1;
             users[id] = {"id":id, "name":val, "image":"user"};
             $('#new-user-name').remove();
             var img = "<img id='" + id + "' class='user' src='../graphics/user.png' name='" + val + "'/>";
@@ -414,6 +414,17 @@
             $(".user").click(function(event){
               openBook(event, bookID);
             });
+
+            $('.user').unbind('mouseenter mouseleave');
+            $(".user").hover(function(event){
+              //mouseEnter
+              var userName = event.target.name;
+              $('.choose-user').append("<h3 id='username'> "+ userName + "</h3>");
+            }, function(event){
+              //mouseLeave
+              $('#username').remove();
+            });
+
           }
         });
       });
@@ -427,6 +438,15 @@
 
       $(".user").click(function(event){
         openBook(event, bookID);
+      });
+
+      $(".user").hover(function(event){
+        //mouseEnter
+        var userName = event.target.name;
+        $('.choose-user').append("<h3 id='username'> "+ userName + "</h3>");
+      }, function(event){
+        //mouseLeave
+        $('#username').remove();
       });
 
       $('.blur-overlay').click(function(event){
