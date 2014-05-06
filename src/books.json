@@ -6,7 +6,7 @@ var books = [
         "list": "cats",
         "title": "Green Eggs and Ham",
         "author": "Dr. Seuss",
-        "synopsis": "The Giving Tree is a children's picture book written and illustrated by Shel Silverstein. First published in 1964 by Harper & Row, it has become one of Silverstein's best known titles and has been translated into numerous languages.",
+        "synopsis": "Green Eggs and Ham is a best-selling and critically acclaimed children's book by Dr. Seuss (a pen-name of Theodor Seuss Geisel), first published on August 12, 1960. As of 2001, according to Publishers Weekly, it was the fourth best-selling English-language children's book of all time.",
     },
     {
         "id": 2,
@@ -15,6 +15,7 @@ var books = [
         "list": "cats",
         "title": "The Cat in the Hat",
         "author": "Dr. Seuss", 
+        "synopsis":"The Cat in the Hat is a children's book written and illustrated by Theodor Geisel under the pen name Dr. Seuss and first published in 1957. The story centers on a tall anthropomorphic cat, who wears a red and white-striped hat and a red bow tie."
     },
     {
         "id": 3,
@@ -22,7 +23,8 @@ var books = [
         "yLoc": "359px",
         "list": "travel",
         "title": "Alice's Adventures in Wonderland",
-        "author": "Lewis Carroll"
+        "author": "Lewis Carroll",
+        "synopsis":"Alice's Adventures in Wonderland (commonly shortened to Alice in Wonderland) is an 1865 novel written by English author Charles Lutwidge Dodgson under the pseudonym Lewis Carroll.[1] It tells of a girl named Alice who falls down a rabbit hole into a fantasy world populated by peculiar, anthropomorphic creatures."
     },
     {
         "id": 4,
@@ -30,7 +32,8 @@ var books = [
         "yLoc": "393px",
         "list": "travel",
         "title": "Oh, the Places You'll Go!",
-        "author": "Dr. Seuss"
+        "author": "Dr. Seuss",
+        "synopsis":"Oh, the Places You'll Go! is a book written and illustrated by children's author Dr. Seuss. It was first published by Random House on January 22, 1990, making it his last book published before his death. The book concerns the journey of life and its challenges."
     },
     {
         "id": 5,
@@ -38,15 +41,17 @@ var books = [
         "yLoc": "25px",
         "list": "discover",
         "title": "Alexander and the Terrible, Horrible, No Good, Very Bad Day",
-        "author": "Judith Viorst"
+        "author": "Judith Viorst",
+        "synopsis": "Alexander and the Terrible, Horrible, No Good, Very Bad Day, published in 1972, is an ALA Notable Children's Book written by Judith Viorst and illustrated by Ray Cruz. It has also won a George G. Stone Center Recognition of Merit, a Georgia Children's Book Award, and is a Reading Rainbow book."
     },
     {
         "id": 6,
         "xLoc": "71px",
         "yLoc": "210px",
         "list": "discover",
-        "title": "Brown Bear, Brown Bear, What Do You Say?",
-        "author": "Bill Martin Jr."
+        "title": "Brown Bear, Brown Bear, What Do You See?",
+        "author": "Bill Martin Jr.",
+        "synopsis": "Brown Bear, Brown Bear, What Do You See? is a children's picture book published in 1967. Written and illustrated by Bill Martin, Jr. and Eric Carle, the book is designed to help toddlers associate colors and meanings to objects."
     },
     {
         "id": 7,
@@ -54,7 +59,8 @@ var books = [
         "yLoc": "29px",
         "list": "nature",
         "title": "The Giving Tree",
-        "author": "Shel Silverstein"
+        "author": "Shel Silverstein",
+        "synopsis":"The Giving Tree is a children's picture book written and illustrated by Shel Silverstein. First published in 1964 by Harper & Row, it has become one of Silverstein's best known titles and has been translated into numerous languages."
     },
     {
         "id": 8,
@@ -62,7 +68,9 @@ var books = [
         "yLoc": "153px",
         "list": "travel",
         "title": "The Wonderful Wizard of Oz",
-        "author": "L. Frank Baum"
+        "author": "L. Frank Baum",
+        "synopsis":"The Wonderful Wizard of Oz is a children's novel written by L. Frank Baum and illustrated by W. W. Denslow."
+
     },
     {
         "id": 9,
@@ -70,7 +78,8 @@ var books = [
         "yLoc": "190px",
         "list": "discover",
         "title": "One Fish, Two Fish, Red Fish, Blue Fish",
-        "author": "Dr Seuss"
+        "author": "Dr Seuss",
+        "synopsis":"One Fish Two Fish Red Fish Blue Fish is a 1960 children's book by Dr. Seuss. A simple rhyming book for learner it is a book with a freewheeling plot about a boy and a girl, and the many amazing creatures they have for friends and pets."
     },
     {
         "id": 10,
@@ -78,7 +87,8 @@ var books = [
         "yLoc": "303px",
         "list": "nature",
         "title": "Where the Wild Things Are",
-        "author": "Maurice Sendak"
+        "author": "Maurice Sendak",
+        "synopsis":"The story, which comprises just 338 words, focuses on a young boy named Max, who, after dressing in his wolf costume, wreaks havoc through his household and is disciplined by being sent to his bedroom."
     },
     {
         "id": 11,
@@ -86,7 +96,8 @@ var books = [
         "yLoc": "247px",
         "list": "discover",
         "title": "Charlotte's Web",
-        "author": "E. B. White"
+        "author": "E. B. White",
+        "synopsis":"The novel tells the story of a pig named Wilbur and his friendship with a barn spider named Charlotte. When Wilbur is in danger of being slaughtered by the farmer, Charlotte writes messages praising Wilbur (such as 'Some Pig') in her web in order to persuade the farmer to let him live."
     },
     {
         "id": 12,
@@ -94,6 +105,7 @@ var books = [
         "yLoc": "89px",
         "list": "religious",
         "title": "The Lion, the Witch, and the Wardrobe",
-        "author": "C.S. Lewis"
+        "author": "C.S. Lewis",
+        "synopsis":"The Lion, the Witch and the Wardrobe is a high fantasy novel for children by C. S. Lewis, published by Geoffrey Bles in 1950. It was the first published of seven novels in The Chronicles of Narnia (1950–1956) and the best known; among all the author's books it is the most widely held in libraries."
     }
 ]

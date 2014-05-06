@@ -44,7 +44,7 @@
       var vIncr = incr;
     }
 
-
+    //creates grid view
     function createGridView(perRow){
       mode = "grid"
       tableButton = document.getElementById("table-button");
@@ -68,7 +68,7 @@
       loadListeners();
 
     }
-
+    //helper function for creating the grid view
     function add(name, row, col){
       var body = document.getElementById('column-right');
 
@@ -101,7 +101,7 @@
       container.style.top = 10+row*hIncr*1.7 + "px";
       body.appendChild(container);
     }
-
+    //helper function for createing the row view
     function setImage(name, hIncr, vIncr){
      // console.log(name);
       var img = document.createElement("img");
@@ -113,7 +113,12 @@
       img.style.height = "auto";
       img.style.zIndex = "1";
       img.setAttribute("id",name)
-      img.setAttribute("draggable",false);
+      img.setAttribute("draggable",true);
+
+      $("#"+name).draggable(/*{
+            scroll:false,
+            containment: "#column-right"
+          }*/"enable");
     
 
       return img;
@@ -156,6 +161,8 @@
           img.height = hIncr + "px";
           img.style.position = "relative";
 
+          
+
           var tbl = document.createElement("table");
           var tblBody = document.createElement("tbody");
 
@@ -166,6 +173,11 @@
           var container = document.createElement("div");
           container.setAttribute("id", "f1_container");
           container.appendChild(img);
+
+          $(".imgContain").draggable({
+            scroll:false,
+            containment: "#column-right"
+          });
 
           cell1.appendChild(container);
           cell1.style.width = "190px";
@@ -180,7 +192,7 @@
           cell2.appendChild(document.createElement("br"));
           cell2.appendChild(document.createElement("br"));
           cell2.appendChild(boldHTML("Synopsis: "));
-          cell2.appendChild(document.createTextNode("The Giving Tree is a children's picture book written and illustrated by Shel Silverstein. First published in 1964 by Harper & Row, it has become one of Silverstein's best known titles and has been translated into numerous languages."));
+          cell2.appendChild(document.createTextNode(books[j]["synopsis"]));
 
           cell2.style.width = "800px";
           cell2.style.textAlign = "left"
@@ -196,10 +208,13 @@
           body.appendChild(div);
         }
       }
+      //$(".bookCover").draggable("enable");
       loadListeners();
+      $(".imgContain").draggable("enable");
       console.log(list)
     }
 
+    //moves hand when recording
     function movePointer() {
       var divElement = $('.b-p1').find('.p-title')[0];
       var title = divElement.title;
@@ -209,7 +224,7 @@
       //}
     }
 
-
+    //opens the book
     function openBook(book){
         $("#mybook").booklet({ 
           pageNumbers: false,
@@ -289,22 +304,17 @@
         console.log(event);
       });
     
-
+    //reloads listeners for record button, and hovering over the book
     function loadListeners(){
 
       $("#record-button").on("click",function(e){
         openBook("book");
       });
 
-      $("#cancel-button").on("click", function(e){
-        console.log("clicked cancel");
-      });
-
       $('#blurrer').hover(function(e){
-        console.log("blah")
       },function(e){
         $('#blurrer').remove();
-          $('#cancel-button').remove();
+          $('#buy-button').remove();
           $('.record-button').remove();
           activeBook = false;
       });
@@ -315,7 +325,8 @@
           console.log(e.currentTarget);
 
           var book = e.currentTarget.parentNode;
-
+          console.log("hello")
+          console.log(book.childNodes[0]);
           var blur = document.createElement("img");
           blur.className = "blur-overlay";
           blur.setAttribute("id","blurrer")
@@ -329,6 +340,23 @@
             blur.width = e.target.width;
             blur.height = e.target.height;
             book.appendChild(record);
+          }else{
+            var button = document.createElement("input");
+            button.type = "button";
+            button.value = "Buy";
+            button.id = "buy-button";
+            button.style.zIndex = 100;
+            button.onclick = function(){
+              books[book.childNodes[0].getAttribute("id")-1]['list'] = "library";
+              $(".imgContain").empty();
+              createRowView(currentList);
+            }
+            button.style.position = "absolute";
+
+            button.style.left = "30%";
+            button.style.top = "55%";
+            book.appendChild(button);
+
           }
           loadListeners();
        }
@@ -387,10 +415,11 @@
         console.log("visible? " + $('#mybook').is(':visible'));
        console.log(e.target.className);
        console.log(e.target.id);
+       console.log(e.target.parentNode.childNodes[0].id)
 
         if(e.target.className != "bookCover" && e.target.className != "blur-overlay"){
           $('#blurrer').remove();
-          $('#cancel-button').remove();
+          $('#buy-button').remove();
           $('.record-button').remove();
           activeBook = false;
 
@@ -415,7 +444,6 @@
         e.preventDefault();
         if(e.target.className == "record-button"){
           $('#blurrer').remove();
-          $('#cancel-button').remove();
           $('.record-button').remove();
           activeBook = false;
           openBook("book");
