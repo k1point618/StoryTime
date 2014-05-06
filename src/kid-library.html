@@ -68,11 +68,13 @@
           var thisButton = document.getElementById("order-button");
           thisButton.disabled = true;
           thisButton.style.backgroundColor = "#2CCCBC";
+          $(thisButton).css("cursor", "auto");
 
           //Make other button clickable
           var otherButton = document.getElementById("random-button");
           otherButton.disabled = false;
           otherButton.style.backgroundColor = "#d4f4f1";
+          $(thisButton).css("cursor", "pointer");
           
         });
         $('#order-button').hover(function(){
@@ -100,11 +102,13 @@
           var thisButton = document.getElementById("random-button");
           thisButton.disabled = true;
           thisButton.style.backgroundColor = "#2CCCBC";
+          $(thisButton).css("cursor", "auto");
 
           //Make other button clickable
           var otherButton = document.getElementById("order-button");
           otherButton.disabled = false;
           otherButton.style.backgroundColor = "#d4f4f1";
+          $(thisButton).css("cursor", "pointer");
 
           
 
@@ -223,6 +227,9 @@
 
             for(var j = 0; j < maxCol; j ++){
 
+              if(books[curID-1] == undefined){
+                break;
+              }
               while(books[curID-1]['list'] == "discover"){
                 curID += 1;
               }
@@ -299,7 +306,9 @@
                     containment:$(library)
               });
 
+              var gridPressed = false;
               $('.grid').mouseup(function(event){
+                gridPressed = false;
                 // Animation for reordering other books
                 var newY = event.clientY - library.offsetTop;
                 var newX = event.clientX - library.offsetLeft;
@@ -325,6 +334,20 @@
                 $(this).animate({left:gridX_new, top:gridY_new});
                 this.setAttribute("name", newIndex);
               });
+
+              $('.grid').mousemove(function(event){
+                if(gridPressed){
+
+                }
+                else{
+                  return;
+                }
+              });
+
+              $('.grid').mousedown(function(event){
+                gridPressed = true;
+              });
+
             }
           }
 
@@ -342,11 +365,11 @@
 
         function returnBook(bookGrid, gridX, gridY, maxCol){
           var index = bookGrid.getAttribute("name");
-          var y = Math.floor(index / maxCol);
-          var x = index % maxCol - 1;
+          var y = Math.floor((index-1) / maxCol);
+          var x = (index-1) % maxCol ;
           $(bookGrid).animate({left: x * gridX, top: y * gridY});
         }
-        
+
         function createBook(bookId, x, y, randomMode){
           var filename = "../graphics/" + bookId + ".jpeg";
           var image = document.createElement("IMG");
@@ -550,7 +573,7 @@
 
         <div id="random-button" class="bar-button" type="button"/> 
           <!-- Randomize  -->
-          <img src="../graphics/grid.png" height="37px" style="opacity:0.7; position:relative; top:-3px; transform:rotate(45deg);"/> 
+          <img src="../graphics/grid-random.png" height="37px" style="opacity:0.8; position:relative; top:-3px; "/> 
         </div>
 
         <div id="logo-navigation-button" type="button">
