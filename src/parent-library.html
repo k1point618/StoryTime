@@ -226,6 +226,7 @@
 
     //opens the book
     function openBook(book){
+        // Make booklet
         $("#mybook").booklet({ 
           pageNumbers: false,
           height: '100%',
@@ -236,6 +237,7 @@
           arrowsHide: true
         });
 
+        // Recording mechanism 
          $('.book-text').mousedown(function(){
             $('#pointer').hide();
             // turn recording button on
@@ -258,7 +260,7 @@
 
 
           $("body").append("<div class='blur-overlay'></div>");
-
+      
           $("#pointer").animate({left: "+=200"}, 3000);
           $("#pointer").animate({left: "-=200"}, 500);
           $("#pointer").animate({left: "+=200"}, 3000);
@@ -307,9 +309,10 @@
     //reloads listeners for record button, and hovering over the book
     function loadListeners(){
 
-      $("#record-button").on("click",function(e){
-        openBook("book");
-      });
+      // Doesn't seem necessary
+      // $("#record-button").on("click",function(e){
+      //   openBook("book");
+      // });
 
       $('#blurrer').hover(function(e){
       },function(e){
@@ -370,6 +373,67 @@
       }
       $(currentNode).css("transform","rotateY(0deg)") 
     }
+
+    //kgu:
+    function chooseUser(bookID){
+
+      $("body").append("<div class='blur-overlay'></div>");
+      $(".choose-user").show();
+
+      //append to choose-user
+      for(var i = 1; i <= users.length; i ++){
+        var img = "<img id='" + users[i-1]["name"] + "' class='user' src='../graphics/" + users[i-1]["name"] + ".png'/>";
+        $(".choose-user").append(img);
+      }
+
+      var add = "<img id='add-user' src='../graphics/addUser.png'>";
+      $(".choose-user").append(add);
+
+      $('#add-user').click(function(){
+        $('#add-user').hide();
+        $('.choose-user').append("<input id='new-user-name' class='popup-text' type='text' name='answer' placeholder='Enter your name.'>");
+
+        $('#new-user-name').keypress(function(event){
+          if(event.which == 13){
+            //Pressed Enter
+            var val = $('#popup-answer').val();
+            var id = users.length;
+            users[id] = {"id":id, "name":val};
+            $('#new-user-name').remove();
+            var img = "<img id='" + val + "' class='user' src='../graphics/user.png'/>";
+            $(".choose-user").append(img);
+
+            $(".user").click(function(event){
+              $(".choose-user").hide();
+              $('.blur-overlay').remove();
+              openBook(bookID);
+            });
+          }
+        });
+      });
+
+      $('#cancel-popup-choose-user').click(function(){
+            $('.blur-overlay').remove();
+            $(".choose-user").hide();
+            $(".user").remove();
+      });
+
+      $(".user").click(function(event){
+        $(".choose-user").hide();
+        $('.blur-overlay').remove();
+        openBook(bookID);
+        $(".user").remove();
+      });
+
+      $('.blur-overlay').click(function(event){
+          console.log(event);
+          $('.blur-overlay').remove();
+          $(".choose-user").hide();
+          $(".user").remove();
+      });
+
+    }//end Choose User (kgu)
+
     $(document).ready(function() {
       
       // Format the booklet
@@ -440,14 +504,15 @@
 
 
       $('.imgContain').on("click","a,img", function (e) {
-        var id = e.target.getAttribute('id');
+        var bookID = e.target.getAttribute('id');
         e.preventDefault();
         if(e.target.className == "record-button"){
           $('#blurrer').remove();
           $('.record-button').remove();
           activeBook = false;
-          openBook("book");
 
+          //Show user choice
+          chooseUser(bookID);
         }
 
       });
@@ -580,7 +645,8 @@
 
 
 
-    });
+    });// DOcument ready
+
     </script>
   </head>
   
@@ -632,7 +698,7 @@
 
     
 
-    <div class = "book-popup popup">
+  <div class = "book-popup popup">
     <div id='pointer' style='position:absolute;'><img src = '../graphics/pointer.png'></div>
 
     <div id='mybook' style="height:600px; width:auto;">
@@ -702,6 +768,18 @@
     <img id="save-button" src="../graphics/save3.png">
     <img id="reader" src="../graphics/user.png">
     <img id="recording" src="../graphics/not-record.png" name = "play">
+
+  </div>
+
+  <div class = "popup choose-user">
+    <br>
+    <h3>Which user are you? </h3>
+    <img id="cancel-popup-choose-user" class="cancel-button"/>
+    <!-- <img id="user1" class="user" src="../graphics/user.png">
+    <img id="user2" class="user" src="../graphics/user.png">
+    <img id="user3" class="user" src="../graphics/user.png">
+    <img id="add-user" src="../graphics/addUser.png"> -->
+
   </div>
 
 </body>

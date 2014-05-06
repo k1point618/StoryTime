@@ -109,3 +109,9 @@ var books = [
         "synopsis":"The Lion, the Witch and the Wardrobe is a high fantasy novel for children by C. S. Lewis, published by Geoffrey Bles in 1950. It was the first published of seven novels in The Chronicles of Narnia (1950–1956) and the best known; among all the author's books it is the most widely held in libraries."
     }
 ]
+
+var users = [
+    {"id": 1, "name": "Jesse"}, 
+    {"id": 2, "name": "Silvia"}, 
+    {"id": 3, "name": "Carmen"}
+    ]

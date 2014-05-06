@@ -50,6 +50,9 @@ table{
     padding: 50px 20px 120px 20px; 
 }*/
 
+.choose-user{
+  display:none;
+}
 .boldText{
   font-weight:bold;
 }
@@ -323,6 +326,33 @@ li{
   color: blue;
   text-align: center;
 }
-
+.user{
+  position:relative;
+  width: 100px;
+  height: auto;
+  padding-top:40px;
+  padding-left:30px;
+  padding-right:30px;
+  cursor: pointer;
+}
+#add-user{
+  opacity:0.7;
+  padding-bottom:20px;
+  padding-left:30px;
+  padding-right:30px;
+  cursor: pointer;
+}
+#new-user-name{
+  margin-bottom:30px;
+}
+/*#user1{
+  left:100px;
+}
+#user2{
+  left:200px;
+}
+#user3{
+  left:300px;
+}*/
 
 /* Your CSS here */
