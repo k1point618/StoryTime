@@ -230,10 +230,13 @@
         //Kgu
         var userID = event.target.id;
         var userName = event.target.name;
+        var userImage = users[userID-1]["image"];
         $(".choose-user").hide();
         $('.blur-overlay').remove();
         $(".user").remove();
         $("#add-user").remove();
+        $('#new-user-name').remove();
+            
 
         // Make booklet
         $("#mybook").booklet({ 
@@ -307,6 +310,8 @@
               $(".book-popup").hide();
               $("#mybook").hide();
           });
+
+          $('#reader').attr("src", "../graphics/" + userImage + ".png");
           
     }
 
@@ -405,14 +410,16 @@
           if(event.which == 13){
             //Pressed Enter
             var val = $('#new-user-name').val();
-            var id = users.length + 1;
-            users[id] = {"id":id, "name":val, "image":"user"};
+            var id = users.length+1;
+            users[id-1] = {"id":id, "name":val, "image":"user"};
             $('#new-user-name').remove();
             var img = "<img id='" + id + "' class='user' src='../graphics/user.png' name='" + val + "'/>";
             $(".choose-user").append(img);
 
             $(".user").click(function(event){
+              $('#username').remove();
               openBook(event, bookID);
+              
             });
 
             $('.user').unbind('mouseenter mouseleave');
@@ -434,10 +441,12 @@
             $(".choose-user").hide();
             $(".user").remove();
             $("#add-user").remove();
+            $('#new-user-name').remove();
       });
 
       $(".user").click(function(event){
         openBook(event, bookID);
+        $('#username').remove();
       });
 
       $(".user").hover(function(event){
@@ -454,6 +463,8 @@
           $(".choose-user").hide();
           $(".user").remove();
           $("#add-user").remove();
+          $('#new-user-name').remove();
+            
       });
 
     }//end Choose User (kgu)
@@ -790,7 +801,7 @@
     <img id="play-button" src="../graphics/play3.png">
     <img id="trash-button" src="../graphics/trash3.png">
     <img id="save-button" src="../graphics/save3.png">
-    <img id="reader" src="../graphics/user.png">
+    <img id="reader">
     <img id="recording" src="../graphics/not-record.png" name = "play">
 
   </div>

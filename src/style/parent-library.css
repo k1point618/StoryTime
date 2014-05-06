@@ -344,7 +344,8 @@ li{
   cursor: pointer;
 }
 #new-user-name{
-  margin-bottom:30px;
+  position: relative;
+  bottom:40px;
 }
 /*#user1{
   left:100px;

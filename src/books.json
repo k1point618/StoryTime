@@ -113,5 +113,5 @@ var books = [
 var users = [
     {"id": 1, "name": "Jesse", "image": "Jesse"}, 
     {"id": 2, "name": "Silvia", "image": "Silvia"}, 
-    {"id": 3, "name": "Carmen", "image": "Carmen"}
+    // {"id": 3, "name": "Carmen", "image": "Carmen"}
     ]
