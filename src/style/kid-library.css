@@ -39,7 +39,7 @@ ul
 .grid{
 	background-color: transparent;
 	padding:20px 0px 0px 0px;
-	z-index: 120;
+	z-index: 90;
 }
 #order-button{
 	right:95px;   
@@ -76,9 +76,19 @@ ul
 	/*top:15px;*/
 	bottom: 19px;
 	left: 130px;
-	cursor: pointer;
 }
-
+.abled{
+	cursor:pointer;
+	opacity:1;
+	filter:none;
+}
+.disabled{
+	filter: url(filters.svg#grayscale); /* Firefox 3.5+ */
+    filter: gray; /* IE6-9 */
+    -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
+    cursor: auto;
+    opacity: 0.7;
+}
 #mybook {
 	position: relative;
 	margin: auto;

@@ -260,93 +260,81 @@
               // li.appendChild(image);
               // ul.appendChild(li);
               $(image).animate({opacity:1}, 1000);
-              $(image).css("z-index", "120");
-
-              $(image).mousemove(function(){
-                notDrag = false;
-              });
 
               $(image).mouseup(function(event){
-                $(this).parent().css("z-index", "120");
-                $(this).css("z-index", "120");
+                // $(this).parent().css("z-index", "120");
+                // $(this).css("z-index", "120");
 
-                if($(this).parent().hasClass('openable') && notDrag){
+                if($(this).parent().hasClass('openable')){
                   openBook($(this));
                 }
                 if($(this).parent().hasClass('selected')){
                   $(this).parent().addClass('openable');
                   $(this).parent().siblings().removeClass('openable');
                 }
-                notDrag = true;
-
-                // Animation for put down book.
-                $(this).animate({height:smallBookHeight});
               });
 
               $(image).mousedown(function(){
-                $(this).parent().css("z-index", "150");
-                $(this).css("z-index", "150");
-
-
-                notDrag = true;
                 $(this).parent().removeClass('unselected');
                 $(this).parent().addClass('selected');
                 $(this).addClass('selected');
                 $(this).removeClass('unselected');
                 $(this).parent().siblings().each(function() {
                   $(this).children().removeClass('selected').addClass('unselected');
+                  $(this).children().animate({height:smallBookHeight});
                 });
                 
                 $(this).animate({height:bigBookHeight});
               });
 
+              $(image).on('dragstart', function(event) { event.preventDefault(); });
               // Add draggable functionality          
-              $(image).parent().draggable({
-                    scroll:false,
-                    containment:$(library)
-              });
+              // $(image).parent().draggable({
+              //       scroll:false,
+              //       containment:$(library)
+              // });
 
-              var gridPressed = false;
-              $('.grid').mouseup(function(event){
-                gridPressed = false;
-                // Animation for reordering other books
-                var newY = event.clientY - library.offsetTop;
-                var newX = event.clientX - library.offsetLeft;
-                var newIndex = Math.ceil(newX / gridX) + Math.floor(newY / gridY) * maxCol;
-                var oldIndex = this.getAttribute("name");
+              // var gridPressed = false;
+              // $('.grid').mouseup(function(event){
+              //   gridPressed = false;
+              //   // Animation for reordering other books
+              //   var newY = event.clientY - library.offsetTop;
+              //   var newX = event.clientX - library.offsetLeft;
+              //   var newIndex = Math.ceil(newX / gridX) + Math.floor(newY / gridY) * maxCol;
+              //   var oldIndex = this.getAttribute("name");
 
-                if (newIndex > numBooks){
-                  returnBook(this, gridX, gridY, maxCol);
-                  return
-                  // newIndex = numBooks;                  
-                }
+              //   if (newIndex > numBooks){
+              //     returnBook(this, gridX, gridY, maxCol);
+              //     return
+              //     // newIndex = numBooks;                  
+              //   }
 
-                // When moved out of scope
-                // if(newX < 0 || newX > library.offsetWidth){
-                //   returnBook(this, gridX, gridY);
-                // }else if (newY < 0 || newY > library.offsetHeight){
-                //   returnBook(this, gridX, gridY);
-                // }
+              //   // When moved out of scope
+              //   // if(newX < 0 || newX > library.offsetWidth){
+              //   //   returnBook(this, gridX, gridY);
+              //   // }else if (newY < 0 || newY > library.offsetHeight){
+              //   //   returnBook(this, gridX, gridY);
+              //   // }
 
-                // moveGrid(this, oldIndex, newIndex);
-                var gridX_new = Math.floor(newX / gridX) * gridX;
-                var gridY_new = Math.floor(newY / gridY) * gridY;
-                $(this).animate({left:gridX_new, top:gridY_new});
-                this.setAttribute("name", newIndex);
-              });
+              //   // moveGrid(this, oldIndex, newIndex);
+              //   var gridX_new = Math.floor(newX / gridX) * gridX;
+              //   var gridY_new = Math.floor(newY / gridY) * gridY;
+              //   $(this).animate({left:gridX_new, top:gridY_new});
+              //   this.setAttribute("name", newIndex);
+              // });
 
-              $('.grid').mousemove(function(event){
-                if(gridPressed){
+              // $('.grid').mousemove(function(event){
+              //   if(gridPressed){
 
-                }
-                else{
-                  return;
-                }
-              });
+              //   }
+              //   else{
+              //     return;
+              //   }
+              // });
 
-              $('.grid').mousedown(function(event){
-                gridPressed = true;
-              });
+              // $('.grid').mousedown(function(event){
+              //   gridPressed = true;
+              // });
 
             }
           }
@@ -425,6 +413,7 @@
           $(".book-popup").css("opacity", "0");
           $(".book-popup").show();
           $(".book-popup").animate({opacity:1}, 500);
+          $("#restart-button").removeClass("abled").addClass("disabled");
 
           $('.blur-overlay').click(function(event){
               console.log(event);
@@ -436,28 +425,30 @@
           // cover.src = "../graphics/GivingTree.jpg";
           // cover.id = "book-cover";
 
-          var reader1 = document.createElement("IMG");
-          reader1.src = "../graphics/user.png";
-          reader1.className = "reader current-reader";
-          reader1.id = "reader1"
+          // var reader1 = document.createElement("IMG");
+          // reader1.src = "../graphics/user.png";
+          // reader1.className = "reader current-reader";
+          // reader1.id = "reader1"
 
-          var reader2 = document.createElement("IMG");
-          reader2.src = "../graphics/user.png";
-          reader2.className = "reader other-reader";
-          reader2.id = "reader2"
+          // var reader2 = document.createElement("IMG");
+          // reader2.src = "../graphics/user.png";
+          // reader2.className = "reader other-reader";
+          // reader2.id = "reader2"
 
           
           // $div.append(cover);
-          $(".book-popup").append(reader1);
-          $(".book-popup").append(reader2);
+          // $(".book-popup").append(reader1);
+          // $(".book-popup").append(reader2);
           
           $('#cancel-popup').click(function(){
             $('.blur-overlay').remove();
             $(".book-popup").hide();
           });
 
-          
+          $("#play-button").unbind('click');          
           $("#play-button").click(function(){
+            $("#restart-button").removeClass("abled").addClass("disabled");
+
             if ($('.b-p1').hasClass('b-page-0')){
               var divElement = $('.b-p2').find('.p-title')[0];
             }else{
@@ -480,6 +471,7 @@
             }
             else if($(this).attr('name') == "pause"){
               audio.pause();
+              $("#restart-button").removeClass("disabled").addClass("abled");
               $(this).attr('name', "play");
               $(this).attr('src', "../graphics/play3.png");
             }
@@ -487,9 +479,11 @@
             audio.addEventListener('ended', ended);
           });
 
-          $(".book-popup").append($("#play-button"));
-
+          // $(".book-popup").append($("#play-button"));
+          $("#restart-button").unbind('click'); 
           $("#restart-button").click(function(){
+            $("#restart-button").removeClass("abled").addClass("disabled");
+              
             if ($('.b-p1').hasClass('b-page-0')){
               var divElement = $('.b-p2').find('.p-title')[0];
             }else{
@@ -511,8 +505,8 @@
 
           }); 
 
-          $(".reader").click(function(){
-            if($(this).hasClass(".current-reader")){
+          $(".reader").click(function(event){
+            if($(this).hasClass("current-reader")){
               return;
             }
             var cur = $(".current-reader");
@@ -528,6 +522,8 @@
         function ended(){
           $("#play-button").attr('name', "play");
           $("#play-button").attr('src', "../graphics/play3.png");
+          $("#restart-button").removeClass("disabled").addClass("abled");
+          
           this.load();
         }
 
@@ -670,7 +666,10 @@
     <img id="cancel-popup" class="cancel-button"/>
 
     <img id="play-button" src="../graphics/play3.png" name = "play">
-    <img id="restart-button" src="../graphics/restart3.png" name = "restart">
+    <img id="restart-button" class="disabled" src="../graphics/restart3.png" name = "restart">
+
+    <img id="reader1" class="reader current-reader" src="../graphics/user.png"></img>
+    <img id="reader2" class="reader other-reader" src="../graphics/user.png"></img>
   </div>
 
   </body>
