@@ -129,6 +129,16 @@ table{
     z-index: 2;
 }
 
+#recording {
+  position: absolute;
+  float: left;
+}
+
+#tools {
+  position: absolute;
+  float: left;
+}
+
 ul {
   list-style-type: none;
   overflow: auto;
