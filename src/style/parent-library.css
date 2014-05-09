@@ -50,6 +50,10 @@ table{
     padding: 50px 20px 120px 20px; 
 }*/
 
+.choose-user{
+  display:none;
+  width:750px;
+}
 .boldText{
   font-weight:bold;
 }
@@ -72,13 +76,45 @@ table{
 }
 
 #play-button{
-  position:relative;
-  width:80px;
+  position:absolute;
+  width:70px;
   height:auto;
-  top:20px;
+  /*top:20px;*/
+  bottom: 19px;
+  left: 130px;
   cursor: pointer;
 }
-
+#save-button{
+  position:absolute;
+  width:70px;
+  height:auto;
+  /*top:15px;*/
+  bottom: 19px;
+  left: 240px;
+  cursor: pointer;
+}
+#trash-button{
+  position:absolute;
+  width:70px;
+  height:auto;
+  /*top:15px;*/
+  bottom: 19px;
+  left: 350px;
+  cursor: pointer;
+}
+#recording{
+  position:absolute;
+  bottom: 47px;
+  right: 130px;
+  cursor: pointer;
+}
+#reader{
+  position:absolute;
+  height: 80px;
+  bottom: 17px;
+  right: 180px;
+  cursor: pointer;
+}
 #pointer {
   left: 430px;
   top: 100px;
@@ -301,6 +337,34 @@ li{
   color: blue;
   text-align: center;
 }
-
+.user{
+  position:relative;
+  width: 100px;
+  height: auto;
+  padding-top:40px;
+  padding-left:30px;
+  padding-right:30px;
+  cursor: pointer;
+}
+#add-user{
+  opacity:0.7;
+  padding-bottom:20px;
+  padding-left:30px;
+  padding-right:30px;
+  cursor: pointer;
+}
+#new-user-name{
+  position: relative;
+  bottom:40px;
+}
+/*#user1{
+  left:100px;
+}
+#user2{
+  left:200px;
+}
+#user3{
+  left:300px;
+}*/
 
 /* Your CSS here */

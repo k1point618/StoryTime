@@ -22,6 +22,7 @@
     <script> window.jQuery || document.write('<script src="Booklet-master/booklet/jquery-2.1.0.min.js"><\/script>') </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
     <script> window.jQuery.ui || document.write('<script src="Booklet-master/booklet/jquery-ui-1.10.4.min.js"><\/script>') </script>
+    <script type="text/javascript" src="books.json"></script>
     <script src="Booklet-master/booklet/jquery.easing.1.3.js"></script>
     <script src="Booklet-master/booklet/jquery.booklet.latest.js"></script>
     <script type='text/javascript' src='blur.js'></script>
@@ -34,6 +35,7 @@
     var suppressBookHide = true;
     var mode;
     var activeBook = false;
+    var currentList = "library"
 
     function createDescriptionView(){
       boardSize = 2.5;
@@ -42,7 +44,7 @@
       var vIncr = incr;
     }
 
-
+    //creates grid view
     function createGridView(perRow){
       mode = "grid"
       tableButton = document.getElementById("table-button");
@@ -66,7 +68,7 @@
       loadListeners();
 
     }
-
+    //helper function for creating the grid view
     function add(name, row, col){
       var body = document.getElementById('column-right');
 
@@ -99,7 +101,7 @@
       container.style.top = 10+row*hIncr*1.7 + "px";
       body.appendChild(container);
     }
-
+    //helper function for createing the row view
     function setImage(name, hIncr, vIncr){
      // console.log(name);
       var img = document.createElement("img");
@@ -111,7 +113,12 @@
       img.style.height = "auto";
       img.style.zIndex = "1";
       img.setAttribute("id",name)
-      img.setAttribute("draggable",false);
+      img.setAttribute("draggable",true);
+
+      $("#"+name).draggable(/*{
+            scroll:false,
+            containment: "#column-right"
+          }*/"enable");
     
 
       return img;
@@ -123,7 +130,8 @@
       return element;
     }
 
-    function createRowView(){
+    function createRowView(list = "library"){
+      console.log(list);
       mode = "row"
       tableButton = document.getElementById("table-button");
       gridButton = document.getElementById("grid-button");
@@ -137,61 +145,76 @@
       var vIncr = incr;
      // console.log(vIncr,hIncr);
       var body = document.getElementById('column-right');
-
+      var heightIncr = 0;
       for (var j = 0; j <=11; j++){
-        var div = document.createElement("div");
-        div.style.position = "relative";
-        div.style.left = 2+"%";
-        div.style.top = .2*hIncr * j + "px";
-        div.className = "book-div"
-        //div.style.textAlign = "left"
-        div.style.width = 93 + "%";
-        var img = setImage((j+1).toString(), hIncr,vIncr);
-        img.height = hIncr + "px";
-        img.style.position = "relative";
+        if(books[j]["list"]==list || (list == "library" && books[j]["list"]!="discover")){
+          console.log(books[j]["title"])
+          var div = document.createElement("div");
+          div.style.position = "relative";
+          div.style.left = 2+"%";
+          div.style.top = .2*hIncr * heightIncr + "px";
+          heightIncr++;
+          div.className = "book-div"
+          //div.style.textAlign = "left"
+          div.style.width = 93 + "%";
+          var img = setImage((j+1).toString(), hIncr,vIncr);
+          img.height = hIncr + "px";
+          img.style.position = "relative";
 
-        var tbl = document.createElement("table");
-        var tblBody = document.createElement("tbody");
+          
 
-        tbl.setAttribute('border', '0');
-        var row = document.createElement('tr');
-        var cell1 = document.createElement("td");
+          var tbl = document.createElement("table");
+          var tblBody = document.createElement("tbody");
 
-        var container = document.createElement("div");
-        container.setAttribute("id", "f1_container");
-        container.appendChild(img);
+          tbl.setAttribute('border', '0');
+          var row = document.createElement('tr');
+          var cell1 = document.createElement("td");
 
-        cell1.appendChild(container);
-        cell1.style.width = "190px";
-        row.appendChild(cell1);
-        cell2 = document.createElement("td");
+          var container = document.createElement("div");
+          container.setAttribute("id", "f1_container");
+          container.appendChild(img);
 
-        cell2.appendChild(boldHTML("Title: "));
-        cell2.appendChild(document.createTextNode("The Giving Tree"));
-        cell2.appendChild(document.createElement("br"));
-        cell2.appendChild(boldHTML("Author: "));
-        cell2.appendChild(document.createTextNode("Shel Silverstein"));
-        cell2.appendChild(document.createElement("br"));
-        cell2.appendChild(document.createElement("br"));
-        cell2.appendChild(boldHTML("Synopsis: "));
-        cell2.appendChild(document.createTextNode("The Giving Tree is a children's picture book written and illustrated by Shel Silverstein. First published in 1964 by Harper & Row, it has become one of Silverstein's best known titles and has been translated into numerous languages."));
+          $(".imgContain").draggable({
+            scroll:false,
+            containment: "#column-right"
+          });
 
-        cell2.style.width = "800px";
-        cell2.style.textAlign = "left"
-        //cell2.style.left = 10+"px";
-        row.appendChild(cell2);
-        tblBody.appendChild(row);
-        tbl.appendChild(tblBody);
-        div.appendChild(tbl);
-        //p.appendChild(text);
-        //p.style.whiteSpace = ;
-        //div.appendChild(img);
-        //div.appendChild(p);
-        body.appendChild(div);
+          cell1.appendChild(container);
+          cell1.style.width = "190px";
+          row.appendChild(cell1);
+          cell2 = document.createElement("td");
+
+          cell2.appendChild(boldHTML("Title: "));
+          cell2.appendChild(document.createTextNode(books[j]["title"]));
+          cell2.appendChild(document.createElement("br"));
+          cell2.appendChild(boldHTML("Author: "));
+          cell2.appendChild(document.createTextNode(books[j]["author"]));
+          cell2.appendChild(document.createElement("br"));
+          cell2.appendChild(document.createElement("br"));
+          cell2.appendChild(boldHTML("Synopsis: "));
+          cell2.appendChild(document.createTextNode(books[j]["synopsis"]));
+
+          cell2.style.width = "800px";
+          cell2.style.textAlign = "left"
+          //cell2.style.left = 10+"px";
+          row.appendChild(cell2);
+          tblBody.appendChild(row);
+          tbl.appendChild(tblBody);
+          div.appendChild(tbl);
+          //p.appendChild(text);
+          //p.style.whiteSpace = ;
+          //div.appendChild(img);
+          //div.appendChild(p);
+          body.appendChild(div);
+        }
       }
+      //$(".bookCover").draggable("enable");
       loadListeners();
+      $(".imgContain").draggable("enable");
+      console.log(list)
     }
 
+    //moves hand when recording
     function movePointer() {
       var divElement = $('.b-p1').find('.p-title')[0];
       var title = divElement.title;
@@ -201,8 +224,21 @@
       //}
     }
 
+    //opens the book
+    //Event is the click event when choosing a user. 
+    function openBook(event, book){
+        //Kgu
+        var userID = event.target.id;
+        var userName = event.target.name;
+        var userImage = users[userID-1]["image"];
+        $(".choose-user").hide();
+        $('.blur-overlay').remove();
+        $(".user").remove();
+        $("#add-user").remove();
+        $('#new-user-name').remove();
+            
 
-    function openBook(book){
+        // Make booklet
         $("#mybook").booklet({ 
           pageNumbers: false,
           height: '100%',
@@ -213,6 +249,7 @@
           arrowsHide: true
         });
 
+        // Recording mechanism 
          $('.book-text').mousedown(function(){
             $('#pointer').hide();
             // turn recording button on
@@ -235,7 +272,7 @@
 
 
           $("body").append("<div class='blur-overlay'></div>");
-
+      
           $("#pointer").animate({left: "+=200"}, 3000);
           $("#pointer").animate({left: "-=200"}, 500);
           $("#pointer").animate({left: "+=200"}, 3000);
@@ -267,13 +304,14 @@
             audio.play();
           });
 
-          $(".book-popup").append(playButton);
-
           $('.blur-overlay').click(function(event){
+              console.log("Clicking on Blur Overlay")
               $('.blur-overlay').remove();
               $(".book-popup").hide();
               $("#mybook").hide();
           });
+
+          $('#reader').attr("src", "../graphics/" + userImage + ".png");
           
     }
 
@@ -281,22 +319,18 @@
         console.log(event);
       });
     
-
+    //reloads listeners for record button, and hovering over the book
     function loadListeners(){
 
-      $("#record-button").on("click",function(e){
-        openBook("book");
-      });
-
-      $("#cancel-button").on("click", function(e){
-        console.log("clicked cancel");
-      });
+      // Doesn't seem necessary
+      // $("#record-button").on("click",function(e){
+      //   openBook("book");
+      // });
 
       $('#blurrer').hover(function(e){
-        console.log("blah")
       },function(e){
         $('#blurrer').remove();
-          $('#cancel-button').remove();
+          $('#buy-button').remove();
           $('.record-button').remove();
           activeBook = false;
       });
@@ -307,19 +341,39 @@
           console.log(e.currentTarget);
 
           var book = e.currentTarget.parentNode;
-
+          console.log("hello")
+          console.log(book.childNodes[0]);
           var blur = document.createElement("img");
           blur.className = "blur-overlay";
           blur.setAttribute("id","blurrer")
           blur.style.zIndex = 99;
           book.appendChild(blur);
-          var record = document.createElement("img");
-          record.setAttribute("id","record");
-          record.className = "record-button";
-          record.style.type = "button";
-          blur.width = e.target.width;
-          blur.height = e.target.height;
-          book.appendChild(record);
+          if(currentList != "discover"){
+            var record = document.createElement("img");
+            record.setAttribute("id","record");
+            record.className = "record-button";
+            record.style.type = "button";
+            blur.width = e.target.width;
+            blur.height = e.target.height;
+            book.appendChild(record);
+          }else{
+            var button = document.createElement("input");
+            button.type = "button";
+            button.value = "Buy";
+            button.id = "buy-button";
+            button.style.zIndex = 100;
+            button.onclick = function(){
+              books[book.childNodes[0].getAttribute("id")-1]['list'] = "library";
+              $(".imgContain").empty();
+              createRowView(currentList);
+            }
+            button.style.position = "absolute";
+
+            button.style.left = "30%";
+            button.style.top = "55%";
+            book.appendChild(button);
+
+          }
           loadListeners();
        }
 
@@ -332,6 +386,89 @@
       }
       $(currentNode).css("transform","rotateY(0deg)") 
     }
+
+    //kgu:
+    function chooseUser(bookID){
+
+      $("body").append("<div class='blur-overlay'></div>");
+      $(".choose-user").show();
+
+      //append to choose-user
+      for(var i = 1; i <= users.length; i ++){
+        var img = "<img id='" + i + "' name='" + users[i-1]["name"] + "' class='user' src='../graphics/" + users[i-1]["image"] + ".png'/>";
+        $(".choose-user").append(img);
+      }
+
+      var add = "<img id='add-user' src='../graphics/addUser.png'>";
+      $(".choose-user").append(add);
+
+      $('#add-user').click(function(){
+        $('#add-user').hide();
+        $('.choose-user').append("<input id='new-user-name' class='popup-text' type='text' name='answer' placeholder='Enter your name.'>");
+
+        $('#new-user-name').keypress(function(event){
+          if(event.which == 13){
+            //Pressed Enter
+            var val = $('#new-user-name').val();
+            var id = users.length+1;
+            users[id-1] = {"id":id, "name":val, "image":"user"};
+            $('#new-user-name').remove();
+            var img = "<img id='" + id + "' class='user' src='../graphics/user.png' name='" + val + "'/>";
+            $(".choose-user").append(img);
+
+            $(".user").click(function(event){
+              $('#username').remove();
+              openBook(event, bookID);
+              
+            });
+
+            $('.user').unbind('mouseenter mouseleave');
+            $(".user").hover(function(event){
+              //mouseEnter
+              var userName = event.target.name;
+              $('.choose-user').append("<h3 id='username'> "+ userName + "</h3>");
+            }, function(event){
+              //mouseLeave
+              $('#username').remove();
+            });
+
+          }
+        });
+      });
+
+      $('#cancel-popup-choose-user').click(function(){
+            $('.blur-overlay').remove();
+            $(".choose-user").hide();
+            $(".user").remove();
+            $("#add-user").remove();
+            $('#new-user-name').remove();
+      });
+
+      $(".user").click(function(event){
+        openBook(event, bookID);
+        $('#username').remove();
+      });
+
+      $(".user").hover(function(event){
+        //mouseEnter
+        var userName = event.target.name;
+        $('.choose-user').append("<h3 id='username'> "+ userName + "</h3>");
+      }, function(event){
+        //mouseLeave
+        $('#username').remove();
+      });
+
+      $('.blur-overlay').click(function(event){
+          $('.blur-overlay').remove();
+          $(".choose-user").hide();
+          $(".user").remove();
+          $("#add-user").remove();
+          $('#new-user-name').remove();
+            
+      });
+
+    }//end Choose User (kgu)
+
     $(document).ready(function() {
       
       // Format the booklet
@@ -377,10 +514,11 @@
         console.log("visible? " + $('#mybook').is(':visible'));
        console.log(e.target.className);
        console.log(e.target.id);
+       console.log(e.target.parentNode.childNodes[0].id)
 
         if(e.target.className != "bookCover" && e.target.className != "blur-overlay"){
           $('#blurrer').remove();
-          $('#cancel-button').remove();
+          $('#buy-button').remove();
           $('.record-button').remove();
           activeBook = false;
 
@@ -401,15 +539,15 @@
 
 
       $('.imgContain').on("click","a,img", function (e) {
-        var id = e.target.getAttribute('id');
+        var bookID = e.target.getAttribute('id');
         e.preventDefault();
         if(e.target.className == "record-button"){
           $('#blurrer').remove();
-          $('#cancel-button').remove();
           $('.record-button').remove();
           activeBook = false;
-          openBook("book");
 
+          //Show user choice
+          chooseUser(bookID);
         }
 
       });
@@ -432,9 +570,17 @@
         var id = e.target.getAttribute('id');
         if(e.target.className == "list"){
           var label = e.target.parentNode;
+          var list = e.target.id
         }else{
           var label = e.target;
+          list = label.parentNode.id
         }
+        currentList = list;
+        $(".imgContain").empty();
+        createRowView(list);
+        //console.log(list)
+        //console.log("yaaaaaay")
+
         var oldLabel = document.getElementsByClassName("current")[0]
         oldLabel.style.color = "grey";
         oldLabel.className = "";
@@ -534,7 +680,8 @@
 
 
 
-    });
+    });// DOcument ready
+
     </script>
   </head>
   
@@ -561,13 +708,13 @@
           <li class = "section" id = "library"><div class = "current" href = "#"> &nbsp My Library</a></li>
           <div id = "library-contents">
             <ul id = "reading-lists">
-              <li><div class = "list" id = "dogs">Dogs</div></li>
+              <li><div class = "list" id = "cats">Cats</div></li>
               <li><div class = "list" id = "nature">Nature</div></li>
-              <li><div class = "list" id = "robots">Robots</div></li>
-              <li><div class = "list" id = "dragons">Dragons</div></li>
+              <li><div class = "list" id = "travel">Travel</div></li>
+              <li><div class = "list" id = "religious">Religious</div></li>
             </ul> 
           </div>
-            <li class = "section"><div href = "#">&nbsp Discover More Books</a></li>
+            <li class = "section" id = "discover"><div href = "#">&nbsp Discover More Books</a></li>
           
         </ul>
         <ul type="none">
@@ -586,7 +733,7 @@
 
     
 
-    <div class = "book-popup popup">
+  <div class = "book-popup popup">
     <div id='pointer' style='position:absolute;'><img src = '../graphics/pointer.png'></div>
 
     <div id='mybook' style="height:600px; width:auto;">
@@ -638,27 +785,45 @@
           Your browser does not support the audio element.
         </audio>
       </div>
-      <div  class="p-title" title='seventh-page'>
+      <!-- <div  class="p-title" title='seventh-page'>
         <h3>
-          <img src="../graphics/save.png" id="re-read">
-          <img src="../graphics/trash.png" id="exit-book">
+          <img src="../graphics/save3.png" id="re-read">
+          <img src="../graphics/trash3.png" id="exit-book">
           <div id="re-read-label">Save</div>
           <div id="exit-book-label">Discard</div>
         </h3>
-      </div>
+      </div> -->
     </div>
 
     <img id="cancel-popup" class="cancel-button"/>
     <br>
 
+<!-- <<<<<<< HEAD
     <div id = "tools">
       <img src="../graphics/play.png">
       <img src="../graphics/trash.png">
       <img src="../graphics/save.png">
-    </div>
+    </div>   -->
 
     
+    <img id="play-button" src="../graphics/play3.png">
+    <img id="trash-button" src="../graphics/trash3.png">
+    <img id="save-button" src="../graphics/save3.png">
+    <img id="reader">
+<!-- >>>>>>> 579a8410a6fe04bffa5d75c04560bf7ea2f10a6e -->
     <img id="recording" src="../graphics/not-record.png" name = "play">
+
+  </div>
+
+  <div class = "popup choose-user">
+    <br>
+    <h3>Which user are you? </h3>
+    <img id="cancel-popup-choose-user" class="cancel-button"/>
+    <!-- <img id="user1" class="user" src="../graphics/user.png">
+    <img id="user2" class="user" src="../graphics/user.png">
+    <img id="user3" class="user" src="../graphics/user.png">
+    <img id="add-user" src="../graphics/addUser.png"> -->
+
   </div>
 
 </body>
