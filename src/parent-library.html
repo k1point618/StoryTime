@@ -187,7 +187,8 @@
       if(bookList.length > 0){
         console.log("yayy");
         for(var i = 0; i < bookList.length; i++){
-          if(bookList[i].list == currentList){
+          console.log("currentList: "+currentList)
+          if(bookList[i].list == currentList|| (currentList == 'library' && bookList[i].list != "discover")){
             console.log(bookList[i].id);
             addBookToRow(bookList[i].id-1,heightIncr);
             heightIncr++;
@@ -678,6 +679,7 @@
           return obj.title == jQuery(this).val();
         })*/
         //console.log(relevantBooks[0].id)
+        console.log(relevantBooks.length)
         if(mode == "row"){
           createRowView("library",relevantBooks)
         }else{
