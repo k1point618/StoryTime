@@ -169,7 +169,7 @@
       console.log(list);
       if(bookList.length > 0){
         for(var i = 0; i < bookList.length; i++){
-          if(bookList[i].list == currentList){
+          if($.inArray(currentList,bookList[i].list.split("$")) > -1){
             add(bookList[i].id,Math.floor(bookCounter/perRow),bookCounter%perRow);
             bookCounter++;
           }
@@ -178,7 +178,7 @@
         for(var i = 0; i < 12/perRow; i ++){
             for(var j = 0; j < perRow; j++){
               console.log(books[i*4+j]["list"] == list)
-              if(books[i*4+j]["list"]==list || (list == "library" && books[i*4+j]["list"]!="discover")){
+              if($.inArray(list, books[i*4+j]["list"].split("$")) > -1 || (list == "library" && $.inArray("discover", books[i*4+j]["list"].split("$"))) == -1){
                 add(book.toString(),Math.floor(bookCounter/perRow),bookCounter%perRow);
                 bookCounter++;
               }
