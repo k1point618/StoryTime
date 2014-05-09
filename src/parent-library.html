@@ -37,6 +37,7 @@
     var activeBook = false;
     var currentList = "library"
 
+
     function createDescriptionView(){
       boardSize = 2.5;
       var incr = 600/boardSize;
@@ -45,23 +46,30 @@
     }
 
     //creates grid view
-    function createGridView(perRow){
+    function createGridView(perRow, list = 'library'){
+      $(".imgContain").empty();
       mode = "grid"
+      console.log(mode);
       tableButton = document.getElementById("table-button");
       gridButton = document.getElementById("grid-button");
       tableButton.style.backgroundColor = "#d4f4f1";
       tableButton.style.color = "#666";
       gridButton.disabled = true;
       tableButton.disabled = false;
-      console.log();
       hIncr = $('#column-right').height()/perRow;
       //vIncr = 600/boardSize*1.2;
       vIncr = hIncr * 5 /3;
       var book = 1;
+      var bookCounter = 0;
+      console.log(list);
       for(var i = 0; i < 12/perRow; i ++){
           for(var j = 0; j < perRow; j++){
-              add(book.toString(),i,j);
-              book++;
+            console.log(books[i*4+j]["list"] == list)
+            if(books[i*4+j]["list"]==list || (list == "library" && books[i*4+j]["list"]!="discover")){
+              add(book.toString(),Math.floor(bookCounter/perRow),bookCounter%perRow);
+              bookCounter++;
+            }
+            book++;
           }
       }
 
@@ -70,6 +78,7 @@
     }
     //helper function for creating the grid view
     function add(name, row, col){
+      console.log(row,col);
       var body = document.getElementById('column-right');
 
       var img = setImage(name, hIncr, vIncr);
@@ -115,10 +124,10 @@
       img.setAttribute("id",name)
       img.setAttribute("draggable",true);
 
-      $("#"+name).draggable(/*{
-            scroll:false,
-            containment: "#column-right"
-          }*/"enable");
+    //  $("#"+name).draggable(/*{
+   //         scroll:false,
+   //         containment: "#column-right"
+   //       }*/"enable");
     
 
       return img;
@@ -131,6 +140,7 @@
     }
 
     function createRowView(list = "library"){
+      $(".imgContain").empty();
       console.log(list);
       mode = "row"
       tableButton = document.getElementById("table-button");
@@ -210,7 +220,7 @@
       }
       //$(".bookCover").draggable("enable");
       loadListeners();
-      $(".imgContain").draggable("enable");
+      //$(".imgContain").draggable("enable");
       console.log(list)
     }
 
@@ -364,8 +374,12 @@
             button.style.zIndex = 100;
             button.onclick = function(){
               books[book.childNodes[0].getAttribute("id")-1]['list'] = "library";
-              $(".imgContain").empty();
-              createRowView(currentList);
+              
+              if(mode == "row"){
+                createRowView(currentList);
+              }else{
+                createGridView(4, currentList);
+              }
             }
             button.style.position = "absolute";
 
@@ -576,8 +590,14 @@
           list = label.parentNode.id
         }
         currentList = list;
-        $(".imgContain").empty();
-        createRowView(list);
+        $(".imgContain").empty
+        if(mode == "row"){
+          createRowView(list);
+        }else{
+          console.log("yayy");
+          createGridView(4, list);
+        }
+        
         //console.log(list)
         //console.log("yaaaaaay")
 
@@ -593,7 +613,7 @@
       $("#grid-button").click(function(evt){
         console.log("viewing Grid!")
         $(".imgContain").empty();
-        createGridView(4);
+        createGridView(4, currentList);
         console.log("viewing grid!");
       });
 
