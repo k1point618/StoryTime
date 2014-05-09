@@ -75,6 +75,7 @@ table{
     border-radius: 13px;
 }
 
+
 .lib-select{
   position:absolute;
   left:30%;
@@ -96,22 +97,22 @@ table{
   width:100px;
 }
 
-#play-button{
+#save-button{
   position:absolute;
   width:70px;
   height:auto;
   /*top:20px;*/
   bottom: 19px;
-  left: 130px;
+  left: 390px;
   cursor: pointer;
 }
-#save-button{
+#play-button{
   position:absolute;
   width:70px;
   height:auto;
   /*top:15px;*/
   bottom: 19px;
-  left: 240px;
+  left: 500px;
   cursor: pointer;
 }
 #trash-button{
@@ -120,13 +121,12 @@ table{
   height:auto;
   /*top:15px;*/
   bottom: 19px;
-  left: 350px;
+  left: 610px;
   cursor: pointer;
 }
 #recording{
-  position:absolute;
-  bottom: 47px;
-  right: 130px;
+  bottom: 40px;
+  left: 500px;
   cursor: pointer;
 }
 #reader{
@@ -192,8 +192,7 @@ table{
 }
 
 #tools {
-  position: absolute;
-  float: left;
+  z-index: 500;
 }
 
 ul {
