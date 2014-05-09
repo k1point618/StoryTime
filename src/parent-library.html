@@ -45,6 +45,24 @@
       var vIncr = incr;
     }
 
+    function getObjects(obj, key, val) {
+      var objects = [];
+      for (var i in obj) {
+          if (!obj.hasOwnProperty(i)) continue;
+          if (typeof obj[i] == 'object') {
+              objects = objects.concat(getObjects(obj[i], key, val));
+              //console.log('hello')
+          } else{
+            //console.log(i, obj[key])
+            if (i == key && obj[key].toLowerCase().indexOf(val) >= 0) {
+              objects.push(obj);
+              //console.log('goodbye');
+          }
+        }
+      }
+      return objects;
+      }
+
     //creates grid view
     function createGridView(perRow, list = 'library'){
       $(".imgContain").empty();
@@ -139,7 +157,9 @@
       return element;
     }
 
-    function createRowView(list = "library"){
+    function createRowView(list = "library", bookList = []){
+      console.log(bookList.length)
+      listOfBooks = bookList;
       $(".imgContain").empty();
       console.log(list);
       mode = "row"
@@ -154,68 +174,20 @@
       var hIncr = incr;
       var vIncr = incr;
      // console.log(vIncr,hIncr);
-      var body = document.getElementById('column-right');
       var heightIncr = 0;
-      for (var j = 0; j <=11; j++){
-        if(books[j]["list"]==list || (list == "library" && books[j]["list"]!="discover")){
-          console.log(books[j]["title"])
-          var div = document.createElement("div");
-          div.style.position = "relative";
-          div.style.left = 2+"%";
-          div.style.top = .2*hIncr * heightIncr + "px";
+      if(bookList.length > 0){
+        console.log("yayy");
+        for(var i = 0; i < bookList.length; i++){
+          console.log(bookList[i].id);
+          addBookToRow(bookList[i].id-1,heightIncr);
           heightIncr++;
-          div.className = "book-div"
-          //div.style.textAlign = "left"
-          div.style.width = 93 + "%";
-          var img = setImage((j+1).toString(), hIncr,vIncr);
-          img.height = hIncr + "px";
-          img.style.position = "relative";
-
-          
-
-          var tbl = document.createElement("table");
-          var tblBody = document.createElement("tbody");
-
-          tbl.setAttribute('border', '0');
-          var row = document.createElement('tr');
-          var cell1 = document.createElement("td");
-
-          var container = document.createElement("div");
-          container.setAttribute("id", "f1_container");
-          container.appendChild(img);
-
-          $(".imgContain").draggable({
-            scroll:false,
-            containment: "#column-right"
-          });
-
-          cell1.appendChild(container);
-          cell1.style.width = "190px";
-          row.appendChild(cell1);
-          cell2 = document.createElement("td");
-
-          cell2.appendChild(boldHTML("Title: "));
-          cell2.appendChild(document.createTextNode(books[j]["title"]));
-          cell2.appendChild(document.createElement("br"));
-          cell2.appendChild(boldHTML("Author: "));
-          cell2.appendChild(document.createTextNode(books[j]["author"]));
-          cell2.appendChild(document.createElement("br"));
-          cell2.appendChild(document.createElement("br"));
-          cell2.appendChild(boldHTML("Synopsis: "));
-          cell2.appendChild(document.createTextNode(books[j]["synopsis"]));
-
-          cell2.style.width = "800px";
-          cell2.style.textAlign = "left"
-          //cell2.style.left = 10+"px";
-          row.appendChild(cell2);
-          tblBody.appendChild(row);
-          tbl.appendChild(tblBody);
-          div.appendChild(tbl);
-          //p.appendChild(text);
-          //p.style.whiteSpace = ;
-          //div.appendChild(img);
-          //div.appendChild(p);
-          body.appendChild(div);
+        }
+      }else{
+        for (var j = 0; j <=11; j++){
+          if(books[j]["list"]==list || (list == "library" && books[j]["list"]!="discover")){
+            addBookToRow(j, heightIncr);
+            heightIncr++;
+          }
         }
       }
       //$(".bookCover").draggable("enable");
@@ -224,6 +196,71 @@
       console.log(list)
     }
 
+    function addBookToRow(j, heightIncr){
+      console.log(j)
+      boardSize = 4
+        var incr = $('#column-right').height()/boardSize;
+      var hIncr = incr;
+      var vIncr = incr;
+      var body = document.getElementById('column-right');
+      console.log(books[j]["title"])
+      var div = document.createElement("div");
+      div.style.position = "relative";
+      div.style.left = 2+"%";
+      div.style.top = .2*hIncr * heightIncr + "px";
+      div.className = "book-div"
+      //div.style.textAlign = "left"
+      div.style.width = 93 + "%";
+
+
+
+
+      var img = setImage((j+1).toString(), hIncr,vIncr);
+      img.height = hIncr + "px";
+      img.style.position = "relative";
+
+      
+
+      var tbl = document.createElement("table");
+      var tblBody = document.createElement("tbody");
+      tbl.setAttribute('border', '0');
+      var row = document.createElement('tr');
+      var cell1 = document.createElement("td");
+      var container = document.createElement("div");
+      container.setAttribute("id", "f1_container");
+      container.appendChild(img);
+      $(".imgContain").draggable({
+        scroll:false,
+        containment: "#column-right"
+      });
+      cell1.appendChild(container);
+      cell1.style.width = "190px";
+      row.appendChild(cell1);
+      cell2 = document.createElement("td");
+
+      cell2.appendChild(boldHTML("Title: "));
+      cell2.appendChild(document.createTextNode(books[j]["title"]));
+      cell2.appendChild(document.createElement("br"));
+      cell2.appendChild(boldHTML("Author: "));
+      cell2.appendChild(document.createTextNode(books[j]["author"]));
+      cell2.appendChild(document.createElement("br"));
+      cell2.appendChild(document.createElement("br"));
+      cell2.appendChild(boldHTML("Synopsis: "));
+      cell2.appendChild(document.createTextNode(books[j]["synopsis"]));
+
+      cell2.style.width = "800px";
+      cell2.style.textAlign = "left"
+      //cell2.style.left = 10+"px";
+      row.appendChild(cell2);
+      tblBody.appendChild(row);
+      tbl.appendChild(tblBody);
+      div.appendChild(tbl);
+      //p.appendChild(text);
+      //p.style.whiteSpace = ;
+      //div.appendChild(img);
+      //div.appendChild(p);
+      body.appendChild(div);
+    }
     //moves hand when recording
     function movePointer() {
       var divElement = $('.b-p1').find('.p-title')[0];
@@ -520,6 +557,7 @@
 
     }//end Choose User (kgu)
 
+    
     $(document).ready(function() {
       
       // Format the booklet
@@ -585,7 +623,16 @@
      
       // Clicking on a book should unhide the book view
       
-      
+      $('#search').keyup(function(e){
+        console.log("serach focused");
+        console.log(jQuery(this).val())
+        relevantBooks = getObjects(books, 'title', jQuery(this).val());
+        /*relevantBooks = jQuery.map(books, function(obj){
+          return obj.title == jQuery(this).val();
+        })*/
+        //console.log(relevantBooks[0].id)
+        createRowView("library",relevantBooks)
+      })
 
 
 
@@ -763,7 +810,7 @@
     <div id="library-div" class="main-frame">
       <div id="column-left">
         <ul id = "column-left-contents" >
-          <span id = "search"><label> Search </label> <input type = "text" name = "search"></span>
+          <span><label> Search </label> <input id = "search" type = "text" name = "search"></span>
           <li class = "section" id = "library"><div class = "current" href = "#"> &nbsp My Library</a></li>
           <div id = "library-contents">
             <ul id = "reading-lists">
