@@ -226,7 +226,7 @@
           var maxCol = 6;
           var curID = 1;
 
-          var totalY = library.offsetHeight - 100;
+          var totalY = library.offsetHeight - 80;
           var totalX = library.offsetWidth;
           var gridY = totalY / maxRow;
           var gridX = totalX / maxCol;
@@ -481,17 +481,20 @@
           $("#play-button").click(function(){
             $("#restart-button").removeClass("abled").addClass("disabled");
 
-            if ($('.b-p1').hasClass('b-page-0')){
-              var divElement = $('.b-p2').find('.p-title')[0];
+            var bp1 = $('#mybook-' + bookID).find('.b-p1');
+            var bp2 = $('#mybook-' + bookID).find('.b-p2');
+
+            if ($(bp1).hasClass('b-page-0')){
+              var divElement = $(bp2).find('.p-title')[0];
             }else{
-              var divElement = $('.b-p1').find('.p-title')[0];
+              var divElement = $(bp1).find('.p-title')[0];
             }
             var title = divElement.title;
             console.log("title: " + title);
             //Figure out reader's user name and append to title
             var userID = $('.current-reader').attr("id");
             console.log(userID);
-            title = title + "-" + userID;
+            title = title + "-" + userID + "-" + bookID;
             console.log(title);
 
             //Play or pause audio
@@ -526,7 +529,7 @@
             //Figure out reader's user name and append to title
             var userID = $('.current-reader').attr("id");
             console.log(userID);
-            title = title + "-" + userID;
+            title = title + "-" + userID + "-" + bookID;
             console.log(title);
 
             var audio = document.getElementById(title);
@@ -657,20 +660,44 @@
       <div class="p-title" title='first-page'> 
         <center> 
           <h3>Oh, the Places You'll Go!</h3>
-          <img src = '../graphics/4.jpeg'> 
-          <audio controls id="first-page-reader1" class="audio-controls">
-            <source src="../audios/first-page-reader1.mp3" type="audio/mp3">
+          <img src = '../graphics/book/ohThePlaces/ohThePlaces.jpg' style="width:100%; height:auto;"> 
+          <audio controls id="first-page-reader1-4" class="audio-controls">
+            <source src="../audios/ohThePlaces/first-page-reader2.mp3" type="audio/mp3">
             Your browser does not support the audio element.
           </audio>
         </center>
       </div>
 
       <div  class="p-title" title='second-page'>
-        <h3 style="top:200px; position:absolute; left:150px">The End.</h3>
-        <audio controls id="End-reader1" class="audio-controls">
-          <source src="../audios/End-reader1.mp3" type="audio/mp3">
+        <img src = '../graphics/book/ohThePlaces/page1.png' style="width:100%; height:auto;"> 
+        <audio controls id="second-page-reader1-4" class="audio-controls">
+          <source src="../audios/ohThePlaces/second-page-reader2.mp3" type="audio/mp3">
           Your browser does not support the audio element.
         </audio>
+      </div>
+
+      <div  class="p-title" title='third-page'>
+        <img src = '../graphics/book/ohThePlaces/page2.png' style="width:100%; height:auto;"> 
+        <!-- <audio controls id="End-reader1" class="audio-controls">
+          <source src="../audios/ohThePlaces/first-page-reader1.mp3" type="audio/mp3">
+          Your browser does not support the audio element.
+        </audio> -->
+      </div>
+
+      <div  class="p-title" title='fourth-page'>
+        <img src = '../graphics/book/ohThePlaces/page3.png' style="width:100%; height:auto;"> 
+        <audio controls id="fourth-page-reader1-4" class="audio-controls">
+          <source src="../audios/ohThePlaces/fourth-page-reader2.mp3" type="audio/mp3">
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+
+      <div  class="p-title" title='fifth-page'>
+        <img src = '../graphics/book/ohThePlaces/page4.png' style="width:100%; height:auto;"> 
+        <!-- <audio controls id="End-reader1" class="audio-controls">
+          <source src="../audios/ohThePlaces/first-page-reader1.mp3" type="audio/mp3">
+          Your browser does not support the audio element.
+        </audio> -->
       </div>
     </div>
 
@@ -680,9 +707,9 @@
       <div class="p-title" title='first-page'> 
         <center> 
           <h3>The Cat In the Hat</h3>
-          <img src = '../graphics/2.jpeg'> 
+          <img src = '../graphics/book/catInTheHat/catInTheHat.jpg' style="width:100%; height:auto;"> 
           <audio controls id="first-page-reader1" class="audio-controls">
-            <source src="../audios/first-page-reader1.mp3" type="audio/mp3">
+            <source src="../audios/catInTheHat/first-page-reader1.mp3" type="audio/mp3">
             Your browser does not support the audio element.
           </audio>
         </center>
@@ -761,8 +788,12 @@
         <center> 
           <h3>The Giving Tree</h3>
           <img src = '../graphics/book/GivingTree.jpg'> 
-          <audio controls id="first-page-reader1" class="audio-controls">
+          <audio controls id="first-page-reader1-7" class="audio-controls">
             <source src="../audios/first-page-reader1.mp3" type="audio/mp3">
+            Your browser does not support the audio element.
+          </audio>
+          <audio controls id="first-page-reader2-7" class="audio-controls">
+            <source src="../audios/first-page-reader2.mp3" type="audio/mp3">
             Your browser does not support the audio element.
           </audio>
         </center>
@@ -772,8 +803,12 @@
       <div class="p-title" title='second-page'>
           <div class = "book-text" style = "left:15px; top:300px;">Once there was a tree</div>
           <img src = '../graphics/book/page1.png'>
-          <audio controls id="second-page-reader1" class="audio-controls">
+          <audio controls id="second-page-reader1-7" class="audio-controls">
             <source src="../audios/second-page-reader1.mp3" type="audio/mp3">
+            Your browser does not support the audio element.
+          </audio>
+          <audio controls id="second-page-reader2-7" class="audio-controls">
+            <source src="../audios/second-page-reader2.mp3" type="audio/mp3">
             Your browser does not support the audio element.
           </audio>
 <!--           <audio controls id="second-page-reader2" class="audio-controls">
@@ -789,10 +824,14 @@
       <div  class="p-title" title='fourth-page'>
         <div class = "book-text" style = "left:200px; top:210px;">And every day the boy would come</div>
         <img src = '../graphics/book/page3.png'>
-        <audio controls id="fourth-page-reader1" class="audio-controls">
+        <audio controls id="fourth-page-reader1-7" class="audio-controls">
           <source src="../audios/fourth-page-reader1.mp3" type="audio/mp3">
           Your browser does not support the audio element.
         </audio>  
+        <audio controls id="fourth-page-reader2-7" class="audio-controls">
+            <source src="../audios/fourth-page-reader2.mp3" type="audio/mp3">
+            Your browser does not support the audio element.
+          </audio>
       </div>
       <div  class="p-title" title='fifth-page'>
         <div class = "book-text" style = "width: 200px; left:80px; top:300px;">And he would gather her leaves</div>
@@ -802,7 +841,7 @@
       <div  class="p-title" title='sixth-page'>
         <h3 style="top:200px; position:absolute; left:150px">The End.</h3>
         <!-- The last page needs two mp3's because ... well... just because -->
-        <audio controls id="sixth-page-reader1" class="audio-controls">
+        <audio controls id="sixth-page-reader1-7" class="audio-controls">
           <source src="../audios/sixth-page-reader1.mp3" type="audio/mp3">
           Your browser does not support the audio element.
         </audio>
