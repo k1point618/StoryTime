@@ -88,7 +88,7 @@ table{
   padding-right:20px;
   border-left:1px solid gray;
 }
-#add-to-list, #add-button{
+.add-to-list, #add-button{
   position:relative;
   left:0px;
   top:60%;
