@@ -188,7 +188,6 @@
                 $(this).siblings().removeClass('top').addClass('bottom');              
                 notDrag = true;
 
-                $(this).animate({height:smallBookHeight}, 300);
               });
 
               $(image).mousedown(function(){
@@ -196,10 +195,14 @@
                 $(this).css("z-index", top++);
                 $(this).removeClass('unselected');
                 $(this).addClass('selected');
+
+                $(this).siblings('.selected').animate({height:smallBookHeight}, 300);
+                
                 $(this).siblings().removeClass('selected').addClass('unselected');
                 
                 $(this).animate({height:bigBookHeight}, 300);
               });
+
             }
             
             
