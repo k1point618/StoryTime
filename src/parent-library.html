@@ -368,17 +368,18 @@
         button.style.zIndex = 100;
         //button.style.width = 90 + "px"
         button.onclick = function(){
-          $('#add-button'+j).remove();
+          $('#add-button'+j).hide();
           var select = document.createElement("select");
           select.setAttribute("id","add-to-list"+j);
           select.className = "add-to-list";
 
           select.onchange = function(){
+            myList = document.getElementById("add-to-list"+j)
+            console.log(myList.options[myList.selectedIndex].text.toLowerCase())
+            books[myList.parentNode.parentNode.childNodes[0].childNodes[0].childNodes[0].getAttribute('id')-1]['list'] += "$"+myList.options[myList.selectedIndex].text.toLowerCase();
+            $("#add-to-list"+j).remove();
+            $('#add-button'+j).show();
 
-    //              console.log('yayyyyyy');
-          myList = document.getElementById("add-to-list"+j)
-          console.log(myList.options[myList.selectedIndex].text.toLowerCase())
-          books[myList.parentNode.parentNode.childNodes[0].childNodes[0].childNodes[0].getAttribute('id')-1]['list'] += "$"+myList.options[myList.selectedIndex].text.toLowerCase();
           }
 
           var option;
@@ -957,7 +958,7 @@
               var item = document.createElement("li");
               var div = document.createElement("div");
               div.className = "list";
-              div.setAttribute('id', val.replace(' ',''));
+              div.setAttribute('id', val.replace(' ','').toLowerCase());
               var text = document.createTextNode(val);
               div.appendChild(text);
               item.appendChild(div);
@@ -968,6 +969,7 @@
               item.style.color = "#FFF";
               item.className = "current";    
               lists = lists.concat(val);
+              $(".imgContain").empty();
             }
             $('#new-list-popup').remove();
             $('.blur-overlay').remove();
