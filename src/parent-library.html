@@ -18,6 +18,8 @@
 
     <link type="text/css" href="style/parent-library.css" rel="stylesheet" />
     <script type="text/javascript" src="external_js/jquery-1.9.0.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="external_js/jquery-ui-1.10.4.custom.js"></script>
+    <script type="text/javascript" charset="utf-8" src="external_js/jquery-ui-1.10.4.custom.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
     <script> window.jQuery || document.write('<script src="Booklet-master/booklet/jquery-2.1.0.min.js"><\/script>') </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
@@ -352,40 +354,74 @@
       row.appendChild(cell2);
 
       // Start cell 3: ================================
-      var cell3 = document.createElement("td");
-      cell3.setAttribute("id", "cell3");
-      var select = document.createElement("select");
-      select.setAttribute("id","add-to-list");
+      if(currentList == 'library'){
+        var cell3 = document.createElement("td");
+        cell3.setAttribute("id", "cell3");
 
-      select.onchange = function(){
-//              console.log('yayyyyyy');
-        myList = document.getElementById("lib-select")
-        console.log(myList.options[myList.selectedIndex].text.toLowerCase())
+       
+
+        var button = document.createElement("input");
+        button.type = "button";
+        button.value = "Add to Library";
+        button.id = "add-button";
+        button.style.zIndex = 100;
+        //button.style.width = 90 + "px"
+        button.onclick = function(){
+          $('#add-button').remove();
+          var select = document.createElement("select");
+          select.setAttribute("id","add-to-list"+j);
+
+          select.onchange = function(){
+
+    //              console.log('yayyyyyy');
+            myList = document.getElementById("add-to-list"+j)
+            console.log(myList.options[myList.selectedIndex].text.toLowerCase())
+            books[myList.parentNode.parentNode.childNodes[0].childNodes[0].childNodes[0].getAttribute('id')-1]['list'] = myList.options[myList.selectedIndex].text.toLowerCase();
+          }
+
+          var option;
+
+          option = document.createElement("option");
+          option.setAttribute("value", "");
+          option.innerHTML = "";
+          select.appendChild(option);
+
+          option = document.createElement("option");
+          option.setAttribute("value", "cats");
+          option.innerHTML = "Cats";
+          select.appendChild(option);
+
+          option = document.createElement("option");
+          option.setAttribute("value", "nature");
+          option.innerHTML = "Nature";
+          select.appendChild(option);            
+
+          option = document.createElement("option");
+          option.setAttribute("value", "travel");
+          option.innerHTML = "Travel";
+          select.appendChild(option);
+
+          option = document.createElement("option");
+          option.setAttribute("value", "religious");
+          option.innerHTML = "Religious";
+          select.appendChild(option);            
+          cell3.appendChild(select);
+        }
+
+        cell3.appendChild(button); 
+
+        
+
+        var record = document.createElement("img");
+        record.setAttribute("id","record");
+        record.className = "record-button";
+        record.style.type = "button";
+        //record.style.position = "relative"
+        cell3.appendChild(record);
+
+
+        row.appendChild(cell3);
       }
-
-      var option;
-
-      option = document.createElement("option");
-      option.setAttribute("value", "cats");
-      option.innerHTML = "Cats";
-      select.appendChild(option);
-
-      option = document.createElement("option");
-      option.setAttribute("value", "nature");
-      option.innerHTML = "Nature";
-      select.appendChild(option);            
-
-      option = document.createElement("option");
-      option.setAttribute("value", "travel");
-      option.innerHTML = "Travel";
-      select.appendChild(option);
-
-      option = document.createElement("option");
-      option.setAttribute("value", "religious");
-      option.innerHTML = "Religious";
-      select.appendChild(option);            
-      cell3.appendChild(select);
-      row.appendChild(cell3);
 
       tblBody.appendChild(row);
       tbl.appendChild(tblBody);
