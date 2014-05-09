@@ -263,6 +263,43 @@
       cell2.style.textAlign = "left"
       //cell2.style.left = 10+"px";
       row.appendChild(cell2);
+
+      // Start cell 3: ================================
+      var cell3 = document.createElement("td");
+      cell3.setAttribute("id", "cell3");
+      var select = document.createElement("select");
+      select.setAttribute("id","add-to-list");
+
+      select.onchange = function(){
+//              console.log('yayyyyyy');
+        myList = document.getElementById("lib-select")
+        console.log(myList.options[myList.selectedIndex].text.toLowerCase())
+      }
+
+      var option;
+
+      option = document.createElement("option");
+      option.setAttribute("value", "cats");
+      option.innerHTML = "Cats";
+      select.appendChild(option);
+
+      option = document.createElement("option");
+      option.setAttribute("value", "nature");
+      option.innerHTML = "Nature";
+      select.appendChild(option);            
+
+      option = document.createElement("option");
+      option.setAttribute("value", "travel");
+      option.innerHTML = "Travel";
+      select.appendChild(option);
+
+      option = document.createElement("option");
+      option.setAttribute("value", "religious");
+      option.innerHTML = "Religious";
+      select.appendChild(option);            
+      cell3.appendChild(select);
+      row.appendChild(cell3);
+
       tblBody.appendChild(row);
       tbl.appendChild(tblBody);
       div.appendChild(tbl);
@@ -417,11 +454,10 @@
             book.appendChild(record);
 
             var select = document.createElement("select");
-            select.setAttribute("name","lib-select");
-            select.className = 'lib-select';
+            select.setAttribute("id","add-to-list");
 
             select.onchange = function(){
-//              console.log('yayyyyyy');
+      //              console.log('yayyyyyy');
               myList = document.getElementById("lib-select")
               console.log(myList.options[myList.selectedIndex].text.toLowerCase())
             }
@@ -446,7 +482,7 @@
             option = document.createElement("option");
             option.setAttribute("value", "religious");
             option.innerHTML = "Religious";
-            select.appendChild(option);            
+            select.appendChild(option);                   
             book.appendChild(select);
 
           }else{

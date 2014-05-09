@@ -82,6 +82,19 @@ table{
   width:40%;
   z-index:100;
 }
+#cell3{
+  padding-left:30px;
+  padding-right:20px;
+  border-left:1px solid gray;
+}
+#add-to-list{
+  position:relative;
+  left:0px;
+  top:60%;
+  width:40%;
+  z-index:100;
+  width:100px;
+}
 
 #play-button{
   position:absolute;
