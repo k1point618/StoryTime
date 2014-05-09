@@ -28,8 +28,91 @@
     <script type='text/javascript' src='blur.js'></script>
     <script type="text/javascript" src="util.js"></script>
 
+    <!-- Recording JS Files 
+    <script src="recording.js"></script> 
+    -->
+    <script src="ga.js"></script>
 
     <script type = "text/javascript">
+    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+    var isRecording = false;
+
+    function makeRecording(){
+      var constraints = {audio: true, video: true};
+      var videoElement = document.getElementById('video');
+      function errorCallback(error){
+        console.log("navigator.getUserMedia error: ", error);
+      }
+
+      var count = 0;
+      function startRecording(stream) {
+        console.log('Starting...');
+        mediaRecorder = new MediaRecorder(stream);
+
+        mediaRecorder.ondataavailable = function(e) {
+          console.log('Data available...');
+        /*  count++;
+          if (count > 1) {
+            return;
+          } */
+          console.log(e);
+          videoElement.src = window.URL.createObjectURL(e.data);
+        };
+
+        mediaRecorder.start();
+
+      }
+
+      if (typeof MediaRecorder === 'undefined' || !navigator.getUserMedia) {
+        console.log('Sorry! This demo requires Firefox Nightly.');
+      } else {
+     /*   navigator.getUserMedia(constraints, startRecording, errorCallback);
+        console.log("started recording");
+
+        var button = document.getElementById("trash-button");
+        button.onclick = function(){
+          console.log("Stopped recording");
+          mediaRecorder.stop();
+        }*/
+
+        $('#recording').mousedown(function(){
+          if (!isRecording) {
+            navigator.getUserMedia(constraints, startRecording, errorCallback);
+            console.log("started recording");
+          }
+          else {
+            console.log("Stopped recording");
+            mediaRecorder.stop();
+          }
+        });
+
+        $('#recording').mouseup(function(){
+          
+        });
+
+        var playButton = document.getElementById('play-button');
+        playButton.onclick = function() {
+          var myVideo = document.getElementById('video');
+          myVideo.onended = function(e) {
+            $("#play-button").attr('src', "../graphics/play3.png");
+          }
+
+          if (myVideo.paused) {
+            myVideo.play(); 
+            $("#play-button").attr('src', "../graphics/pause3.png");
+          }
+          else {
+            myVideo.pause();
+            $("#play-button").attr('src', "../graphics/play3.png");
+          }
+        }
+      }
+    }
+
+    window.onload = function(){
+      makeRecording();
+    };
+
     var hIncr;
     var vIncr;
     var suppressBookHide = true;
@@ -67,7 +150,7 @@
     function createGridView(perRow, list = 'library', bookList = []){
       $(".imgContain").empty();
       mode = "grid"
-      console.log(mode);
+      //console.log(mode);
       tableButton = document.getElementById("table-button");
       gridButton = document.getElementById("grid-button");
       tableButton.style.backgroundColor = "#d4f4f1";
@@ -79,6 +162,8 @@
       vIncr = hIncr * 5 /3;
       var book = 1;
       var bookCounter = 0;
+      //console.log(list);
+
       console.log(list);
       if(bookList.length > 0){
         for(var i = 0; i < bookList.length; i++){
@@ -105,7 +190,7 @@
     }
     //helper function for creating the grid view
     function add(name, row, col){
-      console.log(row,col);
+      //console.log(row,col);
       var body = document.getElementById('column-right');
 
       var img = setImage(name, hIncr, vIncr);
@@ -170,7 +255,7 @@
       console.log(bookList.length)
       listOfBooks = bookList;
       $(".imgContain").empty();
-      console.log(list);
+      //console.log(list);
       mode = "row"
       tableButton = document.getElementById("table-button");
       gridButton = document.getElementById("grid-button");
@@ -184,6 +269,7 @@
       var vIncr = incr;
      // console.log(vIncr,hIncr);
       var heightIncr = 0;
+
       if(bookList.length > 0){
         console.log("yayy");
         for(var i = 0; i < bookList.length; i++){
@@ -205,7 +291,7 @@
       //$(".bookCover").draggable("enable");
       loadListeners();
       //$(".imgContain").draggable("enable");
-      console.log(list)
+      //console.log(list)
     }
 
     function addBookToRow(j, heightIncr){
@@ -274,15 +360,7 @@
       body.appendChild(div);
     }
     //moves hand when recording
-    function movePointer() {
-      var divElement = $('.b-p1').find('.p-title')[0];
-      var title = divElement.title;
-      //if (title == "second-page") {
-        $("#pointer").show();
-        $("#pointer").animate({left: "+=500"}, 300);
-      //}
-    }
-
+  
     //opens the book
     //Event is the click event when choosing a user. 
     function openBook(event, book){
@@ -295,7 +373,8 @@
         $(".user-tag").remove();
         $("#add-user").remove();
         $('#new-user-name').remove();
-            
+        
+        $("#tools").hide();            
 
         // Make booklet
         $("#mybook").booklet({ 
@@ -308,8 +387,49 @@
           arrowsHide: true
         });
 
+        // On clicking the record button
+        $('#recording').mousedown(function(){
+          if (!isRecording) {
+            $("#recording").attr('src', "../graphics/record.png");
+            isRecording = true;
+          }
+
+          else {
+            $("#recording").attr('src', "../graphics/not-record.png");
+            isRecording = false;
+            $("#tools").show();
+            $("#recording").attr('src', "../graphics/not-record.png");
+            $("#recording").hide();
+          }
+
+          
+        });
+
+   /*     $('#recording').mouseup(function(){
+            isRecording = false;
+            $("#tools").show();
+            $("#recording").attr('src', "../graphics/not-record.png");
+            $("#recording").hide();
+        });
+
+        $('.book-popup').mouseup(function(){
+            if (isRecording) {
+              isRecording = false;
+              $("#tools").show();
+              $("#recording").attr('src', "../graphics/not-record.png");
+              $("#recording").hide();
+            }
+        }); */
+
+        $('#trash-button').mouseup(function(){
+            $("#recording").show();
+            $("#tools").hide();
+            makeRecording();
+        });
+        
+
         // Recording mechanism 
-         $('.book-text').mousedown(function(){
+    /*     $('.book-text').mousedown(function(){
             $('#pointer').hide();
             // turn recording button on
             $("#recording").attr('src', "../graphics/record.png");
@@ -324,7 +444,7 @@
             // turn recording button off
             $('#pointer').hide();
             $("#recording").attr('src', "../graphics/not-record.png");
-          });
+          }); */
 
           //movePointer();
 
@@ -332,18 +452,7 @@
 
           $("body").append("<div class='blur-overlay'></div>");
       
-          $("#pointer").animate({left: "+=200"}, 3000);
-          $("#pointer").animate({left: "-=200"}, 500);
-          $("#pointer").animate({left: "+=200"}, 3000);
-          $("#pointer").animate({left: "-=200"}, 500);
-          $("#pointer").animate({left: "+=200"}, 3000);
-          $("#pointer").animate({left: "-=200"}, 500);
-          $("#pointer").animate({left: "+=200"}, 3000);
-          $("#pointer").animate({left: "-=200"}, 500);
-          $("#pointer").animate({left: "+=200"}, 3000);
-          $("#pointer").animate({left: "-=200"}, 500);
-          $("#pointer").animate({left: "+=200"}, 3000);
-          $("#pointer").animate({left: "-=200"}, 500);
+         
 
           //var id = book[0].id;
           $(".book-popup").show();
@@ -358,13 +467,13 @@
           $("#play-button").click(function(){
             var divElement = $('.b-p1').find('.p-title')[0];
             var title = divElement.title;
-            console.log(title);
+            //console.log(title);
             var audio = document.getElementById(title);
             audio.play();
           });
 
           $('.blur-overlay').click(function(event){
-              console.log("Clicking on Blur Overlay")
+              //console.log("Clicking on Blur Overlay")
               $('.blur-overlay').remove();
               $(".book-popup").hide();
               $("#mybook").hide();
@@ -375,7 +484,7 @@
     }
 
     $(document).click(function(event){
-        console.log(event);
+        //console.log(event);
       });
     
     //reloads listeners for record button, and hovering over the book
@@ -398,11 +507,11 @@
       $('.bookCover').hover(function(e){
         if(!activeBook){
           activeBook = true;
-          console.log(e.currentTarget);
+          //console.log(e.currentTarget);
 
           var book = e.currentTarget.parentNode;
-          console.log("hello")
-          console.log(book.childNodes[0]);
+          //console.log("hello")
+          //console.log(book.childNodes[0]);
           var blur = document.createElement("img");
           blur.className = "blur-overlay";
           blur.setAttribute("id","blurrer")
@@ -645,12 +754,12 @@
       });
 
       $("#library-div").on("click", function(e) {
-        console.log("clicked, trying to exit");
+       /* console.log("clicked, trying to exit");
         console.log(suppressBookHide);
         console.log("visible? " + $('#mybook').is(':visible'));
        console.log(e.target.className);
        console.log(e.target.id);
-       console.log(e.target.parentNode.childNodes[0].id)
+       console.log(e.target.parentNode.childNodes[0].id) */
 
         if(e.target.className != "bookCover" && e.target.className != "blur-overlay"){
           $('#blurrer').remove();
@@ -734,7 +843,7 @@
         if(mode == "row"){
           createRowView(list);
         }else{
-          console.log("yayy");
+          //console.log("yayy");
           createGridView(4, list);
         }
         
@@ -751,21 +860,21 @@
       });
 
       $("#grid-button").click(function(evt){
-        console.log("viewing Grid!")
+        //console.log("viewing Grid!")
         $(".imgContain").empty();
         createGridView(4, currentList);
-        console.log("viewing grid!");
+        //console.log("viewing grid!");
       });
 
       $("#table-button").click(function(evt){
-        console.log("viewing Table!")
+        //console.log("viewing Table!")
         $(".imgContain").empty();
         createRowView();
-        console.log("viewing table!");
+        //console.log("viewing table!");
       });
 
       $('#logo-navigation-button').click(function(){
-          console.log("go to home")
+          //console.log("go to home")
           window.location.href = 'home.html';
         });
 
@@ -846,6 +955,10 @@
   </head>
   
   <body>
+     <video id = "video" hidden></video>
+     <video id="second-page-reader1"></video>
+
+
     <div class="wrapper">
       <div id="big-frame">
         <div class="top-navigation">
@@ -894,7 +1007,6 @@
     
 
   <div class = "book-popup popup">
-    <div id='pointer' style='position:absolute;'><img src = '../graphics/pointer.png'></div>
 
     <div id='mybook' style="height:600px; width:auto;">
       
@@ -965,13 +1077,21 @@
       <img src="../graphics/save.png">
     </div>   -->
 
-    
+    <div id = "tools">
     <img id="play-button" src="../graphics/play3.png">
     <img id="trash-button" src="../graphics/trash3.png">
     <img id="save-button" src="../graphics/save3.png">
-    <img id="reader">
-<!-- >>>>>>> 579a8410a6fe04bffa5d75c04560bf7ea2f10a6e -->
+    </div>
+
     <img id="recording" src="../graphics/not-record.png" name = "play">
+
+    <img id="reader">
+
+    <!-- Media Playback Object; it is hidden 
+    <video id = "play-back" autoplay controls></video> -->
+
+
+<!-- >>>>>>> 579a8410a6fe04bffa5d75c04560bf7ea2f10a6e -->
 
   </div>
 
