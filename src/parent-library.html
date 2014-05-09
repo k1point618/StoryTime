@@ -44,12 +44,13 @@
       var constraints = {audio: true, video: true};
       var title = getTitle();
       var videoElement = document.getElementById(title);
+
       console.log("making a recording for " + title);
+
       function errorCallback(error){
         console.log("navigator.getUserMedia error: ", error);
       }
 
-      var count = 0;
       function startRecording(stream) {
         console.log('Starting recording...');
         mediaRecorder = new MediaRecorder(stream);
@@ -72,22 +73,29 @@
       if (typeof MediaRecorder === 'undefined' || !navigator.getUserMedia) {
         console.log('Sorry! This demo requires Firefox Nightly.');
       } else {
-     /*   navigator.getUserMedia(constraints, startRecording, errorCallback);
-        console.log("started recording");
 
-        var button = document.getElementById("trash-button");
-        button.onclick = function(){
-          console.log("Stopped recording");
-          mediaRecorder.stop();
-        }*/
-
-        $('#recording').mousedown(function(){ 
+        $('#recording').click(function(){ 
+          console.log("Is recording? " + isRecording);
           if (!isRecording) {
+            $("#recording").attr('src', "../graphics/record.png");
+            isRecording = true;
             navigator.getUserMedia(constraints, startRecording, errorCallback);
           }
           else {
             console.log("Stopped recording");
-            mediaRecorder.stop();
+            isRecording = false;
+            var okay = true;
+            try {
+              mediaRecorder.stop();
+            }
+            catch(err) {
+              okay = false;
+            }
+            if (okay) {
+              $("#tools").show();
+              $("#recording").attr('src', "../graphics/not-record.png");
+              $("#recording").hide();
+            }
           }
         });
 
@@ -125,7 +133,7 @@
             }else{
               var divElement = $('.b-p1').find('.p-title')[0];
             }
-            var title = divElement.title;
+            var title = divElement.title + "-video";
             //console.log("title: " + title);
             //Figure out reader's user name and append to title
            // var userID = $('.current-reader').attr("id");
@@ -482,24 +490,6 @@
         });
 
         // On clicking the record button
-        $('#recording').mousedown(function(){
-          console.log(isRecording);
-          if (!isRecording) {
-            $("#recording").attr('src', "../graphics/record.png");
-            isRecording = true;
-          }
-
-          else {
-            $("#recording").attr('src', "../graphics/not-record.png");
-            isRecording = false;
-            $("#tools").show();
-            $("#recording").attr('src', "../graphics/not-record.png");
-            $("#recording").hide();
-          }
-
-          
-        });
-
         $('#trash-button').mouseup(function(){
             $("#recording").show();
             $("#tools").hide();
@@ -787,11 +777,13 @@
        // console.log("cur title: " + getTitle());
         var same = lastTitle === getTitle();
         if (lastTitle != "" && !same) {
+          isRecording = false;
           $("#tools").hide();
           $("#recording").show();
           lastTitle = getTitle();
-          console.log("about to make a new recording for page turn");
-          mediaRecorder.stop();
+          console.log("absolute to make a new recording for page turn");
+          $("#recording").attr('src', "../graphics/not-record.png");
+          //mediaRecorder.stop();
           makeRecording();
         }
         //console.log("checking");
@@ -1043,11 +1035,11 @@
   </head>
   
   <body>
-     <video id = "video" hidden></video>
-     <video id="first-page" hidden></video>
-     <video id="second-page" hidden></video>
-     <video id="fourth-page" hidden></video>
-     <video id="sixth-page" hidden></video>
+   <!--  <video id = "video" hidden></video> -->
+     <video id="first-page-video" hidden></video>
+     <video id="second-page-video" hidden></video>
+     <video id="fourth-page-video" hidden></video>
+     <video id="sixth-page-video" hidden></video>
 
 
 
@@ -1172,7 +1164,6 @@
     <div id = "tools">
     <img id="play-button" src="../graphics/play3.png">
     <img id="trash-button" src="../graphics/trash3.png">
-    <img id="save-button" src="../graphics/save3.png">
     </div>
 
     <img id="recording" src="../graphics/not-record.png" name = "play">

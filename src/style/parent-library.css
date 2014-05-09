@@ -114,7 +114,7 @@ table{
   height:auto;
   /*top:15px;*/
   bottom: 19px;
-  left: 500px;
+  left: 420px;
   cursor: pointer;
 }
 #trash-button{
@@ -123,10 +123,12 @@ table{
   height:auto;
   /*top:15px;*/
   bottom: 19px;
-  left: 610px;
+  left: 530px;
   cursor: pointer;
 }
 #recording{
+  width:50px;
+  height:auto;
   bottom: 40px;
   left: 500px;
   cursor: pointer;
