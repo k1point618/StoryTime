@@ -154,48 +154,54 @@
           var library = document.getElementById("library-div");
           for(var i = 0; i < books.length; i ++){
 
-            // Random mode
-            var curBook = books[i];
-            var x = curBook["xLoc"];
-            var y = curBook["yLoc"];
-            var image = createBook(i+1, x, y, randomMode);
-            library.appendChild(image); 
-            $(image).animate({opacity:1}, 1000);
+            if(books[i]['list'] == "discover"){
+              continue;
+            }
+            else{
+              // Random mode
+              var curBook = books[i];
+              var x = curBook["xLoc"];
+              var y = curBook["yLoc"];
+              var image = createBook(i+1, x, y, randomMode);
+              library.appendChild(image); 
+              $(image).animate({opacity:1}, 1000);
 
-            // Add draggable functionality          
-            $(image).draggable({
-                  scroll:false,
-                  containment:$(image).parent()
-            });
-          
-            $(image).mousemove(function(){
-              notDrag = false;
-            });
+              // Add draggable functionality          
+              $(image).draggable({
+                    scroll:false,
+                    containment:$(image).parent()
+              });
+            
+              $(image).mousemove(function(){
+                notDrag = false;
+              });
 
-            $(image).mouseup(function(){
-              if($(this).hasClass('openable') && notDrag){
-                openBook($(this));
-              }
-              if($(this).hasClass('selected')){
-                $(this).addClass('openable');
-                $(this).siblings().removeClass('openable');
-              }
-              $(this).addClass('top').removeClass('bottom');
-              $(this).siblings().removeClass('top').addClass('bottom');              
-              notDrag = true;
+              $(image).mouseup(function(){
+                if($(this).hasClass('openable') && notDrag){
+                  openBook($(this));
+                }
+                if($(this).hasClass('selected')){
+                  $(this).addClass('openable');
+                  $(this).siblings().removeClass('openable');
+                }
+                $(this).addClass('top').removeClass('bottom');
+                $(this).siblings().removeClass('top').addClass('bottom');              
+                notDrag = true;
 
-              $(this).animate({height:smallBookHeight}, 300);
-            });
+                $(this).animate({height:smallBookHeight}, 300);
+              });
 
-            $(image).mousedown(function(){
-              notDrag = true;
-              $(this).css("z-index", top++);
-              $(this).removeClass('unselected');
-              $(this).addClass('selected');
-              $(this).siblings().removeClass('selected').addClass('unselected');
-              
-              $(this).animate({height:bigBookHeight}, 300);
-            });
+              $(image).mousedown(function(){
+                notDrag = true;
+                $(this).css("z-index", top++);
+                $(this).removeClass('unselected');
+                $(this).addClass('selected');
+                $(this).siblings().removeClass('selected').addClass('unselected');
+                
+                $(this).animate({height:bigBookHeight}, 300);
+              });
+            }
+            
             
           }// End for loop
         }
@@ -455,7 +461,7 @@
               var divElement = $('.b-p1').find('.p-title')[0];
             }
             var title = divElement.title;
-            console.log(title);
+            console.log("title: " + title);
             //Figure out reader's user name and append to title
             var userID = $('.current-reader').attr("id");
             console.log(userID);
@@ -648,8 +654,13 @@
 
       <div  class="p-title" title='sixth-page'>
         <h3 style="top:200px; position:absolute; left:150px">The End.</h3>
+        <!-- The last page needs two mp3's because ... well... just because -->
         <audio controls id="sixth-page-reader1" class="audio-controls">
           <source src="../audios/sixth-page-reader1.mp3" type="audio/mp3">
+          Your browser does not support the audio element.
+        </audio>
+        <audio controls id="End-reader1" class="audio-controls">
+          <source src="../audios/End-reader1.mp3" type="audio/mp3">
           Your browser does not support the audio element.
         </audio>
       </div>
