@@ -47,7 +47,7 @@
         var randomMode = true; //1 is random mode, 0 is organized mode.
 
         $(".book-popup").hide();
-        makeBook();
+        // makeBook();
         
         populateRandomBooks();
         var thisButton = document.getElementById("random-button");
@@ -154,48 +154,57 @@
           var library = document.getElementById("library-div");
           for(var i = 0; i < books.length; i ++){
 
-            // Random mode
-            var curBook = books[i];
-            var x = curBook["xLoc"];
-            var y = curBook["yLoc"];
-            var image = createBook(i+1, x, y, randomMode);
-            library.appendChild(image); 
-            $(image).animate({opacity:1}, 1000);
+            if(books[i]['list'] == "discover"){
+              continue;
+            }
+            else{
+              // Random mode
+              var curBook = books[i];
+              var x = curBook["xLoc"];
+              var y = curBook["yLoc"];
+              var image = createBook(i+1, x, y, randomMode);
+              library.appendChild(image); 
+              $(image).animate({opacity:1}, 1000);
 
-            // Add draggable functionality          
-            $(image).draggable({
-                  scroll:false,
-                  containment:$(image).parent()
-            });
-          
-            $(image).mousemove(function(){
-              notDrag = false;
-            });
+              // Add draggable functionality          
+              $(image).draggable({
+                    scroll:false,
+                    containment:$(image).parent()
+              });
+            
+              $(image).mousemove(function(){
+                notDrag = false;
+              });
 
-            $(image).mouseup(function(){
-              if($(this).hasClass('openable') && notDrag){
-                openBook($(this));
-              }
-              if($(this).hasClass('selected')){
-                $(this).addClass('openable');
-                $(this).siblings().removeClass('openable');
-              }
-              $(this).addClass('top').removeClass('bottom');
-              $(this).siblings().removeClass('top').addClass('bottom');              
-              notDrag = true;
+              $(image).mouseup(function(){
+                if($(this).hasClass('openable') && notDrag){
+                  openBook($(this));
+                }
+                if($(this).hasClass('selected')){
+                  $(this).addClass('openable');
+                  $(this).siblings().removeClass('openable');
+                }
+                $(this).addClass('top').removeClass('bottom');
+                $(this).siblings().removeClass('top').addClass('bottom');              
+                notDrag = true;
 
-              $(this).animate({height:smallBookHeight}, 300);
-            });
+              });
 
-            $(image).mousedown(function(){
-              notDrag = true;
-              $(this).css("z-index", top++);
-              $(this).removeClass('unselected');
-              $(this).addClass('selected');
-              $(this).siblings().removeClass('selected').addClass('unselected');
-              
-              $(this).animate({height:bigBookHeight}, 300);
-            });
+              $(image).mousedown(function(){
+                notDrag = true;
+                $(this).css("z-index", top++);
+                $(this).removeClass('unselected');
+                $(this).addClass('selected');
+
+                $(this).siblings('.selected').animate({height:smallBookHeight}, 300);
+
+                $(this).siblings().removeClass('selected').addClass('unselected');
+                
+                $(this).animate({height:bigBookHeight}, 300);
+              });
+
+            }
+            
             
           }// End for loop
         }
@@ -398,7 +407,10 @@
         }
 
         function openBook(book){
-          $("#mybook").booklet({
+
+          var bookID = book[0].id;
+          console.log(bookID)
+          $("#mybook-" + bookID).booklet({
             pageNumbers: false,
             height: '100%',
             width: '80%',
@@ -412,38 +424,58 @@
           var id = book[0].id;
           $(".book-popup").css("opacity", "0");
           $(".book-popup").show();
+          $("#mybook-"+ bookID).show();
           $(".book-popup").animate({opacity:1}, 500);
+          
+
           $("#restart-button").removeClass("abled").addClass("disabled");
 
           $('.blur-overlay').click(function(event){
               console.log(event);
               $('.blur-overlay').remove();
               $(".book-popup").hide();
+              $("#mybook-"+ bookID).hide();
+              $(".reader").remove();
           });
 
           // var cover = document.createElement("IMG");
           // cover.src = "../graphics/GivingTree.jpg";
           // cover.id = "book-cover";
 
-          // var reader1 = document.createElement("IMG");
-          // reader1.src = "../graphics/user.png";
-          // reader1.className = "reader current-reader";
-          // reader1.id = "reader1"
-
-          // var reader2 = document.createElement("IMG");
-          // reader2.src = "../graphics/user.png";
-          // reader2.className = "reader other-reader";
-          // reader2.id = "reader2"
-
-          
-          // $div.append(cover);
-          // $(".book-popup").append(reader1);
-          // $(".book-popup").append(reader2);
-          
           $('#cancel-popup').click(function(){
             $('.blur-overlay').remove();
             $(".book-popup").hide();
+            $("#mybook-"+ bookID).hide();
+            $(".reader").remove();
           });
+
+          var readers = books[bookID-1]["readers"];
+          console.log(readers);
+          for(var i = 0; i < readers.length; i ++){
+            var reader1 = document.createElement("IMG");
+            reader1.src = "../graphics/" + readers[i] + ".png";
+            if(i == 0){
+              reader1.className = "reader current-reader";
+              reader1.id = "reader1"     
+            }else{
+              reader1.className = "reader other-reader";
+              reader1.id = "reader2"     
+            }
+            $(".book-popup").append(reader1);  
+          }
+
+          if(readers.length == 0){
+            $("#play-button").hide();
+            $("#restart-button").hide();
+          }
+          else{
+            $("#play-button").show();
+            $("#restart-button").show();
+          }
+
+          // $div.append(cover);
+          // $(".book-popup").append(reader1);
+          // $(".book-popup").append(reader2);
 
           $("#play-button").unbind('click');          
           $("#play-button").click(function(){
@@ -455,7 +487,7 @@
               var divElement = $('.b-p1').find('.p-title')[0];
             }
             var title = divElement.title;
-            console.log(title);
+            console.log("title: " + title);
             //Figure out reader's user name and append to title
             var userID = $('.current-reader').attr("id");
             console.log(userID);
@@ -515,6 +547,8 @@
             cur.removeClass('current-reader');
             oth.addClass('current-reader');
             oth.removeClass('other-reader');
+
+            $("#restart-button").removeClass("abled").addClass("disabled");
            
           });
         }
@@ -527,17 +561,17 @@
           this.load();
         }
 
-        function makeBook(){
-          $("#mybook").booklet({
-            pageNumbers: false,
-            height: '100%',
-            width: '80%',
-            closed: true,
-            autoCenter: true,
-            arrows: true,
-            arrowsHide: true
-          });
-        }
+        // function makeBook(){
+        //   $("#mybook").booklet({
+        //     pageNumbers: false,
+        //     height: '100%',
+        //     width: '80%',
+        //     closed: true,
+        //     autoCenter: true,
+        //     arrows: true,
+        //     arrowsHide: true
+        //   });
+        // }
         function getNumber(pool) {
             if (pool.length == 0) {
                 throw "No numbers left";
@@ -602,7 +636,126 @@
   </div>
  
   <div class = "book-popup popup">
-    <div id='mybook' style="height:600px; width:auto;">
+
+    <!-- Green Eggs and Ham -->
+    <div id='mybook-1' class='mybook' style="height:600px; width:auto;">
+      
+      <div class="p-title" title='first-page'> 
+        <center> 
+          <h3>Green Eggs and Ham</h3>
+          <img src = '../graphics/1.jpeg'> 
+        </center>
+      </div>
+      <div  class="p-title" title='second-page'>
+        <h3 style="top:200px; position:absolute; left:150px">The End.</h3>
+      </div>
+    </div>
+
+    <!-- OH THE PLACES YOU'LL GO -->
+    <div id='mybook-4' class='mybook' style="height:600px; width:auto;">
+      
+      <div class="p-title" title='first-page'> 
+        <center> 
+          <h3>Oh, the Places You'll Go!</h3>
+          <img src = '../graphics/4.jpeg'> 
+          <audio controls id="first-page-reader1" class="audio-controls">
+            <source src="../audios/first-page-reader1.mp3" type="audio/mp3">
+            Your browser does not support the audio element.
+          </audio>
+        </center>
+      </div>
+
+      <div  class="p-title" title='second-page'>
+        <h3 style="top:200px; position:absolute; left:150px">The End.</h3>
+        <audio controls id="End-reader1" class="audio-controls">
+          <source src="../audios/End-reader1.mp3" type="audio/mp3">
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+    </div>
+
+    <!-- The Cat in the Hat -->
+    <div id='mybook-2' class='mybook' style="height:600px; width:auto;">
+      
+      <div class="p-title" title='first-page'> 
+        <center> 
+          <h3>The Cat In the Hat</h3>
+          <img src = '../graphics/2.jpeg'> 
+          <audio controls id="first-page-reader1" class="audio-controls">
+            <source src="../audios/first-page-reader1.mp3" type="audio/mp3">
+            Your browser does not support the audio element.
+          </audio>
+        </center>
+      </div>
+
+      <div  class="p-title" title='second-page'>
+        <h3 style="top:200px; position:absolute; left:150px">The End.</h3>
+        <audio controls id="End-reader1" class="audio-controls">
+          <source src="../audios/End-reader1.mp3" type="audio/mp3">
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+    </div>
+
+    <!-- Alice's Adventures in Wonderland -->
+    <div id='mybook-3' class='mybook' style="height:600px; width:auto;">
+      
+      <div class="p-title" title='first-page'> 
+        <center> 
+          <h3>Alice's Adventures in Wonderland</h3>
+          <img src = '../graphics/3.jpeg'> 
+        </center>
+      </div>
+      <div  class="p-title" title='second-page'>
+        <h3 style="top:200px; position:absolute; left:150px">The End.</h3>
+      </div>
+    </div>
+
+    <!-- The Wonderful Wizard of Oz -->
+    <div id='mybook-8' class='mybook' style="height:600px; width:auto;">
+      
+      <div class="p-title" title='first-page'> 
+        <center> 
+          <h3>The Wonderful Wizard of Oz</h3>
+          <img src = '../graphics/8.jpeg'> 
+        </center>
+      </div>
+      <div  class="p-title" title='second-page'>
+        <h3 style="top:200px; position:absolute; left:150px">The End.</h3>
+      </div>
+    </div>
+
+    <!-- Where the Wild Things Are -->
+    <div id='mybook-10' class='mybook' style="height:600px; width:auto;">
+      
+      <div class="p-title" title='first-page'> 
+        <center> 
+          <h3>Where the Wild Things Are</h3>
+          <img src = '../graphics/10.jpeg'> 
+        </center>
+      </div>
+      <div  class="p-title" title='second-page'>
+        <h3 style="top:200px; position:absolute; left:150px">The End.</h3>
+      </div>
+    </div>
+
+    <!-- The Lion, the Witch, and the Wardrobe -->
+    <div id='mybook-12' class='mybook' style="height:600px; width:auto;">
+      
+      <div class="p-title" title='first-page'> 
+        <center> 
+          <h3>The Lion, the Witch, and the Wardrobe</h3>
+          <img src = '../graphics/12.jpeg'> 
+        </center>
+      </div>
+      <div  class="p-title" title='second-page'>
+        <h3 style="top:200px; position:absolute; left:150px">The End.</h3>
+      </div>
+    </div>
+
+
+    <!-- The GIVING TREE BOOK -->
+    <div id='mybook-7' class='mybook' style="height:600px; width:auto;">
       
       <div class="p-title" title='first-page'> 
         <center> 
@@ -648,8 +801,13 @@
 
       <div  class="p-title" title='sixth-page'>
         <h3 style="top:200px; position:absolute; left:150px">The End.</h3>
+        <!-- The last page needs two mp3's because ... well... just because -->
         <audio controls id="sixth-page-reader1" class="audio-controls">
           <source src="../audios/sixth-page-reader1.mp3" type="audio/mp3">
+          Your browser does not support the audio element.
+        </audio>
+        <audio controls id="End-reader1" class="audio-controls">
+          <source src="../audios/End-reader1.mp3" type="audio/mp3">
           Your browser does not support the audio element.
         </audio>
       </div>
@@ -668,8 +826,8 @@
     <img id="play-button" src="../graphics/play3.png" name = "play">
     <img id="restart-button" class="disabled" src="../graphics/restart3.png" name = "restart">
 
-    <img id="reader1" class="reader current-reader" src="../graphics/user.png"></img>
-    <img id="reader2" class="reader other-reader" src="../graphics/user.png"></img>
+    <!-- <img id="reader1" class="reader current-reader" src="../graphics/user.png"></img>
+    <img id="reader2" class="reader other-reader" src="../graphics/user.png"></img> -->
   </div>
 
   </body>

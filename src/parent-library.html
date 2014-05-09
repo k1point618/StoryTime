@@ -128,8 +128,26 @@
       var vIncr = incr;
     }
 
+    function getObjects(obj, key, val) {
+      var objects = [];
+      for (var i in obj) {
+          if (!obj.hasOwnProperty(i)) continue;
+          if (typeof obj[i] == 'object') {
+              objects = objects.concat(getObjects(obj[i], key, val));
+              //console.log('hello')
+          } else{
+            //console.log(i, obj[key])
+            if (i == key && obj[key].toLowerCase().indexOf(val) >= 0) {
+              objects.push(obj);
+              //console.log('goodbye');
+          }
+        }
+      }
+      return objects;
+      }
+
     //creates grid view
-    function createGridView(perRow, list = 'library'){
+    function createGridView(perRow, list = 'library', bookList = []){
       $(".imgContain").empty();
       mode = "grid"
       //console.log(mode);
@@ -145,15 +163,26 @@
       var book = 1;
       var bookCounter = 0;
       //console.log(list);
-      for(var i = 0; i < 12/perRow; i ++){
-          for(var j = 0; j < perRow; j++){
-            //console.log(books[i*4+j]["list"] == list)
-            if(books[i*4+j]["list"]==list || (list == "library" && books[i*4+j]["list"]!="discover")){
-              add(book.toString(),Math.floor(bookCounter/perRow),bookCounter%perRow);
-              bookCounter++;
-            }
-            book++;
+
+      console.log(list);
+      if(bookList.length > 0){
+        for(var i = 0; i < bookList.length; i++){
+          if(bookList[i].list == currentList){
+            add(bookList[i].id,Math.floor(bookCounter/perRow),bookCounter%perRow);
+            bookCounter++;
           }
+        }
+      }else{
+        for(var i = 0; i < 12/perRow; i ++){
+            for(var j = 0; j < perRow; j++){
+              console.log(books[i*4+j]["list"] == list)
+              if(books[i*4+j]["list"]==list || (list == "library" && books[i*4+j]["list"]!="discover")){
+                add(book.toString(),Math.floor(bookCounter/perRow),bookCounter%perRow);
+                bookCounter++;
+              }
+              book++;
+            }
+        }
       }
 
       loadListeners();
@@ -222,7 +251,9 @@
       return element;
     }
 
-    function createRowView(list = "library"){
+    function createRowView(list = "library", bookList = []){
+      console.log(bookList.length)
+      listOfBooks = bookList;
       $(".imgContain").empty();
       //console.log(list);
       mode = "row"
@@ -237,68 +268,23 @@
       var hIncr = incr;
       var vIncr = incr;
      // console.log(vIncr,hIncr);
-      var body = document.getElementById('column-right');
       var heightIncr = 0;
-      for (var j = 0; j <=11; j++){
-        if(books[j]["list"]==list || (list == "library" && books[j]["list"]!="discover")){
-          //console.log(books[j]["title"])
-          var div = document.createElement("div");
-          div.style.position = "relative";
-          div.style.left = 2+"%";
-          div.style.top = .2*hIncr * heightIncr + "px";
-          heightIncr++;
-          div.className = "book-div"
-          //div.style.textAlign = "left"
-          div.style.width = 93 + "%";
-          var img = setImage((j+1).toString(), hIncr,vIncr);
-          img.height = hIncr + "px";
-          img.style.position = "relative";
 
-          
-
-          var tbl = document.createElement("table");
-          var tblBody = document.createElement("tbody");
-
-          tbl.setAttribute('border', '0');
-          var row = document.createElement('tr');
-          var cell1 = document.createElement("td");
-
-          var container = document.createElement("div");
-          container.setAttribute("id", "f1_container");
-          container.appendChild(img);
-
-          $(".imgContain").draggable({
-            scroll:false,
-            containment: "#column-right"
-          });
-
-          cell1.appendChild(container);
-          cell1.style.width = "190px";
-          row.appendChild(cell1);
-          cell2 = document.createElement("td");
-
-          cell2.appendChild(boldHTML("Title: "));
-          cell2.appendChild(document.createTextNode(books[j]["title"]));
-          cell2.appendChild(document.createElement("br"));
-          cell2.appendChild(boldHTML("Author: "));
-          cell2.appendChild(document.createTextNode(books[j]["author"]));
-          cell2.appendChild(document.createElement("br"));
-          cell2.appendChild(document.createElement("br"));
-          cell2.appendChild(boldHTML("Synopsis: "));
-          cell2.appendChild(document.createTextNode(books[j]["synopsis"]));
-
-          cell2.style.width = "800px";
-          cell2.style.textAlign = "left"
-          //cell2.style.left = 10+"px";
-          row.appendChild(cell2);
-          tblBody.appendChild(row);
-          tbl.appendChild(tblBody);
-          div.appendChild(tbl);
-          //p.appendChild(text);
-          //p.style.whiteSpace = ;
-          //div.appendChild(img);
-          //div.appendChild(p);
-          body.appendChild(div);
+      if(bookList.length > 0){
+        console.log("yayy");
+        for(var i = 0; i < bookList.length; i++){
+          if(bookList[i].list == currentList){
+            console.log(bookList[i].id);
+            addBookToRow(bookList[i].id-1,heightIncr);
+            heightIncr++;
+          }
+        }
+      }else{
+        for (var j = 0; j <=11; j++){
+          if(books[j]["list"]==list || (list == "library" && books[j]["list"]!="discover")){
+            addBookToRow(j, heightIncr);
+            heightIncr++;
+          }
         }
       }
       //$(".bookCover").draggable("enable");
@@ -307,7 +293,73 @@
       //console.log(list)
     }
 
+    function addBookToRow(j, heightIncr){
+      console.log(j)
+      boardSize = 4
+        var incr = $('#column-right').height()/boardSize;
+      var hIncr = incr;
+      var vIncr = incr;
+      var body = document.getElementById('column-right');
+      console.log(books[j]["title"])
+      var div = document.createElement("div");
+      div.style.position = "relative";
+      div.style.left = 2+"%";
+      div.style.top = .2*hIncr * heightIncr + "px";
+      div.className = "book-div"
+      //div.style.textAlign = "left"
+      div.style.width = 93 + "%";
 
+
+
+
+      var img = setImage((j+1).toString(), hIncr,vIncr);
+      img.height = hIncr + "px";
+      img.style.position = "relative";
+
+      
+
+      var tbl = document.createElement("table");
+      var tblBody = document.createElement("tbody");
+      tbl.setAttribute('border', '0');
+      var row = document.createElement('tr');
+      var cell1 = document.createElement("td");
+      var container = document.createElement("div");
+      container.setAttribute("id", "f1_container");
+      container.appendChild(img);
+      $(".imgContain").draggable({
+        scroll:false,
+        containment: "#column-right"
+      });
+      cell1.appendChild(container);
+      cell1.style.width = "190px";
+      row.appendChild(cell1);
+      cell2 = document.createElement("td");
+
+      cell2.appendChild(boldHTML("Title: "));
+      cell2.appendChild(document.createTextNode(books[j]["title"]));
+      cell2.appendChild(document.createElement("br"));
+      cell2.appendChild(boldHTML("Author: "));
+      cell2.appendChild(document.createTextNode(books[j]["author"]));
+      cell2.appendChild(document.createElement("br"));
+      cell2.appendChild(document.createElement("br"));
+      cell2.appendChild(boldHTML("Synopsis: "));
+      cell2.appendChild(document.createTextNode(books[j]["synopsis"]));
+
+      cell2.style.width = "800px";
+      cell2.style.textAlign = "left"
+      //cell2.style.left = 10+"px";
+      row.appendChild(cell2);
+      tblBody.appendChild(row);
+      tbl.appendChild(tblBody);
+      div.appendChild(tbl);
+      //p.appendChild(text);
+      //p.style.whiteSpace = ;
+      //div.appendChild(img);
+      //div.appendChild(p);
+      body.appendChild(div);
+    }
+    //moves hand when recording
+  
     //opens the book
     //Event is the click event when choosing a user. 
     function openBook(event, book){
@@ -317,7 +369,7 @@
         var userImage = users[userID-1]["image"];
         $(".choose-user").hide();
         $('.blur-overlay').remove();
-        $(".user").remove();
+        $(".user-tag").remove();
         $("#add-user").remove();
         $('#new-user-name').remove();
         
@@ -447,6 +499,7 @@
         $('#blurrer').remove();
           $('#buy-button').remove();
           $('.record-button').remove();
+          $('.lib-select').remove();
           activeBook = false;
       });
 
@@ -471,6 +524,40 @@
             blur.width = e.target.width;
             blur.height = e.target.height;
             book.appendChild(record);
+
+            var select = document.createElement("select");
+            select.setAttribute("name","lib-select");
+            select.className = 'lib-select';
+
+            select.onchange = function(){
+//              console.log('yayyyyyy');
+              myList = document.getElementById("lib-select")
+              console.log(myList.options[myList.selectedIndex].text.toLowerCase())
+            }
+
+            var option;
+
+            option = document.createElement("option");
+            option.setAttribute("value", "cats");
+            option.innerHTML = "Cats";
+            select.appendChild(option);
+
+            option = document.createElement("option");
+            option.setAttribute("value", "nature");
+            option.innerHTML = "Nature";
+            select.appendChild(option);            
+
+            option = document.createElement("option");
+            option.setAttribute("value", "travel");
+            option.innerHTML = "Travel";
+            select.appendChild(option);
+
+            option = document.createElement("option");
+            option.setAttribute("value", "religious");
+            option.innerHTML = "Religious";
+            select.appendChild(option);            
+            book.appendChild(select);
+
           }else{
             var button = document.createElement("input");
             button.type = "button";
@@ -514,26 +601,42 @@
 
       //append to choose-user
       for(var i = 1; i <= users.length; i ++){
-        var img = "<img id='" + i + "' name='" + users[i-1]["name"] + "' class='user' src='../graphics/" + users[i-1]["image"] + ".png'/>";
-        $(".choose-user").append(img);
-      }
+        var div = "<div id='" + i + "-user-tag' class='user-tag'></div>";
+        $(".choose-user").append(div);
 
+        var img = "<img id='" + i + "' name='" + users[i-1]["name"] + "' class='user' src='../graphics/" + users[i-1]["image"] + ".png'/>";
+        $("#" + i + "-user-tag").append(img);
+
+        var nametag = "<h3 class='user-nametag'> " + users[i-1]["name"] + "</h3>";
+        $("#" + i + "-user-tag").append(nametag);
+
+        
+      }
       var add = "<img id='add-user' src='../graphics/addUser.png'>";
       $(".choose-user").append(add);
 
       $('#add-user').click(function(){
         $('#add-user').hide();
-        $('.choose-user').append("<input id='new-user-name' class='popup-text' type='text' name='answer' placeholder='Enter your name.'>");
+        $('.choose-user').append("<input id='new-user-name' autofocus class='popup-text' type='text' name='answer' placeholder='Enter your name.' >");
+        document.getElementById("new-user-name").focus();
 
         $('#new-user-name').keypress(function(event){
           if(event.which == 13){
             //Pressed Enter
             var val = $('#new-user-name').val();
-            var id = users.length+1;
-            users[id-1] = {"id":id, "name":val, "image":"user"};
             $('#new-user-name').remove();
+            
+            var id = users.length+1;
+            users[id-1] = {"id":id, "name":val, "image":"user", "books":[]};
+            
+            var div = "<div id='" + id + "-user-tag' class='user-tag'></div>";
+            $(".choose-user").append(div);
+
             var img = "<img id='" + id + "' class='user' src='../graphics/user.png' name='" + val + "'/>";
-            $(".choose-user").append(img);
+            $("#" + id + "-user-tag").append(img);
+
+            var nametag = "<h3 class='user-nametag'> " + users[i-1]["name"] + "</h3>";
+            $("#" + id + "-user-tag").append(nametag);
 
             $(".user").click(function(event){
               $('#username').remove();
@@ -544,11 +647,21 @@
             $('.user').unbind('mouseenter mouseleave');
             $(".user").hover(function(event){
               //mouseEnter
-              var userName = event.target.name;
-              $('.choose-user').append("<h3 id='username'> "+ userName + "</h3>");
+              var id = event.target.id;
+              var recList = users[id-1]["books"];
+              if(recList.indexOf(parseInt(bookID)) == -1){
+                $('#choose-user-label').text("Click to record");
+                $('#choose-user-label').css("color", "green");
+              }else{
+                $('#choose-user-label').text("You have already recorded this book. Click to override. ");
+                $('#choose-user-label').css("color", "red");
+              }
+
             }, function(event){
               //mouseLeave
-              $('#username').remove();
+              $('#choose-user-label').text("Which user are you? ");
+              $('#choose-user-label').css("color", "gray");
+              
             });
 
           }
@@ -558,7 +671,7 @@
       $('#cancel-popup-choose-user').click(function(){
             $('.blur-overlay').remove();
             $(".choose-user").hide();
-            $(".user").remove();
+            $(".user-tag").remove();
             $("#add-user").remove();
             $('#new-user-name').remove();
       });
@@ -570,17 +683,28 @@
 
       $(".user").hover(function(event){
         //mouseEnter
-        var userName = event.target.name;
-        $('.choose-user').append("<h3 id='username'> "+ userName + "</h3>");
+        var id = event.target.id;
+        var recList = users[id-1]["books"];
+        if(recList.indexOf(parseInt(bookID)) == -1){
+          $('#choose-user-label').text("Click to record");
+          $('#choose-user-label').css("color", "green");
+        }else{
+          $('#choose-user-label').text("You have already recorded this book. Click to override. ");
+          $('#choose-user-label').css("color", "red");
+        }
+        
       }, function(event){
         //mouseLeave
-        $('#username').remove();
+        $('#choose-user-label').text("Which user are you? ");
+        $('#choose-user-label').css("color", "gray");
+        
       });
+
 
       $('.blur-overlay').click(function(event){
           $('.blur-overlay').remove();
           $(".choose-user").hide();
-          $(".user").remove();
+          $(".user-tag").remove();
           $("#add-user").remove();
           $('#new-user-name').remove();
             
@@ -588,6 +712,7 @@
 
     }//end Choose User (kgu)
 
+    
     $(document).ready(function() {
       
       // Format the booklet
@@ -639,6 +764,7 @@
           $('#blurrer').remove();
           $('#buy-button').remove();
           $('.record-button').remove();
+          $('.lib-select').remove();
           activeBook = false;
 
         }
@@ -653,16 +779,32 @@
      
       // Clicking on a book should unhide the book view
       
-      
+      $('#search').keyup(function(e){
+        console.log("serach focused");
+        console.log(jQuery(this).val())
+        relevantBooks = getObjects(books, 'title', jQuery(this).val());
+        /*relevantBooks = jQuery.map(books, function(obj){
+          return obj.title == jQuery(this).val();
+        })*/
+        //console.log(relevantBooks[0].id)
+        if(mode == "row"){
+          createRowView("library",relevantBooks)
+        }else{
+          createGridView(4, "library", relevantBooks);
+        }
+      })
 
 
 
       $('.imgContain').on("click","a,img", function (e) {
-        var bookID = e.target.getAttribute('id');
+        var bookCover = $(e.target).siblings(".bookCover");
+        var bookID = bookCover[0].id;
+
         e.preventDefault();
         if(e.target.className == "record-button"){
           $('#blurrer').remove();
           $('.record-button').remove();
+          $('.lib-select').remove();
           activeBook = false;
 
           //Show user choice
@@ -833,7 +975,7 @@
     <div id="library-div" class="main-frame">
       <div id="column-left">
         <ul id = "column-left-contents" >
-          <span id = "search"><label> Search </label> <input type = "text" name = "search"></span>
+          <span><label> Search </label> <input id = "search" type = "text" name = "search"></span>
           <li class = "section" id = "library"><div class = "current" href = "#"> &nbsp My Library</a></li>
           <div id = "library-contents">
             <ul id = "reading-lists">
@@ -953,7 +1095,7 @@
 
   <div class = "popup choose-user">
     <br>
-    <h3>Which user are you? </h3>
+    <h3 id="choose-user-label">Which user are you? </h3>
     <img id="cancel-popup-choose-user" class="cancel-button"/>
     <!-- <img id="user1" class="user" src="../graphics/user.png">
     <img id="user2" class="user" src="../graphics/user.png">
