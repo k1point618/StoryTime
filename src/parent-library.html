@@ -572,6 +572,7 @@
       },function(e){
         $('#blurrer').remove();
           $('#buy-button').remove();
+          $('#buy-label').remove();
           $('.record-button').remove();
           $('.lib-select').remove();
           activeBook = false;
@@ -632,9 +633,20 @@
             book.appendChild(select);
 
           }else{
-            var button = document.createElement("input");
-            button.type = "button";
-            button.value = "Buy";
+            var text = document.createElement("h3");
+            $(text).attr("id", "buy-label");
+            $(text).text("Add to My Library");
+            $(text).css("position", "absolute");
+            $(text).css("top", "30%");
+            $(text).css("color", "white");
+            $(text).css("z-index", "100");
+
+            book.appendChild(text);
+
+            var button = document.createElement("img");
+            // button.type = "button";
+            // button.value = "Buy";
+            button.src="../graphics/add-book.png"
             button.id = "buy-button";
             button.style.zIndex = 100;
             button.onclick = function(){
@@ -836,6 +848,7 @@
         if(e.target.className != "bookCover" && e.target.className != "blur-overlay"){
           $('#blurrer').remove();
           $('#buy-button').remove();
+          $('#buy-label').remove();
           $('.record-button').remove();
           $('.lib-select').remove();
           activeBook = false;
