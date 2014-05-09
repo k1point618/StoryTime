@@ -64,7 +64,7 @@
       }
 
     //creates grid view
-    function createGridView(perRow, list = 'library'){
+    function createGridView(perRow, list = 'library', bookList = []){
       $(".imgContain").empty();
       mode = "grid"
       console.log(mode);
@@ -80,15 +80,24 @@
       var book = 1;
       var bookCounter = 0;
       console.log(list);
-      for(var i = 0; i < 12/perRow; i ++){
-          for(var j = 0; j < perRow; j++){
-            console.log(books[i*4+j]["list"] == list)
-            if(books[i*4+j]["list"]==list || (list == "library" && books[i*4+j]["list"]!="discover")){
-              add(book.toString(),Math.floor(bookCounter/perRow),bookCounter%perRow);
-              bookCounter++;
-            }
-            book++;
+      if(bookList.length > 0){
+        for(var i = 0; i < bookList.length; i++){
+          if(bookList[i].list == currentList){
+            add(bookList[i].id,Math.floor(bookCounter/perRow),bookCounter%perRow);
+            bookCounter++;
           }
+        }
+      }else{
+        for(var i = 0; i < 12/perRow; i ++){
+            for(var j = 0; j < perRow; j++){
+              console.log(books[i*4+j]["list"] == list)
+              if(books[i*4+j]["list"]==list || (list == "library" && books[i*4+j]["list"]!="discover")){
+                add(book.toString(),Math.floor(bookCounter/perRow),bookCounter%perRow);
+                bookCounter++;
+              }
+              book++;
+            }
+        }
       }
 
       loadListeners();
@@ -178,9 +187,11 @@
       if(bookList.length > 0){
         console.log("yayy");
         for(var i = 0; i < bookList.length; i++){
-          console.log(bookList[i].id);
-          addBookToRow(bookList[i].id-1,heightIncr);
-          heightIncr++;
+          if(bookList[i].list == currentList){
+            console.log(bookList[i].id);
+            addBookToRow(bookList[i].id-1,heightIncr);
+            heightIncr++;
+          }
         }
       }else{
         for (var j = 0; j <=11; j++){
@@ -379,6 +390,7 @@
         $('#blurrer').remove();
           $('#buy-button').remove();
           $('.record-button').remove();
+          $('.lib-select').remove();
           activeBook = false;
       });
 
@@ -403,6 +415,40 @@
             blur.width = e.target.width;
             blur.height = e.target.height;
             book.appendChild(record);
+
+            var select = document.createElement("select");
+            select.setAttribute("name","lib-select");
+            select.className = 'lib-select';
+
+            select.onchange = function(){
+//              console.log('yayyyyyy');
+              myList = document.getElementById("lib-select")
+              console.log(myList.options[myList.selectedIndex].text.toLowerCase())
+            }
+
+            var option;
+
+            option = document.createElement("option");
+            option.setAttribute("value", "cats");
+            option.innerHTML = "Cats";
+            select.appendChild(option);
+
+            option = document.createElement("option");
+            option.setAttribute("value", "nature");
+            option.innerHTML = "Nature";
+            select.appendChild(option);            
+
+            option = document.createElement("option");
+            option.setAttribute("value", "travel");
+            option.innerHTML = "Travel";
+            select.appendChild(option);
+
+            option = document.createElement("option");
+            option.setAttribute("value", "religious");
+            option.innerHTML = "Religious";
+            select.appendChild(option);            
+            book.appendChild(select);
+
           }else{
             var button = document.createElement("input");
             button.type = "button";
@@ -609,6 +655,7 @@
           $('#blurrer').remove();
           $('#buy-button').remove();
           $('.record-button').remove();
+          $('.lib-select').remove();
           activeBook = false;
 
         }
@@ -631,7 +678,11 @@
           return obj.title == jQuery(this).val();
         })*/
         //console.log(relevantBooks[0].id)
-        createRowView("library",relevantBooks)
+        if(mode == "row"){
+          createRowView("library",relevantBooks)
+        }else{
+          createGridView(4, "library", relevantBooks);
+        }
       })
 
 
@@ -644,6 +695,7 @@
         if(e.target.className == "record-button"){
           $('#blurrer').remove();
           $('.record-button').remove();
+          $('.lib-select').remove();
           activeBook = false;
 
           //Show user choice

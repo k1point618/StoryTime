@@ -65,7 +65,7 @@ table{
     
     position:absolute;
     left:40%;
-    top:40%;
+    top:30%;
     width:30px;
     height:30px;
     z-index: 100;
@@ -73,6 +73,14 @@ table{
     -webkit-border-radius: 13px;
     -moz-border-radius: 13px;
     border-radius: 13px;
+}
+
+.lib-select{
+  position:absolute;
+  left:30%;
+  top:60%;
+  width:40%;
+  z-index:100;
 }
 
 #play-button{
