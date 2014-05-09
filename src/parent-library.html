@@ -36,18 +36,22 @@
     <script type = "text/javascript">
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
     var isRecording = false;
+    var lastTitle = "";
 
     function makeRecording(){
       var constraints = {audio: true, video: true};
-      var videoElement = document.getElementById('video');
+      var title = getTitle();
+      var videoElement = document.getElementById(title);
+      console.log("making a recording for " + title);
       function errorCallback(error){
         console.log("navigator.getUserMedia error: ", error);
       }
 
       var count = 0;
       function startRecording(stream) {
-        console.log('Starting...');
+        console.log('Starting recording...');
         mediaRecorder = new MediaRecorder(stream);
+
 
         mediaRecorder.ondataavailable = function(e) {
           console.log('Data available...');
@@ -75,10 +79,9 @@
           mediaRecorder.stop();
         }*/
 
-        $('#recording').mousedown(function(){
+        $('#recording').mousedown(function(){ 
           if (!isRecording) {
             navigator.getUserMedia(constraints, startRecording, errorCallback);
-            console.log("started recording");
           }
           else {
             console.log("Stopped recording");
@@ -86,13 +89,17 @@
           }
         });
 
-        $('#recording').mouseup(function(){
-          
+        $('#cancel-popup').mousedown(function(){
+            console.log("stopping mediarecorder thing");
+            mediaRecorder.stop();
         });
+
 
         var playButton = document.getElementById('play-button');
         playButton.onclick = function() {
-          var myVideo = document.getElementById('video');
+          var title = getTitle();
+          console.log("Playing " + title);
+          var myVideo = document.getElementById(title);
           myVideo.onended = function(e) {
             $("#play-button").attr('src', "../graphics/play3.png");
           }
@@ -107,6 +114,22 @@
           }
         }
       }
+    }
+
+
+    function getTitle() {
+      if ($('.b-p1').hasClass('b-page-0')){
+              var divElement = $('.b-p2').find('.p-title')[0];
+            }else{
+              var divElement = $('.b-p1').find('.p-title')[0];
+            }
+            var title = divElement.title;
+            //console.log("title: " + title);
+            //Figure out reader's user name and append to title
+           // var userID = $('.current-reader').attr("id");
+            //console.log(userID);
+            //title = title + "-reader" + "1";
+            return title;
     }
 
     window.onload = function(){
@@ -388,6 +411,7 @@
 
         // On clicking the record button
         $('#recording').mousedown(function(){
+          console.log(isRecording);
           if (!isRecording) {
             $("#recording").attr('src', "../graphics/record.png");
             isRecording = true;
@@ -404,49 +428,11 @@
           
         });
 
-   /*     $('#recording').mouseup(function(){
-            isRecording = false;
-            $("#tools").show();
-            $("#recording").attr('src', "../graphics/not-record.png");
-            $("#recording").hide();
-        });
-
-        $('.book-popup').mouseup(function(){
-            if (isRecording) {
-              isRecording = false;
-              $("#tools").show();
-              $("#recording").attr('src', "../graphics/not-record.png");
-              $("#recording").hide();
-            }
-        }); */
-
         $('#trash-button').mouseup(function(){
             $("#recording").show();
             $("#tools").hide();
             makeRecording();
         });
-        
-
-        // Recording mechanism 
-    /*     $('.book-text').mousedown(function(){
-            $('#pointer').hide();
-            // turn recording button on
-            $("#recording").attr('src', "../graphics/record.png");
-          });
-
-         $('.book-text').mouseup(function(){
-            // turn recording button off
-            $("#recording").attr('src', "../graphics/not-record.png");
-          });
-
-         $('#mybook').mouseup(function(){
-            // turn recording button off
-            $('#pointer').hide();
-            $("#recording").attr('src', "../graphics/not-record.png");
-          }); */
-
-          //movePointer();
-
 
 
           $("body").append("<div class='blur-overlay'></div>");
@@ -455,13 +441,44 @@
 
           //var id = book[0].id;
           $(".book-popup").show();
+          $("#recording").show();
+          $("#recording").attr('src', "../graphics/not-record.png");
           $("#mybook").show();
+          isRecording = false;
+          lastTitle = getTitle();
 
           $('#cancel-popup').click(function(){
+            //mediaRecorder.stop();
+            isRecording = false;
+
             $('.blur-overlay').remove();
             $(".book-popup").hide();
             $("#mybook").hide();
+
           });
+
+          function sleep(milliseconds) {
+            var start = new Date().getTime();
+            for (var i = 0; i < 1e7; i++) {
+              if ((new Date().getTime() - start) > milliseconds){
+                break;
+              }
+            }
+          }
+
+          
+
+
+
+         /*  $(document).click(function(){
+            sleep(1000);
+            console.log("last title: " + lastTitle);
+            console.log("current title: " + getTitle());
+            if (lastTitle != "" && lastTitle != getTitle()) {
+              $("#tools").hide();
+              $("#recording").show();
+            }
+          }); */
 
           $("#play-button").click(function(){
             var divElement = $('.b-p1').find('.p-title')[0];
@@ -482,9 +499,6 @@
           
     }
 
-    $(document).click(function(event){
-        //console.log(event);
-      });
     
     //reloads listeners for record button, and hovering over the book
     function loadListeners(){
@@ -715,6 +729,24 @@
     
     $(document).ready(function() {
       
+  /*    function checkPageChange() {
+       // console.log("last title: " + lastTitle);
+       // console.log("cur title: " + getTitle());
+        var same = lastTitle === getTitle();
+        if (lastTitle != "" && !same) {
+          $("#tools").hide();
+          $("#recording").show();
+          lastTitle = getTitle();
+          console.log("about to make a new recording for page turn");
+          mediaRecorder.stop();
+          makeRecording();
+        }
+        //console.log("checking");
+      }
+
+      var interval = setInterval(checkPageChange, 50);    */
+
+
       // Format the booklet
       $("#mybook").booklet({ 
         pageNumbers: false,
@@ -954,7 +986,11 @@
   
   <body>
      <video id = "video" hidden></video>
-     <video id="second-page-reader1"></video>
+     <video id="first-page" hidden></video>
+     <video id="second-page" hidden></video>
+     <video id="fourth-page" hidden></video>
+     <video id="sixth-page" hidden></video>
+
 
 
     <div class="wrapper">
