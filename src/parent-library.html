@@ -18,6 +18,8 @@
 
     <link type="text/css" href="style/parent-library.css" rel="stylesheet" />
     <script type="text/javascript" src="external_js/jquery-1.9.0.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="external_js/jquery-ui-1.10.4.custom.js"></script>
+    <script type="text/javascript" charset="utf-8" src="external_js/jquery-ui-1.10.4.custom.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
     <script> window.jQuery || document.write('<script src="Booklet-master/booklet/jquery-2.1.0.min.js"><\/script>') </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
@@ -119,7 +121,7 @@
     var mode;
     var activeBook = false;
     var currentList = "library"
-
+    var lists = ["","Cats","Nature","Travel","Religious"];
 
     function createDescriptionView(){
       boardSize = 2.5;
@@ -274,7 +276,8 @@
         console.log("yayy");
         for(var i = 0; i < bookList.length; i++){
           console.log("currentList: "+currentList)
-          if(bookList[i].list == currentList|| (currentList == 'library' && bookList[i].list != "discover")){
+          console.log(bookList[i].list.split("$"));
+          if($.inArray(currentList,bookList[i].list.split("$")) > -1|| (currentList == 'library' && $.inArray("discover",bookList[i].list.split("$")) == -1)){
             console.log(bookList[i].id);
             addBookToRow(bookList[i].id-1,heightIncr);
             heightIncr++;
@@ -282,7 +285,7 @@
         }
       }else{
         for (var j = 0; j <=11; j++){
-          if(books[j]["list"]==list || (list == "library" && books[j]["list"]!="discover")){
+          if($.inArray(list, books[j]["list"].split("$")) > -1 || (list == "library" && $.inArray("discover", books[j]["list"].split("$")) == -1)){
             addBookToRow(j, heightIncr);
             heightIncr++;
           }
@@ -352,40 +355,70 @@
       row.appendChild(cell2);
 
       // Start cell 3: ================================
-      var cell3 = document.createElement("td");
-      cell3.setAttribute("id", "cell3");
-      var select = document.createElement("select");
-      select.setAttribute("id","add-to-list");
+      if(currentList == 'library'){
+        var cell3 = document.createElement("td");
+        cell3.setAttribute("id", "cell3");
 
-      select.onchange = function(){
-//              console.log('yayyyyyy');
-        myList = document.getElementById("lib-select")
-        console.log(myList.options[myList.selectedIndex].text.toLowerCase())
+       
+
+        var button = document.createElement("input");
+        button.type = "button";
+        button.value = "Add to Library";
+        button.id = "add-button"+j;
+        button.style.zIndex = 100;
+        //button.style.width = 90 + "px"
+        button.onclick = function(){
+          $('#add-button'+j).remove();
+          var select = document.createElement("select");
+          select.setAttribute("id","add-to-list"+j);
+          select.className = "add-to-list";
+
+          select.onchange = function(){
+
+    //              console.log('yayyyyyy');
+          myList = document.getElementById("add-to-list"+j)
+          console.log(myList.options[myList.selectedIndex].text.toLowerCase())
+          books[myList.parentNode.parentNode.childNodes[0].childNodes[0].childNodes[0].getAttribute('id')-1]['list'] += "$"+myList.options[myList.selectedIndex].text.toLowerCase();
+          }
+
+          var option;
+          for(var i = 0; i < lists.length; i++){
+            console.log(books[j]['list'].split("$"))
+            if($.inArray(lists[i].toLowerCase(),books[j]['list'].split("$")) == -1){
+              option = document.createElement("option");
+              option.setAttribute("value", lists[i]);
+              option.innerHTML = lists[i];
+              select.appendChild(option);
+            }
+          }
+          
+/*
+          option = document.createElement("option");
+          option.setAttribute("value", "cats");
+          option.innerHTML = "Cats";
+          select.appendChild(option);
+
+          option = document.createElement("option");
+          option.setAttribute("value", "nature");
+          option.innerHTML = "Nature";
+          select.appendChild(option);            
+
+          option = document.createElement("option");
+          option.setAttribute("value", "travel");
+          option.innerHTML = "Travel";
+          select.appendChild(option);
+
+          option = document.createElement("option");
+          option.setAttribute("value", "religious");
+          option.innerHTML = "Religious";
+          select.appendChild(option);    */        
+          cell3.appendChild(select);
+        }
+
+        cell3.appendChild(button); 
+
+        row.appendChild(cell3);
       }
-
-      var option;
-
-      option = document.createElement("option");
-      option.setAttribute("value", "cats");
-      option.innerHTML = "Cats";
-      select.appendChild(option);
-
-      option = document.createElement("option");
-      option.setAttribute("value", "nature");
-      option.innerHTML = "Nature";
-      select.appendChild(option);            
-
-      option = document.createElement("option");
-      option.setAttribute("value", "travel");
-      option.innerHTML = "Travel";
-      select.appendChild(option);
-
-      option = document.createElement("option");
-      option.setAttribute("value", "religious");
-      option.innerHTML = "Religious";
-      select.appendChild(option);            
-      cell3.appendChild(select);
-      row.appendChild(cell3);
 
       tblBody.appendChild(row);
       tbl.appendChild(tblBody);
@@ -564,37 +597,7 @@
             blur.height = e.target.height;
             book.appendChild(record);
 
-            var select = document.createElement("select");
-            select.setAttribute("id","add-to-list");
-
-            select.onchange = function(){
-      //              console.log('yayyyyyy');
-              myList = document.getElementById("lib-select")
-              console.log(myList.options[myList.selectedIndex].text.toLowerCase())
-            }
-
-            var option;
-
-            option = document.createElement("option");
-            option.setAttribute("value", "cats");
-            option.innerHTML = "Cats";
-            select.appendChild(option);
-
-            option = document.createElement("option");
-            option.setAttribute("value", "nature");
-            option.innerHTML = "Nature";
-            select.appendChild(option);            
-
-            option = document.createElement("option");
-            option.setAttribute("value", "travel");
-            option.innerHTML = "Travel";
-            select.appendChild(option);
-
-            option = document.createElement("option");
-            option.setAttribute("value", "religious");
-            option.innerHTML = "Religious";
-            select.appendChild(option);                   
-            book.appendChild(select);
+           
 
           }else{
             var text = document.createElement("h3");
@@ -763,7 +766,7 @@
 
     
     $(document).ready(function() {
-      
+
       // Format the booklet
       $("#mybook").booklet({ 
         pageNumbers: false,
@@ -964,6 +967,7 @@
               oldLabel.className = "";
               item.style.color = "#FFF";
               item.className = "current";    
+              lists = lists.concat(val);
             }
             $('#new-list-popup').remove();
             $('.blur-overlay').remove();
