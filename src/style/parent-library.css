@@ -342,9 +342,19 @@ li{
   width: 100px;
   height: auto;
   padding-top:40px;
-  padding-left:30px;
-  padding-right:30px;
   cursor: pointer;
+}
+.user-tag{
+  display:inline;
+  float:center;
+  width:100px;
+}
+.user-nametag{
+  position:relative;
+  display:inline;
+  width:100px;
+  top:20px;
+  left:-85px;
 }
 #add-user{
   opacity:0.7;
@@ -352,6 +362,8 @@ li{
   padding-left:30px;
   padding-right:30px;
   cursor: pointer;
+  display:inline;
+  float:center;
 }
 #new-user-name{
   position: relative;

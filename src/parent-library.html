@@ -409,26 +409,42 @@
 
       //append to choose-user
       for(var i = 1; i <= users.length; i ++){
-        var img = "<img id='" + i + "' name='" + users[i-1]["name"] + "' class='user' src='../graphics/" + users[i-1]["image"] + ".png'/>";
-        $(".choose-user").append(img);
-      }
+        var div = "<div id='" + i + "-user-tag' class='user-tag'></div>";
+        $(".choose-user").append(div);
 
+        var img = "<img id='" + i + "' name='" + users[i-1]["name"] + "' class='user' src='../graphics/" + users[i-1]["image"] + ".png'/>";
+        $("#" + i + "-user-tag").append(img);
+
+        var nametag = "<h3 class='user-nametag'> " + users[i-1]["name"] + "</h3>";
+        $("#" + i + "-user-tag").append(nametag);
+
+        
+      }
       var add = "<img id='add-user' src='../graphics/addUser.png'>";
       $(".choose-user").append(add);
 
       $('#add-user').click(function(){
         $('#add-user').hide();
-        $('.choose-user').append("<input id='new-user-name' class='popup-text' type='text' name='answer' placeholder='Enter your name.'>");
+        $('.choose-user').append("<input id='new-user-name' autofocus class='popup-text' type='text' name='answer' placeholder='Enter your name.' >");
+        document.getElementById("new-user-name").focus();
 
         $('#new-user-name').keypress(function(event){
           if(event.which == 13){
             //Pressed Enter
             var val = $('#new-user-name').val();
-            var id = users.length+1;
-            users[id-1] = {"id":id, "name":val, "image":"user"};
             $('#new-user-name').remove();
+            
+            var id = users.length+1;
+            users[id-1] = {"id":id, "name":val, "image":"user", "books":[]};
+            
+            var div = "<div id='" + id + "-user-tag' class='user-tag'></div>";
+            $(".choose-user").append(div);
+
             var img = "<img id='" + id + "' class='user' src='../graphics/user.png' name='" + val + "'/>";
-            $(".choose-user").append(img);
+            $("#" + id + "-user-tag").append(img);
+
+            var nametag = "<h3 class='user-nametag'> " + users[i-1]["name"] + "</h3>";
+            $("#" + id + "-user-tag").append(nametag);
 
             $(".user").click(function(event){
               $('#username').remove();
@@ -439,11 +455,21 @@
             $('.user').unbind('mouseenter mouseleave');
             $(".user").hover(function(event){
               //mouseEnter
-              var userName = event.target.name;
-              $('.choose-user').append("<h3 id='username'> "+ userName + "</h3>");
+              var id = event.target.id;
+              var recList = users[id-1]["books"];
+              if(recList.indexOf(parseInt(bookID)) == -1){
+                $('#choose-user-label').text("Click to record");
+                $('#choose-user-label').css("color", "green");
+              }else{
+                $('#choose-user-label').text("You have already recorded this book. Click to override. ");
+                $('#choose-user-label').css("color", "red");
+              }
+
             }, function(event){
               //mouseLeave
-              $('#username').remove();
+              $('#choose-user-label').text("Which user are you? ");
+              $('#choose-user-label').css("color", "gray");
+              
             });
 
           }
@@ -453,7 +479,7 @@
       $('#cancel-popup-choose-user').click(function(){
             $('.blur-overlay').remove();
             $(".choose-user").hide();
-            $(".user").remove();
+            $(".user-tag").remove();
             $("#add-user").remove();
             $('#new-user-name').remove();
       });
@@ -465,17 +491,28 @@
 
       $(".user").hover(function(event){
         //mouseEnter
-        var userName = event.target.name;
-        $('.choose-user').append("<h3 id='username'> "+ userName + "</h3>");
+        var id = event.target.id;
+        var recList = users[id-1]["books"];
+        if(recList.indexOf(parseInt(bookID)) == -1){
+          $('#choose-user-label').text("Click to record");
+          $('#choose-user-label').css("color", "green");
+        }else{
+          $('#choose-user-label').text("You have already recorded this book. Click to override. ");
+          $('#choose-user-label').css("color", "red");
+        }
+        
       }, function(event){
         //mouseLeave
-        $('#username').remove();
+        $('#choose-user-label').text("Which user are you? ");
+        $('#choose-user-label').css("color", "gray");
+        
       });
+
 
       $('.blur-overlay').click(function(event){
           $('.blur-overlay').remove();
           $(".choose-user").hide();
-          $(".user").remove();
+          $(".user-tag").remove();
           $("#add-user").remove();
           $('#new-user-name').remove();
             
@@ -553,7 +590,9 @@
 
 
       $('.imgContain').on("click","a,img", function (e) {
-        var bookID = e.target.getAttribute('id');
+        var bookCover = $(e.target).siblings(".bookCover");
+        var bookID = bookCover[0].id;
+
         e.preventDefault();
         if(e.target.className == "record-button"){
           $('#blurrer').remove();
@@ -837,7 +876,7 @@
 
   <div class = "popup choose-user">
     <br>
-    <h3>Which user are you? </h3>
+    <h3 id="choose-user-label">Which user are you? </h3>
     <img id="cancel-popup-choose-user" class="cancel-button"/>
     <!-- <img id="user1" class="user" src="../graphics/user.png">
     <img id="user2" class="user" src="../graphics/user.png">
